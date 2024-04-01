@@ -1,0 +1,40 @@
+html{
+    min-width: 300px;
+}
+header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.centro{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+header a{
+    transition: all .2s;
+    color: #00000096;
+    text-decoration: none;
+}
+header h1{
+    color: #000;
+}
+
+header a:hover{
+    color: #000;
+}
+.nav1{
+    height: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #00000049;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 425px) {
+    .centro{
+        width: 100%;
+    }
+}
