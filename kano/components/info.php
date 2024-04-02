@@ -1,5 +1,5 @@
 <?php
-$title = "KANO";
+$title = "KANO | Cut & Shave";
 $favicon = "images/favicon.png";
 
 ?>
