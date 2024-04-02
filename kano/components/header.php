@@ -1,3 +1,4 @@
+<?php include "components/info.php" ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,7 +6,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cristal</title>
+    <title><?php echo $title; ?></title>
+    <link rel="shortcut icon" href="<?php echo $favicon; ?>" type="image/x-icon">
+
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- ESTILOS -->

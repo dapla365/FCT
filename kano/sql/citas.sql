@@ -1,0 +1,7 @@
+CREATE TABLE roles (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fecha VARCHAR(255) NOT NULL,
+    peluquero INT NOT NULL,
+    usuario INT NOT NULL,
+    realizada BOOLEAN DEFAULT FALSE
+);
