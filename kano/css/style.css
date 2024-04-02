@@ -3,3 +3,36 @@
 *{
     font-family: "Open Sans", sans-serif;
 }
+/* PELUQUEROS */
+.peluqueros{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.peluqueros .centro{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.peluquero{
+    text-align: center;
+    margin: 10px;
+    padding: 20px;
+    width: 350px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.peluquero img{
+    width: 300px;
+    -webkit-mask-image: linear-gradient(black, transparent);
+    mask-image: linear-gradient(black, transparent);
+}
+.peluquero h2{
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    border-top: 1px solid black;
+    padding: 5px;
+}
