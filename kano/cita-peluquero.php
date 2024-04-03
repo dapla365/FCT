@@ -5,38 +5,51 @@ require_once 'components/conexion.php';
 
 if (isset($_GET['peluquero'])) {
     $peluquero = mb_strtolower(htmlspecialchars($_GET['peluquero']));
-}else{
+
+    $a = "SELECT * FROM usuarios WHERE id=$peluquero;";
+    $a = mysqli_query($mysqli, $a);
+    $row = mysqli_fetch_assoc($a);
+    $rol = $row['rol'];
+    if ($rol < 1 && $rol > 2) header('Location: peluqueros.php');
+
+} else {
     header('Location: peluqueros.php');
 }
 ?>
 
 <div class="peluqueros">
     <div class="centro">
-        <?php
-        $a = "SELECT * FROM usuarios WHERE id=$peluquero;";
-        $a = mysqli_query($mysqli, $a);
-        while ($row = mysqli_fetch_assoc($a)) {
-            $rol = $row['rol'];
-            if($rol < 1) header('Location: peluqueros.php');
-            
-            $id = $row['id'];
-            $username = mb_strtolower($row['username']);
-            $nombre = ucfirst(mb_strtolower($row['nombre']));
-            $foto = $row['foto'];
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="datepicker" class="form-label">Fecha</label>
+                <input name="datepicker" id='calendar' />
+            </div>
+            <div class="form-group">
+                <label for="aula" class="form-label">Horas disponibles</label>
+                <select id="aula" name="aula" class="form-control">
+                    <?php
+                    /*
+                    $a = "SELECT * FROM plantas";
+                    $a = mysqli_query($mysqli, $a);
+                    while ($row = mysqli_fetch_assoc($a)) {
+                        $plantaid = $row['id'];
+                        $b = "SELECT * FROM aulas WHERE planta = '$plantaid'";
+                        $b = mysqli_query($mysqli, $b);
 
-            echo "        
-            <div class='peluquero'>
-                <a href='cita-peluquero.php?peluquero={$id}'>
-                    <div class='foto'>
-                        <img src='$foto' alt='$nombre'>
-                    </div>
-                    <div class='nombre'>
-                        <h2>$nombre</h2>
-                    </div>
-                </a>
-            </div>";
-        }
-        ?>
+                        while ($rowb = mysqli_fetch_assoc($b)) {
+                            $planta = ucfirst(mb_strtolower($rowb['aula']));
+                            echo "<option value='$planta'>$planta</option>";
+                        }
+                        break;
+                    }
+                    */
+                    ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="crear" class="btn btn-primary mt-2" value="Añadir">
+            </div>
+        </form>
     </div>
 </div>
 

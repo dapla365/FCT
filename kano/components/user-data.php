@@ -18,6 +18,8 @@ if(isset($_SESSION['usuario'])){
     
     $user_id = $a['id'];                                // ID           DEL USUARIO
     $user_username = $a['username'];                    // USERNAME     DEL USUARIO
+    $user_name = $a['username'];                        // NAME         DEL USUARIO
+    $user_surnames = $a['username'];                    // SURNAMES     DEL USUARIO
     $user_rol = $a['rol'];                              // ROL          DEL USUARIO
 }
 else{

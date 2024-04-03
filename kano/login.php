@@ -28,20 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         require_once 'components/conexion.php';
 
         $sql_usuario="SELECT * FROM usuarios WHERE username = '$nombre' OR correo = '$nombre'";
-        $sql_sesion="SELECT ultimo_acceso FROM usuarios WHERE username = '$nombre' OR correo = '$nombre'";
-        $sql_ip="SELECT ip FROM usuarios WHERE username = '$nombre' OR correo = '$nombre'";
-
-        // OBTENER FECHA DE ULTIMA SESION
-        $result_sesion = mysqli_query($mysqli, $sql_sesion);
-        while($row = mysqli_fetch_assoc($result_sesion)){
-            $sql_sesion = $row['ultimo_acceso'];
-        }
-
-        // OBTENER IP DE ULTIMA SESION
-        $result_ip = mysqli_query($mysqli, $sql_ip);
-        while($row = mysqli_fetch_assoc($result_ip)){
-            $sql_ip = $row['ip'];
-        }
 
         $result_user = mysqli_query($mysqli, $sql_usuario);
 
