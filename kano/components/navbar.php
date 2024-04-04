@@ -1,3 +1,4 @@
+<?php include "components/user-data.php"; ?>
 <header>
 <div class="centro">
     <a href="index.php"><i class="bi bi-house-door-fill"></i><h2>Inicio</h2></a>

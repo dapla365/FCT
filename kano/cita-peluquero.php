@@ -1,7 +1,6 @@
+<?php include "components/header.php" ?>
+<?php include "components/navbar.php" ?>
 <?php
-include "components/header.php";
-include "components/navbar.php";
-require_once 'components/conexion.php';
 
 if (isset($_GET['peluquero'])) {
     $peluquero = mb_strtolower(htmlspecialchars($_GET['peluquero']));
@@ -11,7 +10,6 @@ if (isset($_GET['peluquero'])) {
     $row = mysqli_fetch_assoc($a);
     $rol = $row['rol'];
     if ($rol < 1 && $rol > 2) header('Location: peluqueros.php');
-
 } else {
     header('Location: peluqueros.php');
 }
@@ -21,34 +19,63 @@ if (isset($_GET['peluquero'])) {
     <div class="centro">
         <form action="" method="post">
             <div class="form-group">
-                <label for="datepicker" class="form-label">Fecha</label>
-                <input name="datepicker" id='calendar' />
+                <label for="calendar" class="form-label">Fecha</label>
+                <input name="calendar" id='calendar' />
             </div>
             <div class="form-group">
-                <label for="aula" class="form-label">Horas disponibles</label>
-                <select id="aula" name="aula" class="form-control">
+                <label for="horas" class="form-label">Horas disponibles</label>
+                <select id="horas" name="horas" class="form-control">
                     <?php
-                    /*
-                    $a = "SELECT * FROM plantas";
+                    foreach ($horas_disponibles as $x) {
+                        echo "<option value='$x'>$x</option>";
+                    }
+
+                    /* $a = "SELECT * FROM citas WHERE peluquero='$peluquero'";
                     $a = mysqli_query($mysqli, $a);
                     while ($row = mysqli_fetch_assoc($a)) {
-                        $plantaid = $row['id'];
-                        $b = "SELECT * FROM aulas WHERE planta = '$plantaid'";
-                        $b = mysqli_query($mysqli, $b);
-
-                        while ($rowb = mysqli_fetch_assoc($b)) {
-                            $planta = ucfirst(mb_strtolower($rowb['aula']));
-                            echo "<option value='$planta'>$planta</option>";
-                        }
+                        $id = $row['id'];
                         break;
-                    }
-                    */
+                    }*/
+
                     ?>
                 </select>
             </div>
             <div class="form-group">
-                <input type="submit" name="crear" class="btn btn-primary mt-2" value="Añadir">
+                <input type="submit" name="crear" value="Añadir">
             </div>
+
+
+            <?php
+            if (isset($_POST['crear'])) {
+                $calendar = htmlspecialchars($_POST['calendar']);
+                $horas = htmlspecialchars($_POST['horas']);
+
+                /* REVISA LAS FECHAS POR SI SON NULL */
+                /* FECHA SOLUCION */
+                if ($calendar == "") {
+                    $calendar = 'NULL';
+                } else {
+                    $calendar = "'" . $calendar . "'";
+                }
+
+                if ($horas == "" || $calendar == "" || $calendar == 'NULL') {
+                    echo "<p><strong>Error: </strong>¡Tiene que completar los campos obligatorios!</p>";
+                } else {
+                    /* FALTA COMPROBAR HORAS DISPONIBLES */
+                    $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES (".$fecha_alta.",'{$horas}','{$peluquero}','{$user_id}')";
+                    $a = mysqli_query($mysqli, $a);
+                    if (!$a) {
+                        echo "<p><strong>Error: </strong>Algo ha ido mal añadiendo la incidencia: " . mysqli_error($mysqli) . "</p>";
+                    } else {
+                        header("Refresh:3; url=index.php");
+                        echo "<p> ¡Cita añadida con éxito!. Redirigiendo...</p>";
+                        echo "<p> Si no redirige puedes hacer <a href='index.php'>click aquí</a></p>";
+                    }
+                }
+            }
+            ?>
+
+
         </form>
     </div>
 </div>

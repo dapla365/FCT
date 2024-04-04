@@ -1,5 +1,5 @@
 
-<?php include "components/header.php" ?>
+<?php include "components/header.php"; ?>
 
 <div class="body">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
@@ -80,4 +80,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
 </form>
 </div>
-<?php include "components/footer.php" ?>
+<?php include "components/footer.php"; ?>

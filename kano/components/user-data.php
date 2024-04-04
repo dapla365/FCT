@@ -18,12 +18,15 @@ if(isset($_SESSION['usuario'])){
     
     $user_id = $a['id'];                                // ID           DEL USUARIO
     $user_username = $a['username'];                    // USERNAME     DEL USUARIO
-    $user_name = $a['username'];                        // NAME         DEL USUARIO
-    $user_surnames = $a['username'];                    // SURNAMES     DEL USUARIO
+    $user_correo = $a['correo'];                        // CORREO       DEL USUARIO
+    $user_nombre = $a['nombre'];                        // NOMBRE       DEL USUARIO
+    $user_apellidos = $a['apellidos'];                  // APELLIDOS    DEL USUARIO
     $user_rol = $a['rol'];                              // ROL          DEL USUARIO
+    $user_foto = $a['foto'];                            // FOTO         DEL USUARIO
+    
 }
 else{
-    header("Location: login.php");
+    header("Location: disponibles.php");
     session_abort();
     die();
 }

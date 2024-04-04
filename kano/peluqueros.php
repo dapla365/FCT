@@ -1,8 +1,5 @@
-<?php
-include "components/header.php";
-include "components/navbar.php";
-require_once 'components/conexion.php';
-?>
+<?php include "components/header.php" ?>
+<?php include "components/navbar.php" ?>
 
 <div class="peluqueros">
     <div class="centro">
