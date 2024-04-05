@@ -62,7 +62,7 @@ if (isset($_GET['peluquero'])) {
                     echo "<p><strong>Error: </strong>¡Tiene que completar los campos obligatorios!</p>";
                 } else {
                     /* FALTA COMPROBAR HORAS DISPONIBLES */
-                    $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES (".$fecha_alta.",'{$horas}','{$peluquero}','{$user_id}')";
+                    $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES (".$calendar.",'{$horas}','{$peluquero}','{$user_id}')";
                     $a = mysqli_query($mysqli, $a);
                     if (!$a) {
                         echo "<p><strong>Error: </strong>Algo ha ido mal añadiendo la incidencia: " . mysqli_error($mysqli) . "</p>";
