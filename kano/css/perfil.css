@@ -35,7 +35,7 @@ Copiar esto
     width: 100%;
     display: flex;
     justify-content: center;
-    background: linear-gradient(#B873FF, transparent);
+    background: linear-gradient(#d82626, transparent);
     margin-bottom: 1.25rem;
 }
 
@@ -44,7 +44,7 @@ Copiar esto
     position: relative;
     width: 90%;
     height: 17rem;
-    background-image: linear-gradient(45deg, #BC3CFF, #317FFF);
+    background-image: linear-gradient(45deg, #5a2828, #ff1010);
     border-radius: 0 0 20px 20px;
     /*
     background-image: url('http://localhost/multimedia/png/user-portada-3.png');
@@ -194,15 +194,15 @@ Copiar esto
 }
 
 .seccion-perfil-usuario .boton-redes.facebook {
-    background-color: #5955FF;
+    background-color: #ff5555;
 }
 
 .seccion-perfil-usuario .boton-redes.twitter {
-    background-color: #35E1BF;
+    background-color: #e1de35;
 }
 
 .seccion-perfil-usuario .boton-redes.instagram {
-    background: linear-gradient(45deg, #FF2DFD, #40A7FF);
+    background: linear-gradient(45deg, #5a2828, #ff1010);
 }
 
 /* adactacion a dispositivos */

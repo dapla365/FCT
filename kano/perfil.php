@@ -17,7 +17,7 @@
     </div>
     <div class="perfil-usuario-body">
         <div class="perfil-usuario-bio">
-            <h3 class="titulo"><?php echo $user_nombre; echo $user_apellidos;?></h3>
+            <h3 class="titulo"><?php echo "$user_nombre $user_apellidos";?></h3>
             <p class="texto"><?php echo ucfirst(mb_strtolower($user_rolname));?> </p>
         </div>
         <div class="perfil-usuario-footer">
