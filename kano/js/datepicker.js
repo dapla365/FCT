@@ -1,15 +1,17 @@
-/* DESHABILITAR FINES DE SEMANA */
+//* DESHABILITAR FINES DE SEMANA
 
 $(function () {
     $('#calendar').datepicker({
         beforeShowDay: $.datepicker.noWeekends,
         minDate: 0
     });
+    $('#calendario').datepicker({
+        beforeShowDay: $.datepicker.noWeekends,
+        minDate: 0
+    });
 });
 
-
-
-/* DESHABILITAR DIAS CONCRETOS */
+//* DESHABILITAR DIAS CONCRETOS
 /* 
 // Obtener fecha actual
 let fecha = new Date();

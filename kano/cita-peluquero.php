@@ -9,7 +9,7 @@ if (isset($_GET['peluquero'])) {
     $a = mysqli_query($mysqli, $a);
     $row = mysqli_fetch_assoc($a);
     $rol = $row['rol'];
-    if ($rol < 1 && $rol > 2) header('Location: peluqueros.php');
+    if ($rol < 1 || $rol > 2) header('Location: peluqueros.php');
 } else {
     header('Location: peluqueros.php');
 }
@@ -23,8 +23,8 @@ if (isset($_GET['peluquero'])) {
                 <input name="calendar" id='calendar' />
             </div>
             <div class="form-group">
-                <label for="horas" class="form-label">Horas disponibles</label>
-                <select id="horas" name="horas" class="form-control" disabled></select>
+                <label for="hours" class="form-label">Horas disponibles</label>
+                <select id="hours" name="hours" class="form-control" disabled></select>
             </div>
             <div class="form-group">
                 <input type="submit" name="crear" value="Añadir">
@@ -32,7 +32,7 @@ if (isset($_GET['peluquero'])) {
             <?php
             if (isset($_POST['crear'])) {
                 $calendar = htmlspecialchars($_POST['calendar']);
-                $horas = htmlspecialchars($_POST['horas']);
+                $horas = htmlspecialchars($_POST['hours']);
 
                 /* REVISA LAS FECHAS POR SI SON NULL */
                 /* FECHA SOLUCION */

@@ -12,35 +12,30 @@
 
 // Obtener el valor del primer select
 $opcion = htmlspecialchars($_POST['opcion']);
-$peluquero = htmlspecialchars($_POST['peluquero']);
-
-// Consulta para obtener las opciones dependientes de la tabla 'citas'
-$a = "SELECT * FROM citas WHERE fecha = '$opcion' AND peluquero = '$peluquero';";
-$a = mysqli_query($mysqli, $a);
 
 // Generar las opciones para el segundo select
 $options = '';
 
-if (mysqli_num_rows($a) <= 0) {
-    foreach ($horas_disponibles as $x) {
-        $options .= "<option value='$x'>$x</option>";
-    }
-} else {
-    // HORAS OCUPADAS
-    $horas_ocupadas = array();
+foreach ($horas_disponibles as $x) {
 
-    while ($row = mysqli_fetch_assoc($a)) {
-        $hora = $row['hora'];
-        array_push($horas_ocupadas, $hora);
-    }
+    //* OBTENEMOS LOS PELUQUEROS QUE TIENEN ESA HORA OCUPADA DE ESE DIA.
+    $a = "SELECT count(id)'contador' FROM citas WHERE fecha = '$opcion' AND hora = '$x';";
+    $a = mysqli_query($mysqli, $a);
+    $rowa = mysqli_fetch_assoc($a);
+    $peluqueros_ocupados = $rowa['contador'];
 
-    $result = array_diff($horas_disponibles, $horas_ocupadas);
+    //* OBTENEMOS LA CANTIDAD DE PELUQUEROS QUE HAY.
+    $c = "SELECT count(id)'totales' FROM usuarios WHERE rol >= 1 AND rol < 3;";
+    $c = mysqli_query($mysqli, $c);
+    $rowc = mysqli_fetch_assoc($c);
+    $peluqueros_totales = $rowc['totales'];
 
-    // QUITAR HORAS NO DISPONIBLES
-    foreach ($result as $x) {
+    if($peluqueros_ocupados < $peluqueros_totales){
+        //* HAY ALGUNA HORA LIBRE
         $options .= "<option value='$x'>$x</option>";
     }
 }
+
 
 
 echo $options;
