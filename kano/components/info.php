@@ -2,9 +2,9 @@
 /* INFO */
 $title = "KANO | Cut & Shave";
 $favicon = "images/favicon.png";
-$horario_comienzo=8; 
-$horas_trabajo=8;
-$horario_salida=20;
+$horario_comienzo = 8; 
+$horas_trabajo = 8;
+$horario_salida = 20;
 $tiempo_pelado = 30;
 
 

@@ -4,7 +4,7 @@
 <div class="peluqueros">
     <div class="centro">
         <?php
-        $a = "SELECT * FROM usuarios WHERE rol>=1;";
+        $a = "SELECT * FROM usuarios WHERE rol>=1 AND rol<=2;";
         $a = mysqli_query($mysqli, $a);
         while ($row = mysqli_fetch_assoc($a)) {
             $id = $row['id'];

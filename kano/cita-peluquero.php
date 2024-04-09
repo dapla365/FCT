@@ -24,7 +24,7 @@ if (isset($_GET['peluquero'])) {
             </div>
             <div class="form-group">
                 <label for="hours" class="form-label">Horas disponibles</label>
-                <select id="hours" name="hours" class="form-control" disabled></select>
+                <select id="hours" name="hours" class="form-control" disabled><option value="Elije una fecha">Elije una fecha</option></select>
             </div>
             <div class="form-group">
                 <input type="submit" name="crear" value="Añadir">
@@ -34,8 +34,8 @@ if (isset($_GET['peluquero'])) {
                 $calendar = htmlspecialchars($_POST['calendar']);
                 $horas = htmlspecialchars($_POST['hours']);
 
-                /* REVISA LAS FECHAS POR SI SON NULL */
-                /* FECHA SOLUCION */
+                //* REVISA LAS FECHAS POR SI SON NULL 
+                //* FECHA SOLUCION 
                 if ($calendar == "") {
                     $calendar = 'NULL';
                 } else {
@@ -45,7 +45,7 @@ if (isset($_GET['peluquero'])) {
                 if ($horas == "" || $calendar == "" || $calendar == 'NULL') {
                     echo "<p><strong>Error: </strong>¡Tiene que completar los campos obligatorios!</p>";
                 } else {
-                    /* FALTA COMPROBAR HORAS DISPONIBLES */
+                    //TODO FALTA COMPROBAR HORAS DISPONIBLES 
                     $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES (" . $calendar . ",'{$horas}','{$peluquero}','{$user_id}')";
                     $a = mysqli_query($mysqli, $a);
                     if (!$a) {
