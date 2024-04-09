@@ -1,0 +1,56 @@
+
+/* PELUQUEROS */
+.peluqueros{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.peluqueros .centro{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+.peluquero{
+    background-color: rgba(0, 0, 0, 0.85);
+	margin: 0;
+	padding: 0;
+	border: 0;
+	text-align: center;
+	width: 350px;
+	border: 1px solid black;
+	border-radius: 10px;
+	overflow: hidden;
+	max-height: 350px;
+    margin: 10px;
+}
+.peluquero a{
+	text-decoration: none;
+	color: black;
+	transition: all 0.3s;
+}
+.peluquero a:hover{
+	color: white;
+}
+.foto {
+	padding: 10px;
+	padding-bottom: 0;
+}
+.foto img {
+	max-width: 300px;
+    max-height: 280px;
+	mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+}
+.nombre {
+	text-align: center;
+	background-color: red;
+	
+}
+.nombre h2{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin: 0;
+}

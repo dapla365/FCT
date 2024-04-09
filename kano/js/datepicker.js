@@ -8,6 +8,7 @@ $(function () {
 });
 
 
+
 /* DESHABILITAR DIAS CONCRETOS */
 /* 
 // Obtener fecha actual

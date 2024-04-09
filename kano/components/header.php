@@ -25,6 +25,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    
 
     <script src="js/datepicker.js"></script>
 
@@ -36,6 +37,9 @@
         $url = $url[2];
         if ($url == 'login.php' || $url == 'register.php') {
             echo '<link rel="stylesheet" href="css/form.css">';
+        }
+        else if ($url == 'peluqueros.php' || $url == 'cita-peluquero.php') {
+            echo '<link rel="stylesheet" href="css/peluqueros.css">';
         }
         else if ($url == 'perfil.php') {
             echo '<link rel="stylesheet" href="css/perfil.css">';

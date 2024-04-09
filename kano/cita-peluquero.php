@@ -24,27 +24,11 @@ if (isset($_GET['peluquero'])) {
             </div>
             <div class="form-group">
                 <label for="horas" class="form-label">Horas disponibles</label>
-                <select id="horas" name="horas" class="form-control">
-                    <?php
-                    foreach ($horas_disponibles as $x) {
-                        echo "<option value='$x'>$x</option>";
-                    }
-
-                    /* $a = "SELECT * FROM citas WHERE peluquero='$peluquero'";
-                    $a = mysqli_query($mysqli, $a);
-                    while ($row = mysqli_fetch_assoc($a)) {
-                        $id = $row['id'];
-                        break;
-                    }*/
-
-                    ?>
-                </select>
+                <select id="horas" name="horas" class="form-control" disabled></select>
             </div>
             <div class="form-group">
                 <input type="submit" name="crear" value="Añadir">
             </div>
-
-
             <?php
             if (isset($_POST['crear'])) {
                 $calendar = htmlspecialchars($_POST['calendar']);
@@ -62,7 +46,7 @@ if (isset($_GET['peluquero'])) {
                     echo "<p><strong>Error: </strong>¡Tiene que completar los campos obligatorios!</p>";
                 } else {
                     /* FALTA COMPROBAR HORAS DISPONIBLES */
-                    $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES (".$calendar.",'{$horas}','{$peluquero}','{$user_id}')";
+                    $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES (" . $calendar . ",'{$horas}','{$peluquero}','{$user_id}')";
                     $a = mysqli_query($mysqli, $a);
                     if (!$a) {
                         echo "<p><strong>Error: </strong>Algo ha ido mal añadiendo la incidencia: " . mysqli_error($mysqli) . "</p>";
@@ -74,8 +58,6 @@ if (isset($_GET['peluquero'])) {
                 }
             }
             ?>
-
-
         </form>
     </div>
 </div>
