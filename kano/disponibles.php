@@ -1,7 +1,7 @@
 <?php include "components/header.php" ?>
 <?php include "components/navbar.php" ?>
 
-<div class="peluqueros">
+<div class="disponibles">
     <div class="centro">
         <form action="" method="post">
             <div class="form-group">
@@ -33,19 +33,30 @@
                 } else {
                     //* REVISAMOS QUE LA HORA SELECCIONADA ESTÁ DISPONIBLE
                     if (in_array($horas, $horas_disponibles)) {
-
+                        $peluquero_final = 0;
                         $a = "SELECT * FROM citas WHERE fecha = $calendar AND hora = '$horas';";
                         $a = mysqli_query($mysqli, $a);
                         if (mysqli_num_rows($a) <= 0) {
-                            echo "cualquiera"; //TODO RANDOM PARA QUE SE ELIJA UN PELUQUERO.
+                            $b = array_rand($peluqueros_totales, 1); //* $peluqueros_totales SE ENCUENTRA EN INFO.PHP
+                            $peluquero_final = $peluqueros_totales[$b];
                         } else {
+                            $peluqueros_sin_cita = $peluqueros_totales;
                             while ($row = mysqli_fetch_assoc($a)) {
                                 $peluquero = $row['peluquero'];
-                                echo "$peluquero <br>"; //? ID DE LOS PELUQUEROS QUE TIENEN CITA COGIDA A ESA HORA.  
+                                $peluqueros_sin_cita = array_diff($peluqueros_sin_cita, array("$peluquero"));
+                            }
+                            if (count($peluqueros_sin_cita) > 1) {
+
+                                $c = array_rand($peluqueros_sin_cita, 1); //* ELIJE PELUQUERO DISPONIBLE ALEATORIAMENTE
+                                $peluquero_final = $peluqueros_sin_cita[$c];
+                            } else {
+                                foreach ($peluqueros_sin_cita as $x) {
+                                    $peluquero_final = $x; //* UNICO PELUQUERO LIBRE.   
+                                }
                             }
                         }
-                        /* 
-                        $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES (" . $calendar . ",'{$horas}','{$peluquero}','{$user_id}')";
+                        //* AÑADIR CITA
+                        $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES (" . $calendar . ",'{$horas}','{$peluquero_final}','{$user_id}')";
                         $a = mysqli_query($mysqli, $a);
                         if (!$a) {
                             echo "<p><strong>Error: </strong>Algo ha ido mal añadiendo la incidencia: " . mysqli_error($mysqli) . "</p>";
@@ -53,7 +64,7 @@
                             header("Refresh:3; url=index.php");
                             echo "<p> ¡Cita añadida con éxito!. Redirigiendo...</p>";
                             echo "<p> Si no redirige puedes hacer <a href='index.php'>click aquí</a></p>";
-                        }*/
+                        }
                     } else {
                         echo "<p><strong>Error: </strong>¡Tiene que elegir una hora disponible!</p>";
                     }
