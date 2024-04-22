@@ -1,0 +1,49 @@
+.centro{
+    margin: 0;
+    margin-top: 2rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+.container {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.cita{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 1%;
+    padding: 1%;
+}
+.cita_datos{
+    width: 40%;
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+    flex-direction: column;
+}
+.cita_opciones{
+    width: 20%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+.cita_peluquero{
+    font-weight: bold;
+}
+.cita_opciones i{
+    color: red;
+    margin-right: 1%;
+}
+.cita_opciones i:hover{
+    color: black;
+}
+p{
+    margin: 0;
+}

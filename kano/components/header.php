@@ -43,6 +43,8 @@
         }
         else if ($url == 'perfil.php') {
             echo '<link rel="stylesheet" href="css/perfil.css">';
+        }else if ($url == 'reservas.php') {
+            echo '<link rel="stylesheet" href="css/reservas.css">';
         }
     }
     ?>
