@@ -52,11 +52,11 @@
     font-weight: bold;
 }
 .cita_opciones i{
-    color: red;
+    color: black;
     margin-right: 1%;
 }
 .cita_opciones i:hover{
-    color: black;
+    color: red;
 }
 p{
     margin: 0;
