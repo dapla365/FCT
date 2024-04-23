@@ -10,6 +10,20 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding: 2%;
+}
+.sin_citas {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20vh;
+    text-decoration: none;
+    color: rgb(82, 82, 82);
+}
+.sin_citas:hover {
+    cursor: pointer;
+    color: black;
 }
 .cita{
     width: 100%;
@@ -18,8 +32,8 @@
     align-items: center;
     border: 1px solid black;
     border-radius: 5px;
-    margin: 1%;
     padding: 1%;
+    margin-top: 1%;
 }
 .cita_datos{
     width: 40%;
