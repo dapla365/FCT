@@ -39,7 +39,7 @@
                     <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
                 </div>
                 <div class='cita_opciones'>
-                    <a href='components/eliminar_reserva.php?reserva=$id'><i class='bi bi-trash3-fill'></i></a>
+                    <a href='eliminar_reserva.php?reserva={$id}'><i class='bi bi-trash3-fill'></i></a>
                 </div>
             </div>
             ";
