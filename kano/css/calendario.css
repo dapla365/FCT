@@ -78,7 +78,7 @@ header .icons span:last-child{
 }
 .calendar ul li{
     position: relative;
-    width: calc(100% / 7);
+    width: calc(100% / 5);
 }
 .calendar .days li::before{
     position: absolute;
