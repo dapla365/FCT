@@ -28,6 +28,7 @@
     
 
     <script src="js/datepicker.js"></script>
+    <script src="js/calendario.js" defer></script>
 
     <?php
     session_start();
@@ -41,9 +42,13 @@
         else if ($url == 'peluqueros.php' || $url == 'cita-peluquero.php') {
             echo '<link rel="stylesheet" href="css/peluqueros.css">';
         }
+        else if ($url == 'disponibles.php') {
+            echo '<link rel="stylesheet" href="css/calendario.css">';
+        }
         else if ($url == 'perfil.php') {
             echo '<link rel="stylesheet" href="css/perfil.css">';
-        }else if ($url == 'reservas.php') {
+        }
+        else if ($url == 'reservas.php') {
             echo '<link rel="stylesheet" href="css/reservas.css">';
         }
     }
