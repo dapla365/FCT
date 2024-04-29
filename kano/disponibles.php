@@ -49,7 +49,6 @@
                 <li class="inactive">3</li>
                 <li class="inactive">4</li>
                 <li class="inactive">5</li>
-
             </ul>
         </div>
     </div>

@@ -20,7 +20,8 @@ const renderCalendar = () => {
         lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
     let liTag = "";
 
-    /*TODO FALTA COMPROBAR LOS DIAS QUE TIENEN OCUPADOS LOS PELUQUEROS */
+    //*TODO FALTA COMPROBAR LOS DIAS QUE TIENEN OCUPADOS LOS PELUQUEROS
+    //*TODO FALTA PONER FECHA EN ID PARA LOS MESES.
 
     /* DIAS DEL MES ANTERIOR */
     for (let i = firstDayofMonth; i > 0; i--) {
@@ -57,7 +58,7 @@ const renderCalendar = () => {
             } else {
                 isLast = "inactive";
             }
-            liTag += `<li class="${isLast}">${lastDateofLastMonth - i + 1}</li>`;
+            liTag += `<li id="" class="${isLast}">${lastDateofLastMonth - i + 1}</li>`;
         }
     }
 
@@ -80,7 +81,7 @@ const renderCalendar = () => {
             } else {
                 isToday = "inactive";    /* DESACTIVAR AÑOS ANTERIORES */
             }
-            liTag += `<li class="${isToday}">${i}</li>`;
+            liTag += `<li id="" class="${isToday}">${i}</li>`;
         }
     }
 
@@ -115,7 +116,7 @@ const renderCalendar = () => {
                 isLast = "inactive";    /* DESACTIVAR AÑOS ANTERIORES */
             }
 
-            liTag += `<li class="${isLast}">${i - lastDayofMonth + 1}</li>`;
+            liTag += `<li id="" class="${isLast}">${i - lastDayofMonth + 1}</li>`;
         }
     }
     currentDate.innerText = `${months[currMonth]} ${currYear}`;
@@ -136,5 +137,12 @@ prevNextIcon.forEach(icon => {
             date = new Date();
         }
         renderCalendar();
+    });
+});
+
+const li = document.querySelectorAll("li");
+li.forEach(date => {
+    date.addEventListener("click", () => {
+        console.log(currMonth+"/"+date.textContent+"/"+currYear);
     });
 });

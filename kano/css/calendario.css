@@ -1,3 +1,4 @@
+/** CALENDARIO DISPONIBLES */
 *{
     margin: 0;
     padding: 0;
@@ -10,7 +11,6 @@
     justify-content: center;
     min-height: 50vh;
 }
-
 .wrapper{
     width: 550px;
     background: #fff;
@@ -112,3 +112,68 @@ header .icons span:last-child{
 .calendar .days li.ocupado:hover{
     cursor: default;
 }
+/** DISPONIBLES_RESERVAS */
+.centro{
+    margin: 0;
+    margin-top: 2rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+.container {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2%;
+}
+.sin_citas {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20vh;
+    text-decoration: none;
+    color: rgb(82, 82, 82);
+}
+.sin_citas:hover {
+    cursor: pointer;
+    color: black;
+}
+.cita{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1%;
+    margin-top: 1%;
+}
+.cita_datos{
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+    flex-direction: column;
+}
+.cita_opciones{
+    width: 20%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+.cita_peluquero{
+    font-weight: bold;
+}
+.cita_opciones i{
+    color: black;
+    margin-right: 1%;
+}
+.cita_opciones i:hover{
+    color: red;
+}
+p{
+    margin: 0;
+}
+
