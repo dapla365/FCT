@@ -150,14 +150,19 @@ header .icons span:last-child{
     padding: 1%;
     margin-top: 1%;
 }
-.cita_datos{
-    width: 50%;
+.cita_peluquero{
+    width: 40%;
     display: flex;
     justify-content: flex-start;
     text-align: left;
-    flex-direction: column;
 }
-.cita_opciones{
+.cita_fecha{
+    width: 40%;
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+}
+.cita_hora{
     width: 20%;
     display: flex;
     justify-content: right;
@@ -166,14 +171,11 @@ header .icons span:last-child{
 .cita_peluquero{
     font-weight: bold;
 }
-.cita_opciones i{
-    color: black;
-    margin-right: 1%;
-}
-.cita_opciones i:hover{
-    color: red;
-}
 p{
     margin: 0;
 }
+i{
+    padding-right: 3px;
+}
+
 

@@ -11,7 +11,8 @@ trueMonth = date.getMonth();
 trueDate = date.getDate();
 
 const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-    "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+];
 
 const renderCalendar = () => {
     let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(),
@@ -20,37 +21,37 @@ const renderCalendar = () => {
         lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
     let liTag = "";
 
-    //*TODO FALTA COMPROBAR LOS DIAS QUE TIENEN OCUPADOS LOS PELUQUEROS
-    //*TODO FALTA PONER FECHA EN ID PARA LOS MESES.
-
-    /* DIAS DEL MES ANTERIOR */
+    //! DIAS DEL MES ANTERIOR
     for (let i = firstDayofMonth; i > 0; i--) {
         let dia = new Date(currYear + '-' + currMonth + '-' + (lastDateofLastMonth - i + 1)).getDay();
-
+        let mes = currMonth;
+        let ano = currYear;
         /* PARA EL CAMBIO DE AÑO */
         if (currMonth == 0) {
             if (currYear > trueYear) {
                 dia = new Date((currYear - (currYear - trueYear)) + '-' + 12 + '-' + (lastDateofLastMonth - i + 1)).getDay();
+                mes = 12;
+                ano = currYear - (currYear - trueYear);
             } else if (currYear == trueYear) {
                 dia = new Date((currYear - 1) + '-' + 12 + '-' + (lastDateofLastMonth - i + 1)).getDay();
+                mes = 12;
+                ano = currYear - 1;
             } else {
                 dia = new Date((currYear + (trueYear - currYear)) + '-' + currMonth + '-' + (lastDateofLastMonth - i + 1)).getDay();
+                ano = currYear + (trueYear - currYear);
             }
-            /*
-            const dayNames = ["Sunday", "Monday", "Tuesday", "Wed", "Thur", "Fri", "Sat"];
-            console.log((currYear - 1) + " - " + dayNames[dia] + ", " + (lastDateofLastMonth - i + 1));
-            */
         }
-
-
-        if (dia != 0 && dia != 6) {         /* QUITAR FINES DE SEMANA */
+        if (dia != 0 && dia != 6) {
+            /* QUITAR FINES DE SEMANA */
             let isLast = (lastDateofLastMonth - i + 1) === trueDate && trueMonth + 1 === currMonth && trueYear === currYear ? "active" : "";
 
-            if ((lastDateofLastMonth - i + 1) < trueDate && trueMonth === currMonth - 1 && trueYear === currYear) { /* DIAS ANTERIORES AL QUE ESTAMOS */
+            if ((lastDateofLastMonth - i + 1) < trueDate && trueMonth === currMonth - 1 && trueYear === currYear) {
+                /* DIAS ANTERIORES AL QUE ESTAMOS */
                 isLast = "inactive";
             }
             if (currYear === trueYear) {
-                if (trueMonth >= currMonth) { /* MESES ANTERIORES */
+                if (trueMonth >= currMonth) {
+                    /* MESES ANTERIORES */
                     isLast = "inactive";
                 }
             } else if (currYear > trueYear) {
@@ -58,71 +59,142 @@ const renderCalendar = () => {
             } else {
                 isLast = "inactive";
             }
-            liTag += `<li id="" class="${isLast}">${lastDateofLastMonth - i + 1}</li>`;
+
+            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let d = lastDateofLastMonth - i + 1;
+            d = d.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let fecha = `${mes}/${d}/${ano}`;
+
+            liTag += `<li id="${fecha}" class="${isLast}">${lastDateofLastMonth - i + 1}</li>`;     //! ESCRIBE LA FECHA
+
+            if (isLast != "inactive") {
+                //* PETICION PARA VER SI EL DIA ESTÁ DISPONIBLE
+                $.ajax({
+                    url: `${location.origin}/kano/components/comprobarDiaLibre.php`,
+                    method: 'POST',
+                    data: {
+                        fecha: fecha
+                    },
+                    success: function (data) {
+                        data = data.replace(/(\r\n|\n|\r)/gm, "");
+                        document.getElementById(fecha).classList += data;
+                    }
+                });
+            }
         }
     }
 
-    /* HASTA EL DIA EN EL QUE ESTAMOS */
+    //! HASTA EL DIA EN EL QUE ESTAMOS
     for (let i = 1; i <= lastDateofMonth; i++) {
         let dia = new Date(currYear + '-' + (currMonth + 1) + '-' + i).getDay();
 
-        if (dia != 0 && dia != 6) {         /* QUITAR FINES DE SEMANA */
+        if (dia != 0 && dia != 6) {
+            /* QUITAR FINES DE SEMANA */
             let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
 
-            if (i < trueDate && currMonth === new Date().getMonth() && currYear === new Date().getFullYear()) { /* DESACTIVAR DIAS ANTERIORES */
+            if (i < trueDate && currMonth === new Date().getMonth() && currYear === new Date().getFullYear()) {
+                /* DESACTIVAR DIAS ANTERIORES */
                 isToday = "inactive";
             }
             if (currYear === trueYear) {
-                if (trueMonth > currMonth) { /* DESACTIVAR MESES ANTERIORES */
+                if (trueMonth > currMonth) {
+                    /* DESACTIVAR MESES ANTERIORES */
                     isToday = "inactive";
                 }
             } else if (currYear > trueYear) {
                 isToday = "";
             } else {
-                isToday = "inactive";    /* DESACTIVAR AÑOS ANTERIORES */
+                isToday = "inactive"; /* DESACTIVAR AÑOS ANTERIORES */
             }
-            liTag += `<li id="" class="${isToday}">${i}</li>`;
+
+            let mes = currMonth + 1;
+            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let d = i.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let fecha = `${mes}/${d}/${currYear}`;
+
+            liTag += `<li id="${fecha}" class="${isToday}">${i}</li>`;     //! ESCRIBE LA FECHA
+
+            if (isToday != "inactive") {
+                //* PETICION PARA VER SI EL DIA ESTÁ DISPONIBLE
+                $.ajax({
+                    url: `${location.origin}/kano/components/comprobarDiaLibre.php`,
+                    method: 'POST',
+                    data: {
+                        fecha: fecha
+                    },
+                    success: function (data) {
+                        data = data.replace(/(\r\n|\n|\r)/gm, "");
+                        document.getElementById(fecha).classList += data;
+                    }
+                });
+            }
+
         }
     }
 
-    /* DIAS DEL SIGUIENTE MES */
+    //! DIAS DEL SIGUIENTE MES
     for (let i = lastDayofMonth; i < 6; i++) {
         let dia = new Date(currYear + '-' + (currMonth + 2) + '-' + (i - lastDayofMonth + 1)).getDay();
-
+        let mes = currMonth + 2;
+        let ano = currYear;
         /* PARA EL CAMBIO DE AÑO */
         if (currMonth == 11) {
             if (currYear > trueYear) {
                 dia = new Date((currYear + (currYear - trueYear)) + '-' + 1 + '-' + (i - lastDayofMonth + 1)).getDay();
+                mes = 1;
+                ano = currYear + (currYear - trueYear);
             } else if (currYear == trueYear) {
                 dia = new Date((currYear + 1) + '-' + 1 + '-' + (i - lastDayofMonth + 1)).getDay();
+                mes = 1;
+                ano = currYear + 1;
             } else {
                 dia = new Date((currYear - (trueYear - currYear)) + '-' + currMonth + '-' + (i - lastDayofMonth + 1)).getDay();
+                ano = currYear - (trueYear - currYear);
             }
-            /*
-            const dayNames = ["Sunday", "Monday", "Tuesday", "Wed", "Thur", "Fri", "Sat"];
-            console.log((currYear + 1) + " - " +dayNames[dia]+", "+(i - lastDayofMonth + 1));
-            */
         }
-
-        if (dia != 0 && dia != 6) {         /* QUITAR FINES DE SEMANA */
+        if (dia != 0 && dia != 6) {
+            /* QUITAR FINES DE SEMANA */
             let isLast = "";
             if (currYear === trueYear) {
-                if (trueMonth > currMonth) { /* DESACTIVAR MESES ANTERIORES */
+                if (trueMonth > currMonth) {
+                    /* DESACTIVAR MESES ANTERIORES */
                     isLast = "inactive";
                 }
             } else if (currYear > trueYear) {
                 isLast = "";
             } else {
-                isLast = "inactive";    /* DESACTIVAR AÑOS ANTERIORES */
+                isLast = "inactive"; /* DESACTIVAR AÑOS ANTERIORES */
             }
 
-            liTag += `<li id="" class="${isLast}">${i - lastDayofMonth + 1}</li>`;
+            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let d = i - lastDayofMonth + 1;
+            d = d.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+
+            let fecha = `${mes}/${d}/${ano}`;
+
+            liTag += `<li id="${fecha}" class="${isLast}">${i - lastDayofMonth + 1}</li>`;     //! ESCRIBE LA FECHA
+
+            if (isLast != "inactive") {
+                //* PETICION PARA VER SI EL DIA ESTÁ DISPONIBLE
+                $.ajax({
+                    url: `${location.origin}/kano/components/comprobarDiaLibre.php`,
+                    method: 'POST',
+                    data: {
+                        fecha: fecha
+                    },
+                    success: function (data) {
+                        data = data.replace(/(\r\n|\n|\r)/gm, "");
+                        document.getElementById(fecha).classList += data;
+                    }
+                });
+            }
         }
     }
     currentDate.innerText = `${months[currMonth]} ${currYear}`;
     daysTag.innerHTML = liTag;
 }
-renderCalendar();   /* CARGAR AL PRINCIPIO */
+
+renderCalendar(); /* CARGAR AL PRINCIPIO */
 
 /* BOTONES DE CAMBIAR MES */
 prevNextIcon.forEach(icon => {
@@ -143,6 +215,8 @@ prevNextIcon.forEach(icon => {
 const li = document.querySelectorAll("li");
 li.forEach(date => {
     date.addEventListener("click", () => {
-        console.log(currMonth+"/"+date.textContent+"/"+currYear);
+        if (!date.classList.contains("inactive")) {
+            location.href = `${location.origin}/kano/disponibles_reservas.php?fecha=${date.id}`;
+        }
     });
 });
