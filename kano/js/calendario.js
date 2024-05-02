@@ -114,7 +114,7 @@ const renderCalendar = () => {
 
             liTag += `<li id="${fecha}" class="${isToday}">${i}</li>`;     //! ESCRIBE LA FECHA
 
-            if (isToday != "inactive") {
+            if (isToday != "inactive" && isToday != "active") {
                 //* PETICION PARA VER SI EL DIA ESTÁ DISPONIBLE
                 $.ajax({
                     url: `${location.origin}/kano/components/comprobarDiaLibre.php`,

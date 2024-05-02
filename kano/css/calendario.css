@@ -12,6 +12,7 @@
     min-height: 50vh;
 }
 .wrapper{
+    margin: 5px;
     width: 550px;
     background: #fff;
     border-radius: 10px;

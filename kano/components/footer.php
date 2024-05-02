@@ -2,6 +2,14 @@
 <?php include "../cita-peluquero.php"; ?>
 
 <script>
+    function myFunction() {
+        var x = document.getElementById("navbar");
+        if (x.className === "navbar") {
+            x.className += " responsive";
+        } else {
+            x.className = "navbar";
+        }
+    }
     $(document).ready(function() {
         $('#calendar').change(function() {
             var valorSelect1 = $(this).val();
@@ -10,13 +18,13 @@
                 method: 'POST',
                 data: {
                     opcion: valorSelect1,
-                    peluquero: <?php 
-                    if($peluquero == "" || $peluquero == NULL){
-                        echo "a";
-                    }else{
-                        echo "$peluquero";
-                    }
-                    ?>
+                    peluquero: <?php
+                                if ($peluquero == "" || $peluquero == NULL) {
+                                    echo "a";
+                                } else {
+                                    echo "$peluquero";
+                                }
+                                ?>
                 },
                 success: function(data) {
                     $('#hours').html(data);
