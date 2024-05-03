@@ -84,7 +84,7 @@ const renderCalendar = () => {
         }
     }
 
-    //! HASTA EL DIA EN EL QUE ESTAMOS
+    //! DIAS DEL MES EN EL QUE ESTAMOS
     for (let i = 1; i <= lastDateofMonth; i++) {
         let dia = new Date(currYear + '-' + (currMonth + 1) + '-' + i).getDay();
 
@@ -212,11 +212,13 @@ prevNextIcon.forEach(icon => {
     });
 });
 
-const li = document.querySelectorAll("li");
-li.forEach(date => {
-    date.addEventListener("click", () => {
-        if (!date.classList.contains("inactive")) {
-            location.href = `${location.origin}/kano/disponibles_reservas.php?fecha=${date.id}`;
+$(document).on("click", function (e) {      //*     SE HACE POR DOCUMENTO PARA CUANDO SE CAMBIE LA PAGINA SE PUEDA COMPROBAR DE NUEVO
+    let li = document.querySelectorAll(".days li");
+    li.forEach(d => {
+        if(e.target == d){
+            if (!d.classList.contains("inactive")) {
+                location.href = `${location.origin}/kano/disponibles_reservas.php?fecha=${d.id}`;
+            }
         }
     });
 });

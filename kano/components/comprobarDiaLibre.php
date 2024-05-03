@@ -2,7 +2,7 @@
 include "info.php";
 
 $fecha = htmlspecialchars($_POST['fecha']);
-
+$valida = '';
 foreach ($horas_disponibles as $x) {
 
     //* OBTENEMOS LOS PELUQUEROS QUE TIENEN ESA HORA OCUPADA DE ESE DIA.
@@ -13,10 +13,10 @@ foreach ($horas_disponibles as $x) {
 
     if ($peluqueros_ocupados < sizeof($peluqueros_totales)) {
         //* HAY ALGUNA HORA LIBRE
-        $valida = "";
+        $valida = '';
         break;
     } else {
-        $valida = "inactive";
+        $valida = 'inactive';
     }
 }
 
