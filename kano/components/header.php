@@ -40,6 +40,7 @@
         }
         else if ($url == 'peluqueros.php' || $url == 'cita-peluquero.php') {
             echo '<link rel="stylesheet" href="css/peluqueros.css">';
+            echo '<link rel="stylesheet" href="css/calendario.css">';
         }
         else if ($url == 'disponibles.php') {
             echo '<script src="js/calendario.js" defer></script>';
