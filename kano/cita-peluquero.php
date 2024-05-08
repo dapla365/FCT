@@ -97,16 +97,16 @@ if (isset($_GET['peluquero'])) {
         daysTag = document.querySelector(".days"),
         prevNextIcon = document.querySelectorAll(".icons span");
 
-    let date = new Date();
-    currYear = date.getFullYear();
-    currMonth = date.getMonth();
+    let date = new Date(),
+        currYear = date.getFullYear(),
+        currMonth = date.getMonth(),
 
-    trueYear = date.getFullYear();
-    trueMonth = date.getMonth();
-    trueDate = date.getDate();
+        trueYear = date.getFullYear(),
+        trueMonth = date.getMonth(),
+        trueDate = date.getDate(),
 
-    listaDias = new Array();
-    currWeek = 0;
+        listaDias = new Array(),
+        currWeek = 0;
 
     const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
         "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
@@ -121,22 +121,88 @@ if (isset($_GET['peluquero'])) {
 
         //! DIAS DEL MES ANTERIOR
         for (let i = firstDayofMonth; i > 0; i--) {
-            listaDias.push(lastDateofLastMonth - i + 1);
+            let mes = currMonth;
+            let ano = currYear;
+            if (currMonth == 0) { //* CAMBIO DE AÑO
+                if (currYear > trueYear) {
+                    mes = 12;
+                    ano = currYear - (currYear - trueYear);
+                } else if (currYear == trueYear) {
+                    mes = 12;
+                    ano = currYear - 1;
+                } else {
+                    ano = currYear + (trueYear - currYear);
+                }
+            }
 
+            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let dia = lastDateofLastMonth - i + 1;
+            dia = dia.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let fecha = `${mes}/${dia}/${ano}`;
+
+
+            listaDias.push(fecha);
         }
 
         //! DIAS DEL MES EN EL QUE ESTAMOS
         for (let i = 1; i <= lastDateofMonth; i++) {
-            listaDias.push(i);
+            let mes = currMonth + 1;
+            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let dia = i.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let fecha = `${mes}/${dia}/${currYear}`;
+
+            listaDias.push(fecha);
         }
 
         //! DIAS DEL SIGUIENTE MES
         for (let i = lastDayofMonth; i < 6; i++) {
-            listaDias.push(i - lastDayofMonth + 1);
+            let mes = currMonth + 2;
+            let ano = currYear;
+
+            if (currMonth == 11) { //* CAMBIO DE AÑO
+                if (currYear > trueYear) {
+                    mes = 1;
+                    ano = currYear + (currYear - trueYear);
+                } else if (currYear == trueYear) {
+                    mes = 1;
+                    ano = currYear + 1;
+                } else {
+                    ano = currYear - (trueYear - currYear);
+                }
+            }
+
+            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+            let dia = i - lastDayofMonth + 1;
+            dia = dia.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
+
+            let fecha = `${mes}/${dia}/${ano}`;
+
+            listaDias.push(fecha);
         }
+        let primera = true;
+        for (let i = 0, j = 0; j < 7; i++, j++) {
+            if (currWeek != 0 && primera == true) {
+                i = currWeek*7;
+                primera = false;
+            }
+            const element = listaDias[i];
+
+            let mes = element.split("/")[0];
+            let dia = element.split("/")[1];
+            let ano = element.split("/")[2];
+
+            let d = new Date(ano + '-' + mes + '-' + dia).getDay();
+
+            dia = dia.replace(/^(0+)/g, '');
+
+            if (d != 0 && d != 6) { //* QUITAR FINES DE SEMANA
+                liTag += `<li id="${element}" class="dia">${dia}</li>`; //!     AÑADE LA FECHA
+            }
+        }
+        primera = true;
 
         currentDate.innerText = `${months[currMonth]} ${currYear}`;
-        daysTag.innerHTML = liTag;
+        daysTag.innerHTML = liTag; //!     ESCRIBE LA FECHA
     }
 
     renderCalendar(); /* CARGAR AL PRINCIPIO */
@@ -146,10 +212,12 @@ if (isset($_GET['peluquero'])) {
         icon.addEventListener("click", () => {
             currWeek = icon.id === "prev" ? currWeek - 1 : currWeek + 1;
 
-            let maxWeek = listaDias.length/7;
+            let maxWeek = Math.trunc(new Date(currYear, currMonth, 0).getDate()/7);
 
             if (currWeek < 0) {
                 currMonth--;
+                currWeek = maxWeek;
+
                 if (currMonth < 0 || currMonth > 11) {
                     date = new Date(currYear, currMonth);
                     currYear = date.getFullYear();
@@ -157,8 +225,8 @@ if (isset($_GET['peluquero'])) {
                 } else {
                     date = new Date();
                 }
-            }
-            else if (currWeek > maxWeek-1) {
+            }else if(currWeek > maxWeek){
+                currWeek = 0;
                 currMonth++;
                 if (currMonth < 0 || currMonth > 11) {
                     date = new Date(currYear, currMonth);
@@ -168,6 +236,7 @@ if (isset($_GET['peluquero'])) {
                     date = new Date();
                 }
             }
+            listaDias = new Array();
 
             renderCalendar();
         });
