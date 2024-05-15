@@ -35,7 +35,7 @@
     if ($_SERVER['PHP_SELF'] != "") {
         $url = explode("/", $_SERVER['PHP_SELF']);
         $url = $url[2];
-        if ($url == 'login.php' || $url == 'register.php') {
+        if ($url == 'login.php' || $url == 'register.php' || $url == 'login2.php') {
             echo '<link rel="stylesheet" href="css/form.css">';
         }
         else if ($url == 'peluqueros.php' || $url == 'cita-peluquero.php') {
