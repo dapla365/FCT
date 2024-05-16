@@ -2,7 +2,6 @@
 <?php include "components/navbar.php" ?>
 
 <div class="peluqueros">
-    <div class="centro">
         <?php
         $a = "SELECT * FROM usuarios WHERE rol>=1 AND rol<=2;";
         $a = mysqli_query($mysqli, $a);
@@ -12,20 +11,19 @@
             $nombre = ucfirst(mb_strtolower($row['nombre']));
             $foto = $row['foto'];
 
-            echo "        
-            <div class='peluquero'>
-                <a href='cita-peluquero.php?peluquero={$id}'>
-                    <div class='foto'>
-                        <img src='$foto' alt='$nombre'>
+            echo "   
+            <a href='cita-peluquero.php?peluquero={$id}' class='outer-div'>
+                <div class='inner-div'>
+                    <div class='front'>
+                        <img src='$foto' alt='$nombre' class='front__bkg-photo'></img>
+                        <p class='front__text'>
+                            $nombre
+                        </p>
                     </div>
-                    <div class='nombre'>
-                        <h2>$nombre</h2>
-                    </div>
-                </a>
-            </div>";
+                </div>
+            </a>";
         }
         ?>
-    </div>
-</div>
+ </div>
 
 <?php include "components/footer.php" ?>

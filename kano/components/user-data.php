@@ -17,6 +17,7 @@ if(isset($_SESSION['usuario'])){
     $a = mysqli_fetch_assoc($a);
     
     $user_id = $a['id'];                                // ID           DEL USUARIO
+    $user_user_id = $a['user_id'];                      // USER_ID      DEL USUARIO
     $user_username = $a['username'];                    // USERNAME     DEL USUARIO
     $user_correo = $a['correo'];                        // CORREO       DEL USUARIO
     $user_nombre = $a['nombre'];                        // NOMBRE       DEL USUARIO

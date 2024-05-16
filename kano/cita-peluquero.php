@@ -41,57 +41,6 @@ if (isset($_GET['peluquero'])) {
     </div>
 </div>
 
-
-<div class="peluqueros">
-    <div class="centro">
-        <form action="" method="post">
-            <div class="form-group">
-                <label for="calendar" class="form-label">Fecha</label>
-                <input name="calendar" id='calendar' />
-            </div>
-            <div class="form-group">
-                <label for="hours" class="form-label">Horas disponibles</label>
-                <select id="hours" name="hours" class="form-control" disabled>
-                    <option value="Elije una fecha">Elije una fecha</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="submit" name="crear" value="Añadir">
-            </div>
-            <?php
-            if (isset($_POST['crear'])) {
-                $calendar = htmlspecialchars($_POST['calendar']);
-                $horas = htmlspecialchars($_POST['hours']);
-
-                //* REVISA LAS FECHAS POR SI SON NULL 
-                //* FECHA SOLUCION 
-                if ($calendar == "") {
-                    $calendar = 'NULL';
-                } else {
-                    $calendar = "'" . $calendar . "'";
-                }
-
-                if ($horas == "" || $calendar == "" || $calendar == 'NULL') {
-                    echo "<p><strong>Error: </strong>¡Tiene que completar los campos obligatorios!</p>";
-                } else {
-                    //TODO FALTA COMPROBAR HORAS DISPONIBLES 
-                    $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES (" . $calendar . ",'{$horas}','{$peluquero}','{$user_id}')";
-                    $a = mysqli_query($mysqli, $a);
-                    if (!$a) {
-                        echo "<p><strong>Error: </strong>Algo ha ido mal añadiendo la incidencia: " . mysqli_error($mysqli) . "</p>";
-                    } else {
-                        header("Refresh:3; url=index.php");
-                        echo "<p> ¡Cita añadida con éxito!. Redirigiendo...</p>";
-                        echo "<p> Si no redirige puedes hacer <a href='index.php'>click aquí</a></p>";
-                    }
-                }
-            }
-            ?>
-        </form>
-    </div>
-</div>
-
-
 <script>
     const currentDate = document.querySelector(".current-date"),
         daysTag = document.querySelector(".days"),
@@ -247,7 +196,7 @@ if (isset($_GET['peluquero'])) {
         li.forEach(d => {
             if (e.target == d) {
                 if (!d.classList.contains("inactive")) {
-                    location.href = `${location.origin}/kano/disponibles_reservas.php?fecha=${d.id}`;
+                    location.href = `${location.origin}/kano/peluquero_reservas.php?fecha=${d.id}&peluquero=${<?php echo $peluquero; ?>}`;
                 }
             }
         });
@@ -255,4 +204,4 @@ if (isset($_GET['peluquero'])) {
 </script>
 
 
-<?php include "components/footer.php" ?>
+<?php // include "components/footer.php" ?>

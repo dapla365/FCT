@@ -17,11 +17,13 @@
                 <span class="form_line"></span>
             </div>
             <input class="form_submit" type="submit" value="Iniciar Sesión">
-            <div id="g_id_onload" data-client_id="<?php echo $client_id; ?>"
-                data-login_uri="<?php echo $redirect_uris; ?>" data-auto_prompt="false">
-            </div>
-            <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
-                data-text="signin_with" data-size="large" data-locale="es_ES">
+            <div class="google">
+                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                    data-text="signin_with" data-size="large" data-locale="es_ES">
+                </div>
+                <div id="g_id_onload" data-client_id="<?php echo $client_id; ?>"
+                    data-login_uri="<?php echo $redirect_uris; ?>" data-auto_prompt="false">
+                </div>
             </div>
         </div>
 
@@ -43,38 +45,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
             $given_name = $payload['given_name'];
             $family_name = $payload['family_name'];
             $picture = $payload['picture'];
-            // Aquí puedes manejar el inicio de sesión del usuario, por ejemplo, crear una sesión
-            echo $userid ." - " . $email." - ". $given_name." - ". $family_name." - " . $picture;
 
-            $sql_usuario="SELECT * FROM usuarios WHERE user_id = '$userid' OR correo = '$email'";
-            $result_user = mysqli_query($mysqli, $sql_usuario);
-            if(mysqli_num_rows($result_user)>0){
+            $sql_correo="SELECT * FROM usuarios WHERE correo = '$email'";
+            $result_correo = mysqli_query($mysqli, $sql_correo);
+
+            $sql_user="SELECT * FROM usuarios WHERE user_id = '$userid'";
+            $result_user = mysqli_query($mysqli, $sql_user);
+
+            if(mysqli_num_rows($result_correo)>0){
+                //* TIENE CORREO ASOCIADO EN LA BD
+                session_set_cookie_params(360);
+                session_start();
+                while($row = mysqli_fetch_assoc($result_correo)){
+                    $_SESSION['usuario']=$row['username'];
+                    $bd_id=$row['id'];
+                    $bd_user_id = $row['user_id'];
+                
+                    if($bd_user_id == NULL){
+                        //* ACTUALIZAR USUARIO EN BD
+                        $sql = "UPDATE usuarios SET user_id = '$userid' WHERE id = $bd_id;";
+                        $a = mysqli_query($mysqli, $sql);
+                    }
+                }
+               
+                header("Location: index.php");
+                mysqli_close($mysqli);
+                
+            }else if(mysqli_num_rows($result_user)>0){
+                //* NO TIENE CORREO ASOCIADO EN LA BD
+                while($row = mysqli_fetch_assoc($result_user)){
+                    $_SESSION['usuario']=$row['username'];
+                    $bd_id=$row['id'];
+                    $bd_user_correo = $row['correo'];
+
+                    if($bd_user_correo == NULL){
+                        //* ACTUALIZAR USUARIO EN BD
+                        $sql = "UPDATE usuarios SET correo = '$email' WHERE id = $bd_id;";
+                        $a = mysqli_query($mysqli, $sql);
+                    }
+                }
+
                 session_set_cookie_params(360);
                 session_start();
 
-                //USUARIO (CORREO O NOMBRE)
-                $y="SELECT * FROM usuarios WHERE user_id = '$userid'";
-                $x="SELECT * FROM usuarios WHERE correo = '$email'";
-                $y = mysqli_query($mysqli, $y);
-                if(mysqli_num_rows($y)>0){
-                    $_SESSION['usuario']=$row['user_id'];
-                }else{
-                    $x = mysqli_query($mysqli, $x);
-                    if(mysqli_num_rows($x)>0){
-                        while($row = mysqli_fetch_assoc($x)){
-                            $_SESSION['usuario']=$row['username'];
-                        }
-                    }
-                }
-                
                 header("Location: index.php");
-    
                 mysqli_close($mysqli);
-                
             }else{
                 //* REGISTRAR USUARIO
-                $autousername = strtolower(substr($given_name, 3) . substr($family_name, 3));
-                $sql = "INSERT INTO usuarios (user_id, username, correo, nombre, apellidos, foto) VALUES ('$user_id', '$autousername', '$email', '$given_name', '$family_name', '$picture')";
+                $autousername = strtolower(substr($given_name, 3) . substr($family_name, 3). random_int(10000, 99999));
+                $sql = "INSERT INTO usuarios (user_id, username, correo, nombre, apellidos, foto) VALUES ('$userid', '$autousername', '$email', '$given_name', '$family_name', '$picture')";
 
                 if ($mysqli->query($sql) === TRUE) {
                     echo "<p> Registro exitoso. Redirigiendo...</p>";
@@ -82,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
                     
                     session_set_cookie_params(360);
                     session_start();
-                    $_SESSION['usuario']=$nombre;
+                    $_SESSION['usuario']=$autousername;
 
                     header("Refresh:3; url=index.php");
                 }

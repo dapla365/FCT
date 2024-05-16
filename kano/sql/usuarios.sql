@@ -7,7 +7,7 @@ CREATE TABLE usuarios (
     nombre VARCHAR(255) NOT NULL,
     apellidos VARCHAR(255) NOT NULL,
     rol INT DEFAULT 0,
-    foto VARCHAR(255) DEFAULT NULL
+    foto VARCHAR(255) DEFAULT "images/defecto.png"
 );
 
 INSERT INTO usuarios(username, contrasena, correo, nombre, apellidos, rol, foto) VALUES ('david', '$2y$10$cUbu7E3mNAGDPD7761OUlOojnKQl794YKTC35AUgSBt2M9GZQh/Iu', 'plazadiazdavid@gmail.com', 'David', 'Plaza Diaz', '2', 'images/david.png');

@@ -43,12 +43,12 @@
                 $a = $peluqueros_libres[$x];
                 foreach ($peluqueros_libres[$x] as $peluquero_libre) {
                     $c = "SELECT * FROM usuarios WHERE id = $peluquero_libre;";
-                        $c = mysqli_query($mysqli, $c);
-                        $rowc = mysqli_fetch_assoc($c);
-                        $peluquero_nombre = ucwords(mb_strtolower($rowc['nombre']));
-                        $peluquero_apellido = ucwords(mb_strtolower($rowc['apellidos']));
+                    $c = mysqli_query($mysqli, $c);
+                    $rowc = mysqli_fetch_assoc($c);
+                    $peluquero_nombre = ucwords(mb_strtolower($rowc['nombre']));
+                    $peluquero_apellido = ucwords(mb_strtolower($rowc['apellidos']));
 
-                        echo "        
+                    echo "        
                     <a href='confirmarCita.php?fecha=$fecha&hora=$x&peluquero=$peluquero_libre' class='cita' id='$fecha-$x'>
                         <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
                         <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>

@@ -69,6 +69,14 @@ input:not(:placeholder-shown) + label{
     padding: .8em 0;
     border: none;
     border-radius: .5em;
+}
+.google{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    width: 100%;
     margin-bottom: 1em;
 }
 .form_line{
