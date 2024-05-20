@@ -57,6 +57,20 @@
 	color: red;
   }
 
+  .weeks li {
+	border-radius: 5px;
+	color: black;
+	text-transform: uppercase;
+  }
+  .weeks li.active {
+	background: red;
+	font-weight: bold;
+	color: white;
+  }
+  .weeks li.inactive {
+	background: gray;
+  }
+
 
   
 
