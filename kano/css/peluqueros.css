@@ -1,28 +1,28 @@
 /* PELUQUEROS */
-  .peluqueros{
+.peluqueros{
 	height: 80vh;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-  }
-  .outer-div,
-  .inner-div {
+}
+.outer-div,
+.inner-div {
 	height: 350px;
 	max-width: 300px;
 	margin: 2rem;
 	position: relative;
 	text-decoration: none;
-  }
-  .inner-div {
+}
+.inner-div {
 	margin: 0 auto;
 	border-radius: 5px;
 	font-weight: 400;
 	color: black;
 	font-size: 1rem;
 	text-align: center;
-  }
-  .front {
+}
+.front {
 	cursor: pointer;
 	height: 100%;
 	background: white;
@@ -30,8 +30,8 @@
 	border-radius: 5px;
 	box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3),
 	  0 0 40px rgba(0, 0, 0, 0.1) inset;
-  }
-  .front__bkg-photo {
+}
+.front__bkg-photo {
 	position: relative;
 	height: 300px;
 	width: 300px;
@@ -42,8 +42,8 @@
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
 	border-bottom: 2px solid black;
-  }
-  .front__text {
+}
+.front__text {
 	position: relative;
 	top: 10px;
 	margin: 0 auto;
@@ -51,26 +51,200 @@
 	backface-visibility: hidden;
 	text-transform: uppercase;
 	transition: all 2ms ease-in-out;
-  }
+}
 
-  .outer-div:hover .front__text{
+.outer-div:hover .front__text{
 	color: red;
-  }
+}
 
-  .weeks li {
+.weeks li {
 	border-radius: 5px;
 	color: black;
 	text-transform: uppercase;
-  }
-  .weeks li.active {
+}
+.weeks li.active {
 	background: red;
 	font-weight: bold;
 	color: white;
-  }
-  .weeks li.inactive {
+}
+.weeks li.inactive {
 	background: gray;
-  }
+}
+
+.calendar .weeks li:hover{
+    background-color: black;
+    color: white;
+}
+.calendar .weeks li.active:hover{
+    background-color: red;
+}
+.calendar .weeks li.inactive:hover{
+    background-color: gray;
+    color: black;
+    cursor: not-allowed;
+}
 
 
-  
+
+  /** CALENDARIO DISPONIBLES */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.centrar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+/*    min-height: 50vh;*/
+}
+.wrapper{
+    margin: 5px;
+    width: 550px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+.wrapper header{
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+}
+header .current-date{
+    font-size: 1.45rem;
+    font-weight: 500;
+}
+header .icons{
+    display: flex;
+}
+header .icons span{
+    height: 38px;
+    width: 38px;
+    color: #878787;
+    font-size: 1.9rem;
+    margin: 0 1px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 50%;
+}
+header .icons span:hover{
+    background: #f2f2f2;
+}
+header .icons span:last-child{
+    margin-right: -10px;
+}
+.calendar{
+    padding: 20px;
+}
+.calendar ul{
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+.calendar .weeks li{
+    font-weight: 500;
+    padding: 5px;
+    margin: 5px;
+    margin-inline: 2%;
+    cursor: pointer;
+}
+
+/** RESERVAS */
+.centro{
+    margin: 0;
+    margin-top: 2rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+.container {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2%;
+}
+.sin_citas {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20vh;
+    text-decoration: none;
+    color: rgb(82, 82, 82);
+}
+.sin_citas:hover {
+    cursor: pointer;
+    color: black;
+}
+.cita{
+    color: black;
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 1%;
+    margin-top: 1%;
+    transition: all 0.2s;
+}
+.cita:hover{
+    border: 1px solid red;
+}
+.cita_peluquero{
+    width: 40%;
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+}
+.cita_fecha{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.cita_hora{
+    width: 20%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+.cita_peluquero{
+    font-weight: bold;
+}
+p{
+    margin: 0;
+}
+i{
+    padding-right: 3px;
+}
+body{
+    min-width: 310px;
+}
+@media screen and (max-width: 550px) {
+    .mes{
+        display: none;
+    }
+    .dias_semana{
+        display: none;
+    }
+    .centro .container{
+        width: 100%;
+    }
+    
+}
+@media screen and (max-width: 470px) {
+    .apellidos{
+        display: none;
+    }
+}
+
+
 

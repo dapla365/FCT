@@ -7,7 +7,6 @@ if (!isset($_SESSION['usuario'])) {
     die();
 }
 ?>
-
 <div class="index_centro">
     <div class="index_container">
         <a href="peluqueros.php">

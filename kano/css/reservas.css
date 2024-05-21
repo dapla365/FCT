@@ -61,3 +61,9 @@
 p{
     margin: 0;
 }
+
+button{
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}

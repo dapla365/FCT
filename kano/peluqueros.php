@@ -12,7 +12,7 @@
             $foto = $row['foto'];
 
             echo "   
-            <a href='cita-peluquero.php?peluquero={$id}' class='outer-div'>
+            <a href='peluqueros2.php?peluquero={$id}' class='outer-div'>
                 <div class='inner-div'>
                     <div class='front'>
                         <img src='$foto' alt='$nombre' class='front__bkg-photo'></img>

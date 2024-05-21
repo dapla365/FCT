@@ -6,6 +6,20 @@
     box-sizing: border-box;
 	font-family: "Open Sans", sans-serif;
 }
+html{
+	position: relative;
+	height: 90%;
+}
+body{
+	position: absolute;
+	background-size: initial;
+	background-image: url(../images/kano.png);
+	background-blend-mode: luminosity;
+	background-position: top center;
+	background-repeat: no-repeat;
+	height: 100%;
+	width: 100%;
+}
 .index_centro {
 	margin-top: 20vh;
     width: 100%;

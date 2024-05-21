@@ -77,7 +77,11 @@ const renderCalendar = () => {
                     },
                     success: function (data) {
                         data = data.replace(/(\r\n|\n|\r)/gm, "");
-                        document.getElementById(fecha).classList += data;
+                        try {
+                            document.getElementById(fecha).classList += data;
+                        } catch (error) {
+                            
+                        }
                     }
                 });
             }
@@ -124,7 +128,11 @@ const renderCalendar = () => {
                     },
                     success: function (data) {
                         data = data.replace(/(\r\n|\n|\r)/gm, "");
-                        document.getElementById(fecha).classList += data;
+                        try {
+                            document.getElementById(fecha).classList += data;
+                        } catch (error) {
+                            
+                        }
                     }
                 });
             }
@@ -184,7 +192,11 @@ const renderCalendar = () => {
                     },
                     success: function (data) {
                         data = data.replace(/(\r\n|\n|\r)/gm, "");
-                        document.getElementById(fecha).classList += data;
+                        try {
+                            document.getElementById(fecha).classList += data;
+                        } catch (error) {
+                            
+                        }
                     }
                 });
             }
@@ -217,7 +229,7 @@ $(document).on("click", function (e) {      //*     SE HACE POR DOCUMENTO PARA C
     li.forEach(d => {
         if(e.target == d){
             if (!d.classList.contains("inactive")) {
-                location.href = `${location.origin}/kano/disponibles_reservas.php?fecha=${d.id}`;
+                location.href = `${location.origin}/kano/disponibles2.php?fecha=${d.id}`;
             }
         }
     });

@@ -43,7 +43,7 @@
                     <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
                 </div>
                 <div class='cita_opciones'>
-                    <a href='eliminar_reserva.php?reserva={$id}'><i class='bi bi-trash3-fill'></i></a>
+                    <button onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></button>
                 </div>
             </div>
             ";
@@ -52,5 +52,14 @@
         ?>
     </div>
 </div>
+
+<script>
+    function confirmacion(id) {
+        if (confirm("¿Estás seguro que quieres eliminar esta reserva?")) {
+            location.href = "eliminar_reserva.php?reserva=" + id;
+        }
+    }
+</script>
+
 
 <?php include "components/footer.php"; ?>

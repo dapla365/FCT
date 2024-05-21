@@ -8,7 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
     <link rel="shortcut icon" href="<?php echo $favicon; ?>" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
+    <?php
+    /*
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- ESTILOS -->
@@ -17,7 +20,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
 
     <!-- JQuery -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
@@ -26,35 +29,55 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     
-    <?php
+    */
     session_start();
 
     if ($_SERVER['PHP_SELF'] != "") {
         $url = explode("/", $_SERVER['PHP_SELF']);
         $url = $url[2];
-        if ($url == 'login.php' || $url == 'register.php' || $url == 'login2.php') {
+        //* NAVBAR
+        if ($url != 'index.php') {
+            echo '            
+            <!-- Bootstrap Icon -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+            <!-- Estilos -->
+            <link rel="stylesheet" href="css/navbar.css">';
+        }
+        //*ESTILOS
+        if ($url == 'index.php') {
+            echo '
+            <!-- Estilos -->
+            <link rel="stylesheet" href="css/index.css">';
+        }
+        if ($url == 'login.php' || $url == 'register.php') {
             echo '<link rel="stylesheet" href="css/form.css">';
         }
-        else if ($url == 'peluqueros.php' || $url == 'cita-peluquero.php') {
+        if ($url == 'peluqueros.php' || $url == 'peluqueros2.php') {
             echo '<link rel="stylesheet" href="css/peluqueros.css">';
+        }
+        if ($url == 'disponibles.php' || $url == 'disponibles2.php') {
             echo '<link rel="stylesheet" href="css/calendario.css">';
         }
-        else if ($url == 'disponibles.php') {
-            echo '<script src="js/calendario.js" defer></script>';
-            echo '<link rel="stylesheet" href="css/calendario.css">';
-        }
-        else if ($url == 'disponibles_reservas.php' || $url == 'peluquero_reservas.php') {
-            echo '<link rel="stylesheet" href="css/calendario.css">';
-        }
-        else if ($url == 'perfil.php') {
+        if ($url == 'perfil.php') {
             echo '<link rel="stylesheet" href="css/perfil.css">';
         }
-        else if ($url == 'reservas.php') {
+        if ($url == 'reservas.php') {
             echo '<link rel="stylesheet" href="css/reservas.css">';
+        }
+        //* JQUERY
+        if ($url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php') {
+            echo '             
+            <!-- JQuery -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';
+        }
+        //* JS
+        if ($url == 'disponibles.php') {
+            echo '             
+            <!-- JS -->
+            <script src="js/calendario.js" defer></script>';
         }
     }
     ?>
-
+    
 </head>
-
 <body>

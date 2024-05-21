@@ -4,7 +4,7 @@
 <div class="centrar">
     <div class="wrapper">
         <header>
-            <p class="current-date">Abril 2024</p>
+            <p class="current-date"><span class="mes">Abril 2024</span>|| <span class="semana"></span></p>
             <div class="icons">
                 <span id="prev" class="material-symbols-rounded">
                     <i class="bi bi-chevron-left"></i></span>
@@ -14,11 +14,11 @@
         </header>
         <div class="calendar">
             <ul class="weeks">
-                <li class="lunes">Lunes</li>
-                <li class="martes">Martes</li>
-                <li class="miercoles">Miércoles</li>
-                <li class="jueves">Jueves</li>
-                <li class="viernes">Viernes</li>
+                <li class="lunes">Lun <span class="dias_semana">es</span></li>
+                <li class="martes">Mar<span class="dias_semana">tes</span></li>
+                <li class="miercoles">Mié<span class="dias_semana">rcoles</span></li>
+                <li class="jueves">Jue<span class="dias_semana">ves</span></li>
+                <li class="viernes">Vie<span class="dias_semana">rnes</span></li>
             </ul>
         </div>
     </div>
@@ -36,10 +36,9 @@
             $rol = $row['rol'];
             if ($rol < 1 || $rol > 2) header('Location: peluqueros.php');
 
-            if(isset($_GET['fecha'])){
+            $fecha = date("m/d/Y");
+            if(isset($_GET['fecha']) && $_GET['fecha'] >= $fecha) {
                 $fecha = htmlspecialchars($_GET['fecha']);  
-            }else{
-                $fecha = date("m/d/Y");
             }
             
             $mes = explode("/", $fecha)[0];
@@ -71,7 +70,7 @@
 
                     echo "        
                     <a href='confirmarCita.php?fecha=$fecha&hora=$x&peluquero=$peluquero' class='cita' id='$fecha-$x'>
-                        <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
+                        <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre&nbsp;<span class='apellidos'>$peluquero_apellido<span></p>
                         <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
                         <p class='cita_hora'><i class='bi bi-clock-fill'></i> $x</p>
                     </a>";
@@ -87,7 +86,7 @@
 
                     echo "        
                     <a href='confirmarCita.php?fecha=$fecha&hora=$x&peluquero=$peluquero' class='cita' id='$fecha-$x'>
-                        <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
+                        <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre&nbsp;<span class='apellidos'>$peluquero_apellido<span></p>
                         <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
                         <p class='cita_hora'><i class='bi bi-clock-fill'></i> $x</p>
                     </a>";
@@ -267,7 +266,7 @@
 
                 //TODO REVISAR DIAS COMPLETOS DE CITAS Y DESACTIVARLOS
                 $.ajax({
-                    url: 'components/peluquero_reservas.php',
+                    url: 'components/comprobarDiaLibre.php',
                     method: 'POST',
                     data: {
                         fecha: element,
@@ -290,8 +289,9 @@
             }
         }
         primera = true;
+        
 
-        currentDate.innerText = `${months[currMonth]} ${currYear}  ||  Semana ${primerDiaSemana}/${primerDiaSemanaMes} - ${ultimoDiaSemana}/${ultimoDiaSemanaMes}`;
+        currentDate.innerHTML = `<span class='mes'>${months[currMonth]} ${currYear} || </span> <span class='semana'>Semana ${primerDiaSemana}/${primerDiaSemanaMes} - ${ultimoDiaSemana}/${ultimoDiaSemanaMes}</span>`;
     }
 
     //! CARGAR AL PRINCIPIO 
@@ -338,7 +338,7 @@
         li.forEach(d => {
             if (e.target == d) {
                 if (!d.classList.contains("inactive")) {
-                    location.href = `${location.origin}/kano/cita-peluquero.php?fecha=${d.id}&peluquero=${<?php echo $peluquero; ?>}`;
+                    location.href = `${location.origin}/kano/peluqueros2.php?fecha=${d.id}&peluquero=${<?php echo $peluquero; ?>}`;
                 }
             }
         });
@@ -356,4 +356,4 @@
 </script>
 
 
-<?php // include "components/footer.php" ?>
+<?php include "components/footer.php" ?>
