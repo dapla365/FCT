@@ -24,6 +24,8 @@ if(isset($_SESSION['usuario'])){
     $user_apellidos = $a['apellidos'];                  // APELLIDOS    DEL USUARIO
     $user_rol = $a['rol'];                              // ROL          DEL USUARIO
     $user_foto = $a['foto'];                            // FOTO         DEL USUARIO
+
+    date_default_timezone_set("Europe/Madrid");
     
 }
 else{

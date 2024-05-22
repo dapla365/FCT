@@ -6,15 +6,15 @@ $peluquero = htmlspecialchars($_POST['peluquero']);
 
 $valida = '';
 foreach ($horas_disponibles as $x) {
-    if($peluquero != null){
+    if($peluquero != null && $peluquero != ""){
         $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero' AND hora = '$x';";
         $a = mysqli_query($mysqli, $a);
         if(mysqli_num_rows($a)>0){
         //* NO HAY CITAS EN ESA FECHA */
-            $valida .= "inactive";
+            $valida = 'inactive';
         }else{
         //* HAY CITAS LIBRES EN ESA FECHA */
-            $valida .= "";
+            $valida = '';
             break;    
         }   
     }else{
