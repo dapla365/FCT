@@ -33,6 +33,9 @@
         if ($url == 'login.php' || $url == 'register.php') {
             echo '<link rel="stylesheet" href="css/form.css">';
         }
+        if ($url == 'editar_user.php') {
+            echo '<link rel="stylesheet" href="css/form_user.css">';
+        }
         if ($url == 'peluqueros.php' || $url == 'peluqueros2.php') {
             echo '<link rel="stylesheet" href="css/peluqueros.css">';
         }

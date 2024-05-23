@@ -53,13 +53,13 @@ tbody tr:hover td {
 .editar a{
     padding-inline: 3px;
 }
-i {
+.editar i {
     color: black;
 }
-i:hover {
+.editar i:hover {
     color: red;
 }
-button{
+.editar button{
     cursor: pointer;
     background-color: transparent;
     border: none;
