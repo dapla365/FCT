@@ -1,6 +1,7 @@
 <?php include "components/header.php" ?>
 <?php include "components/navbar.php" ?>
-
+<div class="centro">
+    <div class="container">
 <?php
 if (isset($_GET['reserva'])) {
     $id = htmlspecialchars($_GET['reserva']);
@@ -12,7 +13,7 @@ if (isset($_GET['reserva'])) {
         array_push($b, $row['id']);
     }
 
-    if (in_array($id, $b)) {
+    if (in_array($id, $b) || $user_nivel > 5) {
         $c = "DELETE FROM citas WHERE id = '{$id}';";
         $c = mysqli_query($mysqli, $c);
         echo "Reserva eliminada correctamente";
@@ -24,4 +25,6 @@ if (isset($_GET['reserva'])) {
     header("Refresh:3; url=$pagina");
 }
 ?>
+    </div>
+</div>
 <?php include "components/footer.php" ?>

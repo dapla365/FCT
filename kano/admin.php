@@ -1,68 +1,215 @@
 <?php include "components/header.php" ?>
 <?php include "components/navbar.php" ?>
-
 <?php
 session_start();
-if ($nivel <= 5) {
-    $pagina = $_SERVER['HTTP_REFERER'];
-    header("Location: $pagina");
+if ($user_nivel <= 5) {
+    header("Location: index.php");
 }
-
-/*
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id VARCHAR(255),
-    username VARCHAR(50) NOT NULL,
-    contrasena VARCHAR(255),
-    correo VARCHAR(255) NOT NULL,
-    nombre VARCHAR(255) NOT NULL,
-    apellidos VARCHAR(255) NOT NULL,
-    rol INT DEFAULT 0,
-    foto VARCHAR(255) DEFAULT "images/defecto.png"
-*/
 ?>
 <div class="centro">
     <div class="container">
         <h2>Usuarios</h2>
         <table>
             <thead>
-                <th>FOTO</th>
-                <th>ID</th>
-                <th>USERNAME</th>
-                <th>CORREO</th>
-                <th>NOMBRE</th>
-                <th>APELLIDOS</th>
-                <th>ROL</th>
-                <th colspan="2">OPERACIONES</th>
+                <tr>
+                    <th scope='col'>FOTO</th>
+                    <th scope='col'><a href="
+                    <?php 
+                    $enlace = "admin.php?orderby=id";
+                    if(htmlspecialchars($_GET["orderby"]) == "id"){                      
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            $enlace .= "&type=ASC";
+                        }else{
+                            $enlace .= "&type=DESC";
+                        }
+                    }
+                    echo $enlace;
+                    ?>">ID
+                    <?php 
+                    if(htmlspecialchars($_GET["orderby"]) == "id"){
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            echo "<i class='bi bi-arrow-up'></i>"; 
+                        }else{
+                            echo "<i class='bi bi-arrow-down'></i>"; 
+                        }                    
+                    }?></a></th>
+                    <th scope='col'><a href="<?php 
+                    $enlace = "admin.php?orderby=username";
+                    if(htmlspecialchars($_GET["orderby"]) == "username"){                      
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            $enlace .= "&type=ASC";
+                        }else{
+                            $enlace .= "&type=DESC";
+                        }
+                    }
+                    echo $enlace;
+                    ?>">USERNAME
+                    <?php 
+                    if(htmlspecialchars($_GET["orderby"]) == "username"){
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            echo "<i class='bi bi-arrow-up'></i>"; 
+                        }else{
+                            echo "<i class='bi bi-arrow-down'></i>"; 
+                        }                    
+                    }?></a></th>
+                    <th scope='col'><a href="<?php 
+                    $enlace = "admin.php?orderby=correo";
+                    if(htmlspecialchars($_GET["orderby"]) == "correo"){                      
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            $enlace .= "&type=ASC";
+                        }else{
+                            $enlace .= "&type=DESC";
+                        }
+                    }
+                    echo $enlace;
+                    ?>">CORREO
+                    <?php 
+                    if(htmlspecialchars($_GET["orderby"]) == "correo"){
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            echo "<i class='bi bi-arrow-up'></i>"; 
+                        }else{
+                            echo "<i class='bi bi-arrow-down'></i>"; 
+                        }                    
+                    }?></a></th>
+                    <th scope='col'><a href="<?php 
+                    $enlace = "admin.php?orderby=nombre";
+                    if(htmlspecialchars($_GET["orderby"]) == "nombre"){                      
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            $enlace .= "&type=ASC";
+                        }else{
+                            $enlace .= "&type=DESC";
+                        }
+                    }
+                    echo $enlace;
+                    ?>">NOMBRE
+                    <?php 
+                    if(htmlspecialchars($_GET["orderby"]) == "nombre"){
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            echo "<i class='bi bi-arrow-up'></i>"; 
+                        }else{
+                            echo "<i class='bi bi-arrow-down'></i>"; 
+                        }                    
+                    }?></a></th>
+                    <th scope='col'><a href="<?php 
+                    $enlace = "admin.php?orderby=apellidos";
+                    if(htmlspecialchars($_GET["orderby"]) == "apellidos"){                      
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            $enlace .= "&type=ASC";
+                        }else{
+                            $enlace .= "&type=DESC";
+                        }
+                    }
+                    echo $enlace;
+                    ?>">APELLIDOS
+                    <?php 
+                    if(htmlspecialchars($_GET["orderby"]) == "apellidos"){
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            echo "<i class='bi bi-arrow-up'></i>"; 
+                        }else{
+                            echo "<i class='bi bi-arrow-down'></i>"; 
+                        }                    
+                    }?></a></th>
+                    <th scope='col'><a href="<?php 
+                    $enlace = "admin.php?orderby=rol";
+                    if(htmlspecialchars($_GET["orderby"]) == "rol"){                      
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            $enlace .= "&type=ASC";
+                        }else{
+                            $enlace .= "&type=DESC";
+                        }
+                    }
+                    echo $enlace;
+                    ?>">ROL
+                    <?php 
+                    if(htmlspecialchars($_GET["orderby"]) == "rol"){
+                        if(htmlspecialchars($_GET["type"]) == "DESC"){
+                            echo "<i class='bi bi-arrow-up'></i>"; 
+                        }else{
+                            echo "<i class='bi bi-arrow-down'></i>"; 
+                        }                    
+                    }?></a></th>
+                    <th scope='col'>OPERACIONES</th>
+                </tr>
             </thead>
             <tbody>
         <?php
-        $a="SELECT * FROM usuarios;";     
-        $a = mysqli_query($mysqli, $a);
-    
-        while($row = mysqli_fetch_assoc($a)){
-            $id = $row['id'];
-            $user_id = $row['user_id'];
-            $username = $row['username'];
-            $correo = $row['correo'];
-            $nombre = $row['nombre'];
-            $apellidos = $row['apellidos'];
-            $rol = $row['rol'];
-            $foto = $row['foto'];
-            if($user_id != $id){
-                echo "<tr>";
-                echo `
-                    <td class="image"><img src="$foto" alt="foto"></td>
-                    <td class="id">$id</td>
-                    <td class="username">$username</td>
-                    <td class="correo">$correo</td>
-                    <td class="nombre">$nombre</td>
-                    <td class="apellidos">$apellidos</td>
-                    <td class="rol">$rol</td>
-    
-                    <td class="editar"><a href='editar_rol.php?user={$id}'><i class='bi bi-pencil'></i></a></td>
-                    <td class="citas"><a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a></td>
-                    `;
-                echo "</tr>";
+        if (isset($_GET["orderby"]) && isset($_GET["type"])) {
+            $orden = htmlspecialchars($_GET["orderby"]);
+            $type = htmlspecialchars($_GET["type"]);
+            $a="SELECT * FROM usuarios ORDER BY $orden $type;";     
+            $a = mysqli_query($mysqli, $a);
+            while($row = mysqli_fetch_assoc($a)){
+                            
+                $id = $row['id'];
+                $user_id_new = $row['user_id'];
+                $username = $row['username'];
+                $correo = $row['correo'];
+                $nombre = $row['nombre'];
+                $apellidos = $row['apellidos'];
+                $rol = $row['rol'];
+                $foto = $row['foto'];
+
+                $b="SELECT * FROM roles WHERE id=$rol;";     
+                $b = mysqli_query($mysqli, $b);
+                $rowb = mysqli_fetch_assoc($b);
+                $rol_name = $rowb["nombre"];
+
+                if($user_id != $id){
+                    echo 
+                    "<tr> 
+                        <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
+                        <td class='id'>$id</td>
+                        <td class='username'>$username</td>
+                        <td class='correo'>$correo</td>
+                        <td class='nombre'>$nombre</td>
+                        <td class='apellidos'>$apellidos</td>
+                        <td class='rol'>$rol_name</td>
+
+                        <td class='editar'>
+                            <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
+                            <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                            <button onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></button>                        
+                        </td>
+                    </tr>";
+                }
+            }
+        }else{
+            $a="SELECT * FROM usuarios;";     
+            $a = mysqli_query($mysqli, $a);
+            while($row = mysqli_fetch_assoc($a)){
+                            
+                $id = $row['id'];
+                $user_id_new = $row['user_id'];
+                $username = $row['username'];
+                $correo = $row['correo'];
+                $nombre = $row['nombre'];
+                $apellidos = $row['apellidos'];
+                $rol = $row['rol'];
+                $foto = $row['foto'];
+
+                $b="SELECT * FROM roles WHERE id=$rol;";     
+                $b = mysqli_query($mysqli, $b);
+                $rowb = mysqli_fetch_assoc($b);
+                $rol_name = $rowb["nombre"];
+
+                if($user_id != $id){
+                    echo 
+                    "<tr> 
+                        <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
+                        <td class='id'>$id</td>
+                        <td class='username'>$username</td>
+                        <td class='correo'>$correo</td>
+                        <td class='nombre'>$nombre</td>
+                        <td class='apellidos'>$apellidos</td>
+                        <td class='rol'>$rol_name</td>
+
+                        <td class='editar'>
+                            <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
+                            <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                            <button onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></button>  
+                        </td>
+                    </tr>";
+                }
             }
         }
         ?>
@@ -70,6 +217,14 @@ if ($nivel <= 5) {
         </table>
     </div>
 </div>
-
+<script>
+    function eliminarUsuario(id) {
+        if (confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
+            window.location.href = "components/eliminar_usuario.php?user=" + id;
+        } else {
+            return false;
+        }
+    } 
+</script>
 
 <?php include "components/footer.php" ?>

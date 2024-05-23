@@ -1,0 +1,66 @@
+.centro{
+    margin: 0;
+    margin-top: 2rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+.container {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2%;
+}
+h2{
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 1em;
+}
+table {
+    border: 0; 
+    border-collapse: separate; 
+    border-spacing: 0 5px;
+}
+thead tr th{
+    padding: 3px;
+    border-bottom: 3px solid rgb(0, 0, 0);
+    border-collapse: separate; 
+    border-spacing: 5px 5px;
+    margin-bottom: 10px;
+    background: #a3a3a3;
+    cursor: pointer;
+    transition: all 0.5s linear;
+}
+th a{
+    text-decoration: none;
+    color: black;
+}
+th a:hover i,
+th a:hover {
+    color: red;
+}
+tbody tr td {
+    border-collapse: separate;
+    border-spacing: 5px 5px;
+    text-align: center;
+    transition: all 0.4s ease;
+}
+tbody tr:hover td {
+    background-color: rgb(236, 236, 236);
+}
+.editar a{
+    padding-inline: 3px;
+}
+i {
+    color: black;
+}
+i:hover {
+    color: red;
+}
+button{
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}

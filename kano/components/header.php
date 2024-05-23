@@ -11,25 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
     <?php
-    /*
-    <!-- Bootstrap Icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- ESTILOS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/navbar.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-
-    <!-- JQuery -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-    
-    */
     session_start();
 
     if ($_SERVER['PHP_SELF'] != "") {
@@ -61,8 +42,11 @@
         if ($url == 'perfil.php') {
             echo '<link rel="stylesheet" href="css/perfil.css">';
         }
-        if ($url == 'reservas.php') {
+        if ($url == 'reservas.php' || $url == 'editar_citas.php' || $url == 'eliminar_reserva.php') {
             echo '<link rel="stylesheet" href="css/reservas.css">';
+        }        
+        if ($url == 'admin.php') {
+            echo '<link rel="stylesheet" href="css/admin.css">';
         }
         //* JQUERY
         if ($url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php') {

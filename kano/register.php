@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 mysqli_close($mysqli);
             }else{
                 //* REGISTRAR USUARIO
-                $autousername = strtolower(substr($given_name, 3) . substr($family_name, 3). random_int(10000, 99999));
+                $autousername = strtolower(substr($given_name, 0, 3) . substr($family_name, 0, 3). random_int(10000, 99999));
                 $sql = "INSERT INTO usuarios (user_id, username, correo, nombre, apellidos, foto) VALUES ('$userid', '$autousername', '$email', '$given_name', '$family_name', '$picture')";
 
                 if ($mysqli->query($sql) === TRUE) {
