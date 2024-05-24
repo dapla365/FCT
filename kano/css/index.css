@@ -66,7 +66,13 @@ body{
 
 
 @media screen and (max-width: 675px) {
+	.index_centro {
+		margin-top: 45vh;
+	}
 	.index_container{
 		width: auto;
+	}
+	body{
+		background-image: url(../images/favicon.png);
 	}
 }

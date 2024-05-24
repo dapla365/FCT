@@ -14,7 +14,7 @@
         </header>
         <div class="calendar">
             <ul class="weeks">
-                <li class="lunes">Lun <span class="dias_semana">es</span></li>
+                <li class="lunes">Lun<span class="dias_semana">es</span></li>
                 <li class="martes">Mar<span class="dias_semana">tes</span></li>
                 <li class="miercoles">Mié<span class="dias_semana">rcoles</span></li>
                 <li class="jueves">Jue<span class="dias_semana">ves</span></li>
