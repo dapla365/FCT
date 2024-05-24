@@ -19,6 +19,8 @@ h2{
     margin-bottom: 1em;
 }
 table {
+    width: 100%;
+    overflow-x: auto;
     border: 0; 
     border-collapse: separate; 
     border-spacing: 0 5px;
@@ -63,4 +65,28 @@ tbody tr:hover td {
     cursor: pointer;
     background-color: transparent;
     border: none;
+}
+@media (max-width: 767px) {
+    table thead {
+        display: none; /* Oculta los encabezados en dispositivos móviles */
+    }
+    table tr {
+        margin-bottom: 1em;
+        display: block;
+        border-bottom: 1px solid #ccc;
+        padding: 1em;
+    }
+    table td {
+        display: block;
+        text-align: center;
+        position: relative;
+    }
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        font-weight: bold;
+        text-align: center;
+   }
 }

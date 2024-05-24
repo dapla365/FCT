@@ -10,7 +10,7 @@
 form{
     margin: auto;
     width: 90%;
-    max-width: 400px;
+    max-width: 500px;
     padding: 4.5em 3em;
     border-radius: 10px;
     box-shadow: 0 5px 10px -5px rgb(0, 0, 0 / 30%);
@@ -33,12 +33,14 @@ form p a{
     gap: 2.5em;
 }
 .form__group{
-    position: relative;
+    display: flex;
+    justify-content: left;
+    align-items: center;
     color: #5757577e;
 }
 input{
+    width: 40%;
     text-align: right;
-    width: 100%;
     background: none;
     color: #706c6c;
     font-size: 1rem;
@@ -47,13 +49,16 @@ input{
     outline: none;
 }
 label {
-    position: absolute;
+    width: 60%;
+    text-align: left;
     pointer-events: none;
-    top: 0px;
-    left: 5px;
     color: #5757577e;
 }
+select{
+    width: 40%;
+}
 .form_submit{
+    width: 100%;
     text-align: center;
     background: #f23838;
     color: white;

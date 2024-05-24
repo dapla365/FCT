@@ -3,9 +3,9 @@
 
 <?php
 if (isset($_GET['user'])) {
-    $id = htmlspecialchars($_GET['user']);
+    $user = htmlspecialchars($_GET['user']);
     if ($user_nivel > 5) {
-        $a = "SELECT * FROM usuarios WHERE id=$id;";
+        $a = "SELECT * FROM usuarios WHERE id=$user;";
         $a = mysqli_query($mysqli, $a);
         while ($row = mysqli_fetch_assoc($a)) {
             $username = $row["username"];
@@ -19,11 +19,11 @@ if (isset($_GET['user'])) {
     } else {
         header("Location: index.php");
     }
-}
+  }
 ?>
 
 <div class="body">
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+  <form action="" method="post">
     <h2>Editar usuario</h2>
     <div class="form__container">
         <div class="form__group">
@@ -55,11 +55,11 @@ if (isset($_GET['user'])) {
         <input type="checkbox" name="pass">
       </div>
       <div class="form__group">
-        <input type="submit" class="form_submit" name="editar" value="Editar">
-    </div>
+        <input type="submit" class="form_submit" name="editar" value="editar">
+      </div>
       <?php 
 
-if(isset($_POST['editar'])) 
+  if(isset($_POST['editar'])) 
   {
     if($user_nivel <= 5){
       echo "<p><strong>Error: </strong>¡No tienes permisos para editar al usuario!</p>";
@@ -71,12 +71,12 @@ if(isset($_POST['editar']))
       $a = mysqli_query($mysqli, $a);
       $rolnuevo = mysqli_fetch_assoc($a)['id'];
       
-      $query = "UPDATE usuarios SET rol = '{$rolnuevo}' WHERE id = {$id}";
+      $query = "UPDATE usuarios SET rol = '{$rolnuevo}' WHERE id = {$user}";
       if(isset($_POST['pass'])){
-        $pass = $username.$id;
+        $pass = $username.$user;
         $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
 
-        $query = "UPDATE usuarios SET rol = '{$rolnuevo}', contrasena = '{$pass_hash}' WHERE id = {$id}";
+        $query = "UPDATE usuarios SET rol = '{$rolnuevo}', contrasena = '{$pass_hash}' WHERE id = {$user}";
       }
 
       $a = mysqli_query($mysqli, $query);
@@ -87,19 +87,25 @@ if(isset($_POST['editar']))
       {
         if(isset($_POST['pass'])){
           echo "<p> ¡Usuario editado con éxito!.</p>";
-          echo "<script>alert('La nueva contraseña del usuario $username es: $pass');</script>";
+          echo "
+          <script>
+            if (confirm('La nueva contraseña del usuario $username es: $pass')) {
+              location.href = 'admin.php';
+            }else{
+              location.href = 'admin.php';
+            }         
+          </script>";
         }else{
           header("Refresh:3; url=admin.php");
           echo "<p> ¡Usuario editado con éxito!. Redirigiendo...</p>";
-          echo "<p> Si no redirige puedes hacer <a href='usuarios.php'>click aquí</a></p>";
+          echo "<p> Si no redirige puedes hacer <a href='admin.php'>click aquí</a></p>";
         }
       }      
     }
   }
-?>
+?>  
     </div>
-</form> 
-
+  </form> 
 </div>
 
 <?php include "components/footer.php" ?>
