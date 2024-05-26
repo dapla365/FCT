@@ -19,9 +19,8 @@
                 if (!$a) {
                     echo "<p><strong>Error: </strong>Algo ha ido mal añadiendo la incidencia: " . mysqli_error($mysqli) . "</p>";
                 } else {
-                    header("Refresh:3; url=index.php");
-                    echo "<p> ¡Cita añadida con éxito!. Redirigiendo...</p>";
-                    echo "<p> Si no redirige puedes hacer <a href='index.php'>click aquí</a></p>";
+                    //* ENVIAR CORREO
+                    header("Location: components/mail.php?correo=$user_correo&fecha=$fecha&hora=$hora&peluquero=$peluquero");
                 }
             }else {
                 echo "<p><strong>Error: </strong>¡Ese peluquero ya tiene una cita a esa hora!</p>";
@@ -29,7 +28,13 @@
         } else {
             echo "<p><strong>Error: </strong>¡Cita con peluquero seleccionado incorrecta!</p>";
         }
-    } else {
+    }else if (isset($_GET['confirmado'])) { //* EMAIL ENVIADO CORRECTAMENTE Y CITA AÑADIDA CON ÉXITO.
+        header("Refresh:3; url=index.php");
+        echo "<h2 class='sin_citas'> ¡Cita añadida con éxito!. Redirigiendo...</h2>";
+        echo "<p class='sin_citas'> Si no redirige puedes hacer&nbsp;<a href='index.php'>click aquí</a></p>";
+    }
+    
+    else {
         $pagina = $_SERVER['HTTP_REFERER'];
         header("Location: $pagina");
     }

@@ -69,6 +69,7 @@ input:not(:placeholder-shown) + label{
     padding: .8em 0;
     border: none;
     border-radius: .5em;
+    cursor: pointer;
 }
 .google{
     display: flex;

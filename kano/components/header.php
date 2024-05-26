@@ -30,7 +30,7 @@
             <!-- Estilos -->
             <link rel="stylesheet" href="css/index.css">';
         }
-        if ($url == 'login.php' || $url == 'register.php') {
+        if ($url == 'login.php' || $url == 'register.php' || $url == 'changePassword.php') {
             echo '<link rel="stylesheet" href="css/form.css">';
         }
         if ($url == 'editar_user.php') {
@@ -45,7 +45,7 @@
         if ($url == 'perfil.php') {
             echo '<link rel="stylesheet" href="css/perfil.css">';
         }
-        if ($url == 'reservas.php' || $url == 'editar_citas.php' || $url == 'eliminar_reserva.php') {
+        if ($url == 'reservas.php' || $url == 'editar_citas.php' || $url == 'eliminar_reserva.php' || $url == 'confirmarCita.php') {
             echo '<link rel="stylesheet" href="css/reservas.css">';
         }        
         if ($url == 'admin.php') {

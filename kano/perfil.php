@@ -20,6 +20,9 @@
             <div class="datos">
                 <p class="info">Cargo</p> <span><?php echo ucwords(mb_strtolower($user_rolname)); ?></span>
             </div>
+            <div class="datos">
+                <p class="info">Cambiar contraseña</p> <span><button onclick="window.location.href = 'changePassword.php'">Cambiar</button></span>
+            </div>
         </div>
     </div>
 </div>
