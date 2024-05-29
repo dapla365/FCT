@@ -9,7 +9,7 @@
         $peluquero = htmlspecialchars($_GET['peluquero']);
 
         if (in_array($hora, $horas_disponibles) && in_array($peluquero, $peluqueros_totales)) { //* COMPROBAR QUE LA HORA Y LOS PELUQUEROS SON VÁLIDOS.
-            $a = "SELECT * FROM citas c, usuarios u WHERE c.peluquero = u.id AND c.fecha = $fecha AND c.hora = '$hora' AND u.id = $peluquero;";
+            $a = "SELECT * FROM citas WHERE fecha = $fecha AND hora = '$hora' AND peluquero = $peluquero;";
             $a = mysqli_query($mysqli, $a);
             if (mysqli_num_rows($a) <= 0) {     //* COMPROBAR QUE EL PELUQUERO NO TIENE CITA A ESA HORA
 
@@ -20,7 +20,12 @@
                     echo "<p><strong>Error: </strong>Algo ha ido mal añadiendo la incidencia: " . mysqli_error($mysqli) . "</p>";
                 } else {
                     //* ENVIAR CORREO
-                    header("Location: components/mail.php?correo=$user_correo&fecha=$fecha&hora=$hora&peluquero=$peluquero");
+                    
+                    $b = "SELECT * FROM citas WHERE usuario=$user_id AND hora='$hora' AND fecha='$fecha' AND peluquero=$peluquero;";
+                    $b = mysqli_query($mysqli, $b);
+                    $row = mysqli_fetch_assoc($b);
+                    $reserva = $row['id'];
+                    header("Location: components/mail.php?reserva=$reserva&correo=$user_correo&fecha=$fecha&hora=$hora&peluquero=$peluquero");
                 }
             }else {
                 echo "<p><strong>Error: </strong>¡Ese peluquero ya tiene una cita a esa hora!</p>";

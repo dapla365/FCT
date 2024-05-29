@@ -336,7 +336,7 @@
     $(document).on("click", function(e) { //*     SE HACE POR DOCUMENTO PARA CUANDO SE CAMBIE LA PAGINA SE PUEDA COMPROBAR DE NUEVO
         let li = document.querySelectorAll(".weeks li");
         li.forEach(d => {
-            if (e.target == d) {
+            if (e.target == d || e.target.parentNode == d) {
                 if (!d.classList.contains("inactive")) {
                     location.href = `${location.origin}/kano/peluqueros2.php?fecha=${d.id}&peluquero=${<?php echo $peluquero; ?>}`;
                 }

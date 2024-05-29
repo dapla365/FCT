@@ -2,7 +2,7 @@
 require "../PHPMailer/src/Exception.php";
 require "../PHPMailer/src/PHPMailer.php";
 require "../PHPMailer/src/SMTP.php";
-include "secret.php";
+require "secret.php";
 include "conexion.php";
 include "firma.php";
 
@@ -12,7 +12,8 @@ use PHPMailer\PHPMailer\Exception;
 if(isset($_GET['reset']) && isset($_GET['correo'])){
 
 }
-else if(isset($_GET['correo']) && isset($_GET['fecha']) && isset($_GET['hora']) && isset($_GET['peluquero'])){
+else if(isset($_GET['reserva']) && isset($_GET['correo']) && isset($_GET['fecha']) && isset($_GET['hora']) && isset($_GET['peluquero'])){
+    $reserva = htmlspecialchars($_GET['reserva']);
     $correo = htmlspecialchars($_GET['correo']);
     $fecha = htmlspecialchars($_GET['fecha']);
     $hora = htmlspecialchars($_GET['hora']);
@@ -33,17 +34,19 @@ else if(isset($_GET['correo']) && isset($_GET['fecha']) && isset($_GET['hora']) 
     $mail->SMTPDebug = "0";
     $mail->SMTPSecure = "ssl";
     $mail->SMTPAuth=true;
-    $mail->Username="davidplaza03@iesamachado.org";
+    $mail->Username="$mail_email";
     $mail->Password="$mail_password";
-    $mail->setFrom("davidplaza03@iesamachado.org","David Plaza");
+    $mail->setFrom("$mail_email","$mail_name");
     $mail->addAddress("$correo");
     $mail->Subject="KANO - Confirmacion de cita";
 
+    $enlace = "$redirect_uris?reserva=$reserva";
     $msg = "
-    <h2>Datos de la cita</h2>7
+    <h2>Datos de la cita</h2>
     <p>Fecha: <strong>$fecha</strong></p>
     <p>Hora: <strong>$hora</strong></p>
     <p>Peluquero: <strong>$peluquero $peluquero_apellido</strong></p>
+    <p>Para cancelar la cita, haz click en el siguiente enlace: $enlace</p>
     ";
 
     $mail->Body=$msg.$firma;
@@ -57,27 +60,5 @@ else if(isset($_GET['correo']) && isset($_GET['fecha']) && isset($_GET['hora']) 
 }else{
     header("Location: ../index.php");
 }
-
-/*
-
-$mail= new PHPMailer();
-$mail->isSMTP();
-$mail->Host="smtp.gmail.com";
-$mail->Port=465;
-$mail->SMTPDebug = "0";
-$mail->SMTPSecure = "ssl";
-$mail->SMTPAuth=true;
-$mail->Username="davidplaza03@iesamachado.org";
-$mail->Password="$mail_password";
-$mail->setFrom("davidplaza03@iesamachado.org","David Plaza");
-$mail->addAddress("plazadiazdavid@gmail.com","David");
-$mail->Subject="OLEEEE";
-$mail->msgHTML("Hola soy un mensaje");
-
-if(!$mail->send()){echo $mail->ErrorInfo;}
-else {
-    echo "Correo enviado correctamente!";
-}
-*/
 ?>
 

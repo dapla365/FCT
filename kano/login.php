@@ -28,7 +28,6 @@
         </div>
 
         <?php
-        
 if ($_SERVER["REQUEST_METHOD"] === "POST"){
     require_once 'components/conexion.php';
     if(isset($_POST['credential'])){
@@ -67,9 +66,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
                         $a = mysqli_query($mysqli, $sql);
                     }
                 }
-               
-                header("Location: index.php");
-                mysqli_close($mysqli);
+                if (isset($_GET['reserva'])){
+                    $reserva = htmlspecialchars($_GET['reserva']);
+                     
+                    header('Location: eliminar_reserva?reserva='.$_GET['reserva']);
+                }else{
+                    header("Location: index.php");
+                    mysqli_close($mysqli);
+                }
                 
             }else if(mysqli_num_rows($result_user)>0){
                 //* NO TIENE CORREO ASOCIADO EN LA BD
