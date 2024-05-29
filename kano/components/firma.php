@@ -1,7 +1,9 @@
-<table style="font-family:'Times New Roman', Times, serif;">
+<?php
+$firma = '
+<table style="font-family:`Times New Roman`, Times, serif;">
     <tr>
         <td style="border-right: 1px solid red; padding-right: 30px;">
-            <img src="kano/images/favicon.png" alt="kano"
+            <img src="../images/favicon.png" alt="kano"
                 style="width: 130px;">
         </td>
         <td style="padding-left: 30px;">
@@ -13,4 +15,6 @@
             </ul>
         </td>
     </tr>
-</table>
+</table>';
+
+?>

@@ -1,50 +1,74 @@
-:root {
-    --red: #ff0000;
-    --unblack: #00000096;
-    --black: #000;
-    --white: #fff;
-    --back: #363841;
-    --backhover: #202227;
-}
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-*{
-    margin: 0;
+* {
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
 	font-family: "Open Sans", sans-serif;
 }
+header {
+    overflow: hidden;
+    z-index: 6;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
 .navbar {
-      overflow: hidden;
-      text-align: center;
-      z-index: 6;
-      text-transform: uppercase;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
 }
 .navbar a {
-     display: inline-block;
-     margin-right: -4px;  /* inline-block gap fix */
-     color: var(--black);
-     padding: 22px 22px;
-     text-decoration: none;
-     font-family: Poppins;
-     font-size: 18px;
-     -webkit-transition: background 0.3s linear;
-     -moz-transition: background 0.3s linear;
-     -ms-transition: background 0.3s linear;
-     -o-transition: background 0.3s linear;
-     transition: background 0.3s linear;
-     z-index: 9;
+    color: black;
+    display: inline-block;
+    position: relative;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
 }
-    
-.navbar a:hover {
-    color: var(--red);
+.navbar p {
+    display: inline-block;
 }
-    
+.navbar i {
+    display: inline-block;
+    margin-right: 3px;
+}
+.navbar .middle a:after,
+.navbar .right a:after {
+    content: "";
+    display: block;
+    margin: auto;
+    height: 3px;
+    border-radius: 50px;
+    width: 0px;
+    transition: all .5s;
+}
+.navbar a:hover:after {
+    width: 60%;
+    background: red;
+}
+.navbar .left img {
+    width: 100px;
+}
+.navbar .left a,
+.navbar .middle a {
+    padding-inline: 20px;
+}
+.navbar .right a {
+    padding-inline: 10px;
+}
 .navbar .icon {
     display: none;
 }
-    
+
 /* Estilos para dispositivos móviles */ 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 1200px) {
+    .navbar .right p {
+        display: none;
+    }
+}
+@media screen and (max-width: 900px) {
     .navbar a {display: none;}
     .navbar a.icon {
         margin-right: 10px;
@@ -54,7 +78,7 @@
     }
 }
     
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 900px) {
     .navbar.responsive {position: relative; top: 73px;}
     .navbar.responsive .icon {
         position: fixed;
@@ -65,5 +89,21 @@
         float: none;
         display: block;
         text-align: center;
+        padding: 10px;
+    }
+    .navbar.responsive {
+        display: block;
+    }
+    .navbar a:hover:after {
+        width: 50px;
+    }
+    .navbar i {
+        display: none;
+    }
+    .navbar .right p {
+        display: block;
+    }
+    .navbar .left img {
+        width: 200px;
     }
 }

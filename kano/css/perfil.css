@@ -10,47 +10,47 @@
     display: flex;
     justify-content: center;
 }
-.left{
+.container .left{
     width: 35%;
     margin-right: 5%;
     display: flex;
     flex-direction: column;
     text-align: center;
 }
-.left img{
+.container .left img{
     border-radius: 50%;
     border: 7px solid black;
     box-shadow: 7px 7px 15px black;
     max-width: 500px;
     max-height: 500px;
 }
-.right{
+.container .right{
     width: 60%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-.datos{
+.container .datos{
     width: 100%;
     display: flex;
 }
-.datos p, span{
+.container .datos p, span{
     width: 50%;
 }
-p, h2, h3, span{
+.container p, .container h2, .container h3, .container span{
     margin: 0;
     padding: 5px;
 }
-p{
+.container p{
     font-size: x-large;
     font-weight: bold;
 }
-span{
+.container span{
     font-size: x-large;
     color: rgb(73, 73, 73);
 }
 @media screen and (max-width: 900px) {
-    p, span, h2, h3{
+    .container p, .container span, .container h2, .container h3{
         font-size: normal;
     }
 }
@@ -60,7 +60,7 @@ span{
         width: 95%;
         flex-direction: column;
     }
-    .left img{
+    .container .left img{
         max-width: 300px;
         max-height: 300px;
 
@@ -68,18 +68,17 @@ span{
         margin-right: auto;
         width: 50%;
     }
-    .left , .right{
-
+    .container .left , .container .right{
         margin-top: 20px;
         width: 100%;
     }
-    .left h2, h3{
+    .container .left h2, .container h3{
         display: none;
     }
-    .datos{
+    .container .datos{
         flex-direction: column;
     }
-    .datos p, span{
+    .container .datos p, .container span{
         width: 100%;
         text-align: center;
     }

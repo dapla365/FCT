@@ -2,8 +2,9 @@
 require "../PHPMailer/src/Exception.php";
 require "../PHPMailer/src/PHPMailer.php";
 require "../PHPMailer/src/SMTP.php";
-require "secret.php";
+include "secret.php";
 include "conexion.php";
+include "firma.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -45,7 +46,7 @@ else if(isset($_GET['correo']) && isset($_GET['fecha']) && isset($_GET['hora']) 
     <p>Peluquero: <strong>$peluquero $peluquero_apellido</strong></p>
     ";
 
-    $mail->Body=$msg;
+    $mail->Body=$msg.$firma;
     $mail->isHTML(true);
 
     if(!$mail->send()){echo $mail->ErrorInfo;}
