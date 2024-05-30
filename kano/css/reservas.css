@@ -48,6 +48,14 @@
     justify-content: right;
     align-items: center;
 }
+
+.cita__datos{
+    width: 20%;
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+    flex-direction: column;
+}
 .cita_peluquero{
     font-weight: bold;
 }

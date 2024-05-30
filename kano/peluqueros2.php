@@ -14,11 +14,13 @@
         </header>
         <div class="calendar">
             <ul class="weeks">
+                <li class="domingo">Dom<span class="dias_semana">ingo</span></li>
                 <li class="lunes">Lun<span class="dias_semana">es</span></li>
                 <li class="martes">Mar<span class="dias_semana">tes</span></li>
                 <li class="miercoles">Mié<span class="dias_semana">rcoles</span></li>
                 <li class="jueves">Jue<span class="dias_semana">ves</span></li>
                 <li class="viernes">Vie<span class="dias_semana">rnes</span></li>
+                <li class="sabado">Sab<span class="dias_semana">ado</span></li>
             </ul>
         </div>
     </div>
@@ -28,7 +30,8 @@
     <div class="container">
         <?php
         if (isset($_GET['peluquero'])) {
-            $peluquero = mb_strtolower(htmlspecialchars($_GET['peluquero']));
+            $peluquero = htmlspecialchars($_GET['peluquero']);
+            $disp = TRUE;
 
             $a = "SELECT * FROM usuarios WHERE id=$peluquero;";
             $a = mysqli_query($mysqli, $a);
@@ -36,62 +39,87 @@
             $rol = $row['rol'];
             if ($rol < 1 || $rol > 2) header('Location: peluqueros.php');
 
-            $fecha = date("m/d/Y");
-            if(isset($_GET['fecha']) && $_GET['fecha'] >= $fecha) {
-                $fecha = htmlspecialchars($_GET['fecha']);  
-            }
-            
-            $mes = explode("/", $fecha)[0];
-            $dia = explode("/", $fecha)[1];
+            $fecha = date("d/m/Y");
+            $dia = explode("/", $fecha)[0];
+            $mes = explode("/", $fecha)[1];
             $ano = explode("/", $fecha)[2];
 
-            $mes = str_pad($mes, 2, "0", STR_PAD_LEFT);
             $dia = str_pad($dia, 2, "0", STR_PAD_LEFT);
+            $mes = str_pad($mes, 2, "0", STR_PAD_LEFT);
             $ano = str_pad($ano, 2, "0", STR_PAD_LEFT);
-            $peluquero = htmlspecialchars($_GET['peluquero']);
+
+            if(isset($_GET['fecha'])) {
+                $fecha_url = htmlspecialchars($_GET['fecha']);  
+                $dia_url = explode("/", $fecha_url)[0];
+                $mes_url = explode("/", $fecha_url)[1];
+                $ano_url = explode("/", $fecha_url)[2];
+
+                if($ano_url > $ano || ($ano_url == $ano && $mes_url > $mes) || ($ano_url == $ano && $mes_url == $mes && $dia_url > $dia)){   //* QUITAR FECHAS ANTERIORES 
+                    $fecha = $fecha_url;
+                    $dia = $dia_url;
+                    $mes = $mes_url;
+                    $ano = $ano_url;
+                }
+            }
             
             $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero';";
             $a = mysqli_query($mysqli, $a);
             if(mysqli_num_rows($a)>0){
                 //* HAY CITAS EN ESA FECHA */
+                while ($row = mysqli_fetch_assoc($a)) {
+                    $id = $row['id'];
+                    $fecha = $row['fecha'];
+                    $hora = $row['hora'];
+                    $peluquero = $row['peluquero'];
+                    $usuario = $row['usuario'];
+    
+                    if($fecha == date("d/m/Y")){
+                        $hora_hoy = date("H:i", time());
+                        $hh = explode(":", $hora)[0]; 
+                        $mm = explode(":", $hora)[1]; 
+                        $hh_hoy = explode(":", $hora_hoy)[0]; 
+                        $mm_hoy = explode(":", $hora_hoy)[1]; 
 
-                $horas_ocupadas = array();
-                while ($row = mysqli_fetch_array($a)) {
-                    $hora = $row["hora"];
-                    array_push($horas_ocupadas, $hora);
+                        if($hh < $hh_hoy || ($hh == $hh_hoy && $mm < $mm_hoy)){
+                            $usuario = 0;
+                        }
+                    }
+
+                    if($usuario == NULL){
+                        $disp = FALSE;
+                        /* INFO PELUQUERO */
+                        $b = "SELECT * FROM usuarios WHERE id=$peluquero;";
+                        $b = mysqli_query($mysqli, $b);
+                        $rowb = mysqli_fetch_assoc($b);
+                        $peluquero_nombre = ucwords(mb_strtolower($rowb['nombre']));
+                        $peluquero_apellido = ucwords(mb_strtolower($rowb['apellidos']));
+    
+                        echo "        
+                        <div class='cita' id='$id'>
+                            <div class='cita_datos'>
+                                <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
+                            </div>
+                            <div class='cita_datos'>
+                                <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
+                                
+                            </div>
+                            <div class='cita_datos'>
+                                <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
+                            </div>
+                            <div class='cita_opciones'>
+                                <button onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></button>
+                            </div>
+                        </div>
+                        ";
+                    }
                 }
-                $horas_libres = array_diff_assoc($horas_disponibles, $horas_ocupadas);
-                foreach ($horas_libres as $x) {
-                    $c = "SELECT * FROM usuarios WHERE id = $peluquero;";
-                    $c = mysqli_query($mysqli, $c);
-                    $rowc = mysqli_fetch_assoc($c);
-                    $peluquero_nombre = ucwords(mb_strtolower($rowc['nombre']));
-                    $peluquero_apellido = ucwords(mb_strtolower($rowc['apellidos']));
 
-                    echo "        
-                    <a href='confirmarCita.php?fecha=$fecha&hora=$x&peluquero=$peluquero' class='cita' id='$fecha-$x'>
-                        <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre&nbsp;<span class='apellidos'>$peluquero_apellido<span></p>
-                        <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
-                        <p class='cita_hora'><i class='bi bi-clock-fill'></i> $x</p>
-                    </a>";
+                if($disp) {
+                    echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> No hay citas disponibles</a>";
                 }
             }else{
                 //* NO HAY CITAS EN ESA FECHA */
-                foreach ($horas_disponibles as $x) {    
-                    $c = "SELECT * FROM usuarios WHERE id = $peluquero;";
-                    $c = mysqli_query($mysqli, $c);
-                    $rowc = mysqli_fetch_assoc($c);
-                    $peluquero_nombre = ucwords(mb_strtolower($rowc['nombre']));
-                    $peluquero_apellido = ucwords(mb_strtolower($rowc['apellidos']));
-
-                    echo "        
-                    <a href='confirmarCita.php?fecha=$fecha&hora=$x&peluquero=$peluquero' class='cita' id='$fecha-$x'>
-                        <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre&nbsp;<span class='apellidos'>$peluquero_apellido<span></p>
-                        <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
-                        <p class='cita_hora'><i class='bi bi-clock-fill'></i> $x</p>
-                    </a>";
-                    
-                }
+                echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> No hay citas en esta fecha</a>";
             }   
         } else {
             header('Location: peluqueros.php');
@@ -108,7 +136,9 @@
         martes = document.querySelector(".martes"),
         miercoles = document.querySelector(".miercoles"),
         jueves = document.querySelector(".jueves"),
-        viernes = document.querySelector(".viernes");
+        viernes = document.querySelector(".viernes"),
+        sabado = document.querySelector(".sabado"),
+        domingo = document.querySelector(".domingo");
 
     let date = new Date(),
         currYear = date.getFullYear(),
@@ -118,16 +148,16 @@
         trueMonth = date.getMonth(),
         trueDate = date.getDate(),
 
-        selectYear = <?php echo "$ano";?>,
-        selectMonth = <?php echo "$mes";?>,
         selectDate = <?php echo "$dia";?>,
+        selectMonth = <?php echo "$mes";?>,
+        selectYear = <?php echo "$ano";?>,
 
         listaDias = new Array(),
         currWeek = 0;
 
     const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-    ];
+        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
     const days = [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"];
 
     const renderCalendar = () => {
@@ -136,6 +166,8 @@
         miercoles.style.fontWeight = "normal";
         jueves.style.fontWeight = "normal";
         viernes.style.fontWeight = "normal";
+        sabado.style.fontWeight = "normal";
+        domingo.style.fontWeight = "normal";
 
         let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(),
             lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(),
@@ -161,7 +193,7 @@
             mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
             let dia = lastDateofLastMonth - i + 1;
             dia = dia.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let fecha = `${mes}/${dia}/${ano}`;
+            let fecha = `${dia}/${mes}/${ano}`;
 
             listaDias.push(fecha);
         }
@@ -171,7 +203,7 @@
             let mes = currMonth + 1;
             mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
             let dia = i.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let fecha = `${mes}/${dia}/${currYear}`;
+            let fecha = `${dia}/${mes}/${currYear}`;
 
             listaDias.push(fecha);
         }
@@ -195,7 +227,7 @@
             mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
             let dia = i - lastDayofMonth + 1;
             dia = dia.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let fecha = `${mes}/${dia}/${ano}`;
+            let fecha = `${dia}/${mes}/${ano}`;
 
             listaDias.push(fecha);
         }
@@ -213,58 +245,66 @@
             }
             const element = listaDias[i];
 
-            let mes = element.split("/")[0];
-            let dia = element.split("/")[1];
+            let dia = element.split("/")[0];
+            let mes = element.split("/")[1];
             let ano = element.split("/")[2];
 
             let trueMonthfecha = (trueMonth+1).toString().padStart(2, '0');
             let trueDatefecha = trueDate.toString().padStart(2, '0');
             let trueYearfecha = trueYear.toString().padStart(2, '0');
-            let fecha = `${trueMonthfecha}/${trueDatefecha}/${trueYearfecha}`;  //* DESACTIVAR FECHAS ANTERIORES 
+            let fecha = `${trueDatefecha}/${trueMonthfecha}/${trueYearfecha}`;  //* DESACTIVAR FECHAS ANTERIORES 
 
             let selectMonthfecha = selectMonth.toString().padStart(2, '0');
             let selectDatefecha = selectDate.toString().padStart(2, '0');
             let selectYearfecha = selectYear.toString().padStart(2, '0');
-            let selectFecha = `${selectMonthfecha}/${selectDatefecha}/${selectYearfecha}`;  //* FECHA ELEGIDA PARA COGER CITA
+            let selectFecha = `${selectDatefecha}/${selectMonthfecha}/${selectYearfecha}`;  //* FECHA ELEGIDA PARA COGER CITA
 
             let clase = "";
             if(element == selectFecha){   //* FECHA ELEGIDA 
                 clase = "active";
             }
-            if(element < fecha){   //* QUITAR FECHAS ANTERIORES 
+            if(trueYearfecha > ano || (trueYearfecha == ano && trueMonthfecha > mes) || (trueYearfecha == ano && trueMonthfecha == mes && trueDatefecha > dia)){   //* QUITAR FECHAS ANTERIORES 
                 clase = "inactive";
             }
 
             let d = new Date(ano + '-' + mes + '-' + dia).getDay();
             dia = dia.replace(/^(0+)/g, '');
 
-            if (d != 0 && d != 6) { //* QUITAR FINES DE SEMANA
-                switch (d) {
-                    case 1:
-                        lunes.id = element;
-                        lunes.classList = `lunes ${clase}`;
-                        break;
-                    case 2:
-                        martes.id = element;
-                        martes.classList = `martes ${clase}`;
-                        break;
-                    case 3:
-                        miercoles.id = element;
-                        miercoles.classList = `miercoles ${clase}`;
-                        break;
-                    case 4:
-                        jueves.id = element;
-                        jueves.classList = `jueves ${clase}`;
-                        break;
-                    case 5:
-                        viernes.id = element;
-                        viernes.classList = `viernes ${clase}`;
-                        break;
-                    default:
-                        break;
-                }
+            switch (d) {
+                case 0:
+                    domingo.id = element;
+                    domingo.classList = `domingo ${clase}`;
+                    break;
+                case 1:
+                    lunes.id = element;
+                    lunes.classList = `lunes ${clase}`;
+                    break;
+                case 2:
+                    martes.id = element;
+                    martes.classList = `martes ${clase}`;
+                    break;
+                case 3:
+                    miercoles.id = element;
+                    miercoles.classList = `miercoles ${clase}`;
+                    break;
+                case 4:
+                    jueves.id = element;
+                    jueves.classList = `jueves ${clase}`;
+                    break;
+                case 5:
+                    viernes.id = element;
+                    viernes.classList = `viernes ${clase}`;
+                    break;
+                case 6:
+                    sabado.id = element;
+                    sabado.classList = `sabado ${clase}`;
+                    break;
+                default:
+                    break;
+            } 
 
                 //TODO REVISAR DIAS COMPLETOS DE CITAS Y DESACTIVARLOS
+                /*
                 $.ajax({
                     url: 'components/comprobarDiaLibre.php',
                     method: 'POST',
@@ -278,7 +318,7 @@
                             d = data;
                         }
                     }
-                });
+                });*/
 
                 if (primerDiaSemana == 0) {
                     primerDiaSemana = dia;
@@ -286,7 +326,6 @@
                 }
                 ultimoDiaSemana = dia;
                 ultimoDiaSemanaMes = mes;
-            }
         }
         primera = true;
         
@@ -298,6 +337,7 @@
     currWeek = getWeekOfMonth(selectYear, selectMonth-1, selectDate);
     currMonth = selectMonth-1;
     currYear = selectYear;
+
     renderCalendar(); 
 
     /* BOTONES DE CAMBIAR MES */
@@ -354,6 +394,5 @@
         return weekNumber;
     }
 </script>
-
 
 <?php include "components/footer.php" ?>

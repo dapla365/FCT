@@ -10,43 +10,93 @@
         if (mysqli_num_rows($a) <= 0) {
             echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> No hay citas reservadas</a>";
         } else {
+            $disp = TRUE;
             while ($row = mysqli_fetch_assoc($a)) {
                 $id = $row['id'];
                 $fecha = $row['fecha'];
                 $hora = $row['hora'];
-                $realizada = $row['realizada'];
                 $peluquero = $row['peluquero'];
                 $usuario = $row['usuario'];
+                $tipo = $row['tipo'];
+                $pagado = $row['pagado'];
+                $realizada = $row['realizada'];
 
-                /* INFO PELUQUERO */
-                $b = "SELECT * FROM usuarios WHERE id=$peluquero;";
-                $b = mysqli_query($mysqli, $b);
-                $rowb = mysqli_fetch_assoc($b);
-                $peluquero_nombre = ucwords(mb_strtolower($rowb['nombre']));
-                $peluquero_apellido = ucwords(mb_strtolower($rowb['apellidos']));
+                if($usuario != NULL){
+                    $disp = FALSE;
 
-                /* INFO USUARIO */
-                $c = "SELECT * FROM usuarios WHERE id=$usuario;";
-                $c = mysqli_query($mysqli, $c);
-                $rowc = mysqli_fetch_assoc($c);
-                $usuario_nombre = ucwords(mb_strtolower($rowc['nombre']));
-                $usuario_apellido = ucwords(mb_strtolower($rowc['apellidos']));
+                    /* INFO PELUQUERO */
+                    $b = "SELECT * FROM usuarios WHERE id=$peluquero;";
+                    $b = mysqli_query($mysqli, $b);
+                    $rowb = mysqli_fetch_assoc($b);
+                    $peluquero_nombre = ucwords(mb_strtolower($rowb['nombre']));
+                    $peluquero_apellido = ucwords(mb_strtolower($rowb['apellidos']));
 
-                echo "        
-            <div class='cita' id='$id'>
-                <div class='cita_datos'>
-                    <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
-                    <p class='cita_usuario'><i class='bi bi-person-standing'></i> $usuario_nombre $usuario_apellido</p>
-                </div>
-                <div class='cita_datos'>
-                    <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
-                    <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
-                </div>
-                <div class='cita_opciones'>
-                    <button onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></button>
-                </div>
-            </div>
-            ";
+                    /* INFO USUARIO */
+                    $c = "SELECT * FROM usuarios WHERE id=$usuario;";
+                    $c = mysqli_query($mysqli, $c);
+                    $rowc = mysqli_fetch_assoc($c);
+                    $usuario_nombre = ucwords(mb_strtolower($rowc['nombre']));
+                    $usuario_apellido = ucwords(mb_strtolower($rowc['apellidos']));
+
+                    /* INFO TIPO */
+                    $d = "SELECT * FROM tipos WHERE id=$tipo;";
+                    $d = mysqli_query($mysqli, $d);
+                    $rowd = mysqli_fetch_assoc($d);
+                    $tipo_nombre = ucwords(mb_strtolower($rowd['tipo']));
+                    $tipo_precio = $rowd['precio'];
+
+                    $pago = 'Sin Pagar: ' . $tipo_precio. "€";
+                    if($pagado == TRUE){
+                        $pago = 'Pagado';
+
+                        //* PAGADO */
+                        echo "        
+                        <div class='cita' id='$id'>
+                            <div class='cita__datos'>
+                                <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
+                                <p class='cita_usuario'><i class='bi bi-person-standing'></i> $usuario_nombre $usuario_apellido</p>
+                            </div>
+                            <div class='cita__datos'>
+                                <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
+                                <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
+                            </div>
+                            <div class='cita__datos'>
+                                <p class='cita_tipo'> $tipo_nombre </p>
+                                <p class='cita_pagado'> $pago </p>
+                            </div>
+                            <div class='cita_opciones'>
+                                <button onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></button>
+                            </div>
+                        </div>
+                        ";
+                    }else {
+                        //* SIN PAGAR
+                        echo "        
+                        <div class='cita' id='$id'>
+                            <div class='cita__datos'>
+                                <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
+                                <p class='cita_usuario'><i class='bi bi-person-standing'></i> $usuario_nombre $usuario_apellido</p>
+                            </div>
+                            <div class='cita__datos'>
+                                <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
+                                <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
+                            </div>
+                            <div class='cita__datos'>
+                                <p class='cita_tipo'> $tipo_nombre </p>
+                                <p class='cita_pagado'> $pago </p>
+                            </div>
+                            <div class='cita_opciones'>
+                                <button onclick='realizada($id)'><i class='bi bi-check-lg'></i></button>
+                                <button onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></button>
+                                <button onclick='pagar($id)'><i class='bi bi-currency-euro'></i></button>
+                            </div>
+                        </div>
+                        ";
+                    }
+                }
+            }
+            if($disp){
+                echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> No hay citas reservadas</a>";
             }
         }
         ?>

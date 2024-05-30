@@ -18,6 +18,7 @@
     text-align: center;
 }
 .container .left img{
+    cursor: pointer;
     border-radius: 50%;
     border: 7px solid black;
     box-shadow: 7px 7px 15px black;

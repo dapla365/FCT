@@ -30,7 +30,7 @@
             <!-- Estilos -->
             <link rel="stylesheet" href="css/index.css">';
         }
-        if ($url == 'login.php' || $url == 'register.php' || $url == 'changePassword.php') {
+        if ($url == 'login.php' || $url == 'register.php' || $url == 'changePassword.php' || $url == 'registerAdmin.php') {
             echo '<link rel="stylesheet" href="css/form.css">';
         }
         if ($url == 'editar_user.php') {
@@ -38,6 +38,7 @@
         }
         if ($url == 'peluqueros.php' || $url == 'peluqueros2.php') {
             echo '<link rel="stylesheet" href="css/peluqueros.css">';
+            echo '<link rel="stylesheet" href="css/reservas.css">';
         }
         if ($url == 'disponibles.php' || $url == 'disponibles2.php') {
             echo '<link rel="stylesheet" href="css/calendario.css">';
@@ -52,7 +53,7 @@
             echo '<link rel="stylesheet" href="css/admin.css">';
         }
         //* JQUERY
-        if ($url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php') {
+        if ($url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php' || $url == 'perfil.php') {
             echo '             
             <!-- JQuery -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';

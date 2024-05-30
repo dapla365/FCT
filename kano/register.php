@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<p><strong>Error: </strong>Todos los campos son obligatorios.</p";
             return;
         }
-        $username = strtolower(substr($nombre, 3) . substr($apellidos, 3). random_int(10000, 99999)); //* GENERAR USUARIO A PARTIR DE NOMBRE Y APELLIDOS
+        $username = strtolower(substr($nombre, 0, 3) . substr($apellidos, 0, 3). random_int(10000, 99999)); //* GENERAR USUARIO A PARTIR DE NOMBRE Y APELLIDOS
 
         //LOGIN CON USUARIO O CORREO
         $sql_usuario="SELECT * FROM usuarios WHERE username ='$username'";

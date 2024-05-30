@@ -215,6 +215,7 @@ if ($user_nivel <= 5) {
         ?>
             </tbody>
         </table>
+        <button onclick="window.location.href = 'registerAdmin.php';">Agregar usuario</button>
     </div>
 </div>
 <script>

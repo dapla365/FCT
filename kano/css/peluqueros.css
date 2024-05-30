@@ -154,77 +154,6 @@ header .icons span:last-child{
     cursor: pointer;
 }
 
-/** RESERVAS */
-.centro{
-    margin: 0;
-    margin-top: 2rem;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-.container {
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 2%;
-}
-.sin_citas {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20vh;
-    text-decoration: none;
-    color: rgb(82, 82, 82);
-}
-.sin_citas:hover {
-    cursor: pointer;
-    color: black;
-}
-.cita{
-    color: black;
-    text-decoration: none;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid gray;
-    border-radius: 5px;
-    padding: 1%;
-    margin-top: 1%;
-    transition: all 0.2s;
-}
-.cita:hover{
-    border: 1px solid red;
-}
-.cita_peluquero{
-    width: 40%;
-    display: flex;
-    justify-content: flex-start;
-    text-align: left;
-}
-.cita_fecha{
-    width: 40%;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-}
-.cita_hora{
-    width: 20%;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-}
-.cita_peluquero{
-    font-weight: bold;
-}
-p{
-    margin: 0;
-}
-i{
-    padding-right: 3px;
-}
 body{
     min-width: 310px;
 }
@@ -238,7 +167,6 @@ body{
     .centro .container{
         width: 100%;
     }
-    
 }
 @media screen and (max-width: 470px) {
     .apellidos{
