@@ -65,7 +65,7 @@
                                 <p class='cita_pagado'> $pago </p>
                             </div>
                             <div class='cita_opciones'>
-                                <button onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></button>
+                                <div onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></div>
                             </div>
                         </div>
                         ";
@@ -86,9 +86,9 @@
                                 <p class='cita_pagado'> $pago </p>
                             </div>
                             <div class='cita_opciones'>
-                                <button onclick='realizada($id)'><i class='bi bi-check-lg'></i></button>
-                                <button onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></button>
-                                <button onclick='pagar($id)'><i class='bi bi-currency-euro'></i></button>
+                                <div onclick='realizada($id)'><i class='bi bi-check-lg'></i></div>
+                                <div onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></div>
+                                <div onclick='pagar($id)'><i class='bi bi-currency-euro'></i></div>
                             </div>
                         </div>
                         ";

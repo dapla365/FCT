@@ -38,7 +38,6 @@
         }
         if ($url == 'peluqueros.php' || $url == 'peluqueros2.php') {
             echo '<link rel="stylesheet" href="css/peluqueros.css">';
-            echo '<link rel="stylesheet" href="css/reservas.css">';
         }
         if ($url == 'disponibles.php' || $url == 'disponibles2.php') {
             echo '<link rel="stylesheet" href="css/calendario.css">';

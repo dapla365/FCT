@@ -8,30 +8,36 @@
         $hora = htmlspecialchars($_GET['hora']);
         $peluquero = htmlspecialchars($_GET['peluquero']);
 
-        if (in_array($hora, $horas_disponibles) && in_array($peluquero, $peluqueros_totales)) { //* COMPROBAR QUE LA HORA Y LOS PELUQUEROS SON VÁLIDOS.
-            $a = "SELECT * FROM citas WHERE fecha = $fecha AND hora = '$hora' AND peluquero = $peluquero;";
-            $a = mysqli_query($mysqli, $a);
-            if (mysqli_num_rows($a) <= 0) {     //* COMPROBAR QUE EL PELUQUERO NO TIENE CITA A ESA HORA
-
-                //* AÑADIR CITA
-                $a = "INSERT INTO citas (fecha, hora, peluquero, usuario) VALUES ('{$fecha}','{$hora}','{$peluquero}','{$user_id}')";
-                $a = mysqli_query($mysqli, $a);
-                if (!$a) {
-                    echo "<p><strong>Error: </strong>Algo ha ido mal añadiendo la incidencia: " . mysqli_error($mysqli) . "</p>";
-                } else {
-                    //* ENVIAR CORREO
-                    
-                    $b = "SELECT * FROM citas WHERE usuario=$user_id AND hora='$hora' AND fecha='$fecha' AND peluquero=$peluquero;";
-                    $b = mysqli_query($mysqli, $b);
-                    $row = mysqli_fetch_assoc($b);
-                    $reserva = $row['id'];
-                    header("Location: components/mail.php?reserva=$reserva&correo=$user_correo&fecha=$fecha&hora=$hora&peluquero=$peluquero");
-                }
-            }else {
-                echo "<p><strong>Error: </strong>¡Ese peluquero ya tiene una cita a esa hora!</p>";
+        if($fecha < date('d/m/Y')){
+            echo "<p><strong>Error: </strong>¡Esa fecha no es actual!</p>";
+            return;
+        }
+        if($fecha == date("d/m/Y")){
+            $hora_hoy = date("H:i", time());
+            $hh = explode(":", $hora)[0]; 
+            $mm = explode(":", $hora)[1]; 
+            $hh_hoy = explode(":", $hora_hoy)[0]; 
+            $mm_hoy = explode(":", $hora_hoy)[1]; 
+    
+            if($hh < $hh_hoy || ($hh == $hh_hoy && $mm < $mm_hoy)){
+                echo "<p><strong>Error: </strong>¡Esa hora no es actual!</p>";
+                return;
             }
-        } else {
-            echo "<p><strong>Error: </strong>¡Cita con peluquero seleccionado incorrecta!</p>";
+        } 
+
+        $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND hora = '$hora' AND peluquero = $peluquero AND usuario IS NULL;";
+        $a = mysqli_query($mysqli, $a);
+        if (mysqli_num_rows($a) > 0) {    
+            $row = mysqli_fetch_array($a); 
+            $id_cita = $row["id"];
+
+            //* AÑADIR USUARIO A LA CITA
+            $a = "UPDATE citas SET usuario='$user_id' WHERE id='$id_cita';";
+            $a = mysqli_query($mysqli, $a);
+
+            header("Location: components/mail.php?reserva=$id_cita&correo=$user_correo&fecha=$fecha&hora=$hora&peluquero=$peluquero");
+        }else {
+            echo "<p><strong>Error: </strong>¡Ese peluquero ya tiene una cita asignada a esa hora!</p>";
         }
     }else if (isset($_GET['confirmado'])) { //* EMAIL ENVIADO CORRECTAMENTE Y CITA AÑADIDA CON ÉXITO.
         header("Refresh:3; url=index.php");

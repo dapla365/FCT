@@ -4,7 +4,8 @@
 <div class="centrar">
     <div class="wrapper">
         <header>
-            <p class="current-date"><span class="mes">Abril 2024</span>|| <span class="semana"></span></p>
+            <p class="current-date"><span class="mes">Abril 2024</span></p>
+            <p class="semana"></p>
             <div class="icons">
                 <span id="prev" class="material-symbols-rounded">
                     <i class="bi bi-chevron-left"></i></span>
@@ -62,7 +63,7 @@
                 }
             }
             
-            $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero';";
+            $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero' AND usuario IS NULL;";
             $a = mysqli_query($mysqli, $a);
             if(mysqli_num_rows($a)>0){
                 //* HAY CITAS EN ESA FECHA */
@@ -93,24 +94,13 @@
                         $rowb = mysqli_fetch_assoc($b);
                         $peluquero_nombre = ucwords(mb_strtolower($rowb['nombre']));
                         $peluquero_apellido = ucwords(mb_strtolower($rowb['apellidos']));
-    
+                        
                         echo "        
-                        <div class='cita' id='$id'>
-                            <div class='cita_datos'>
-                                <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
-                            </div>
-                            <div class='cita_datos'>
-                                <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
-                                
-                            </div>
-                            <div class='cita_datos'>
-                                <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
-                            </div>
-                            <div class='cita_opciones'>
-                                <button onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></button>
-                            </div>
-                        </div>
-                        ";
+                        <a href='confirmarCita.php?fecha=$fecha&hora=$hora&peluquero=$peluquero' class='cita' id='$fecha-$hora'>
+                            <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre&nbsp;<span class='apellidos'>$peluquero_apellido<span></p>
+                            <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
+                            <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
+                        </a>";
                     }
                 }
 
@@ -130,6 +120,7 @@
 
 <script>
     const currentDate = document.querySelector(".current-date"),
+        semana = document.querySelector(".semana"),
         prevNextIcon = document.querySelectorAll(".icons span");
         
     const lunes = document.querySelector(".lunes"),
@@ -303,8 +294,7 @@
                     break;
             } 
 
-                //TODO REVISAR DIAS COMPLETOS DE CITAS Y DESACTIVARLOS
-                /*
+                //* DESACTIVAR DIAS COMPLETOS DE CITAS Y DESACTIVARLOS
                 $.ajax({
                     url: 'components/comprobarDiaLibre.php',
                     method: 'POST',
@@ -313,12 +303,13 @@
                         peluquero: <?php echo "$peluquero";?>
                     },
                     success: function(data) {
+                    
                         let d = document.getElementById(element).classList;
                         if(!d.contains("inactive") && !d.contains("active")){
-                            d = data;
+                            document.getElementById(element).classList += data.trim();
                         }
                     }
-                });*/
+                });
 
                 if (primerDiaSemana == 0) {
                     primerDiaSemana = dia;
@@ -330,7 +321,8 @@
         primera = true;
         
 
-        currentDate.innerHTML = `<span class='mes'>${months[currMonth]} ${currYear} || </span> <span class='semana'>Semana ${primerDiaSemana}/${primerDiaSemanaMes} - ${ultimoDiaSemana}/${ultimoDiaSemanaMes}</span>`;
+        currentDate.innerHTML = `<span class='mes'>${months[currMonth]} ${currYear}</span>`;
+        semana.innerHTML = `Semana ${primerDiaSemana}/${primerDiaSemanaMes} - ${ultimoDiaSemana}/${ultimoDiaSemanaMes}`;
     }
 
     //! CARGAR AL PRINCIPIO 
@@ -343,6 +335,31 @@
     /* BOTONES DE CAMBIAR MES */
     prevNextIcon.forEach(icon => {
         icon.addEventListener("click", () => {
+            let w = getWeekOfMonth(trueYear, trueMonth, trueDate);
+            if (currWeek == w && icon.id === "prev" && currMonth == trueMonth && currYear == trueYear) {
+                return;
+            }
+
+            //TODO ARREGLAR NO PASAR MAS DE DOS MESES HACIA ADELANTE.
+            /*let tM = trueMonth;
+            let tY = trueYear;
+
+            console.log(currMonth, tM, tY);
+            if (trueMonth == 11) {
+                tM = 1;
+                tY = trueYear + 1;
+            }else if (trueMonth == 12){
+                tM = 2;
+                tY = trueYear + 1;
+            }else{
+                tM = trueMonth + 2;
+                tY = trueYear;
+            }
+            let w2 = semanasEnMes(tM, tY);
+           
+            if (currWeek == w2 && icon.id != "prev" && currMonth == tM && currYear == tY) {
+                return;
+            }*/
             currWeek = icon.id === "prev" ? currWeek - 1 : currWeek + 1;
             let maxWeek = Math.trunc(new Date(currYear, currMonth, 0).getDate()/7);
             if (currWeek < 0) {
@@ -392,6 +409,13 @@
         let weekNumber = Math.trunc((dayOfMonth + firstDayOfWeek - 1) / 7);
         
         return weekNumber;
+    }
+    function semanasEnMes(mes, año) {
+        // Obtener el número de días en el mes específico
+        let diasEnMes = new Date(año, mes, 0).getDate();
+        // Dividir los días entre 7 para obtener las semanas y redondear hacia arriba
+        let semanas = Math.ceil(diasEnMes / 7);
+        return semanas;
     }
 </script>
 
