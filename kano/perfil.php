@@ -1,41 +1,70 @@
 <?php include "components/header.php" ?>
 <?php include "components/navbar.php" ?>
-<div class="centro">
-    <div class="container">
-        <div class="left">
-            <input type="file" id="subirfoto" name="subirfoto" accept="image/png, image/jpeg" style="display: none;"/>
-            <img id="foto" src="<?php echo $user_foto; ?>" alt="img-avatar">
-            <h2><?php echo "$user_username"; ?></h2>
-            <h3><?php echo ucwords(mb_strtolower($user_rolname)); ?></h3>
+<div class="centrar">
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-image">
+                <img src="<?php echo $user_foto; ?>" alt="Imagen de perfil" id="profileImg">
+                <input type="file" id="fileInput" accept="image/png, image/jpeg">
+            </div>
+            <div class="profile-details">
+                <p><span>Usuario:</span> <?php echo "$user_username"; ?> <button class="edit-btn" onclick="cambiarUsername()">Editar</button></p>
+                <p><span>Nombre:</span> <?php echo $user_nombre; ?> <button class="edit-btn" onclick="cambiarNombre()">Editar</button></p>
+                <p><span>Apellidos:</span> <?php echo ucwords($user_apellidos); ?> <button class="edit-btn" onclick="cambiarApellidos()">Editar</button></p>
+                <p><span>Correo: </span> <?php echo $user_correo; ?> </p>
+            </div>
         </div>
-        <div class="right">
-            <div class="datos">
-                <p class="info">Correo electrónico</p> <span><?php echo $user_correo; ?></span>
-            </div>
-            <div class="datos">
-                <p class="info">Nombre</p> <span><?php echo $user_nombre; ?></span>
-            </div>
-            <div class="datos">
-                <p class="info">Apellidos</p> <span><?php echo ucwords($user_apellidos); ?></span>
-            </div>
-            <div class="datos">
-                <p class="info">Cargo</p> <span><?php echo ucwords(mb_strtolower($user_rolname)); ?></span>
-            </div>
-            <div class="datos">
-                <p class="info">Cambiar contraseña</p> <span><button onclick="window.location.href = 'changePassword.php'">Cambiar</button></span>
-            </div>
+        <div class="buttons-container">
+            <button class="action-btn change-password-btn" onclick="window.location.href = 'changePassword.php'">Cambiar contraseña</button>
             <?php
-            if($user_rol > 0 && $user_rol < 3){ 
+            if ($user_rol > 0 && $user_rol < 3) {
                 echo '
-            <div class="datos">
-                <p class="info">Cambiar horario</p> <span><button onclick="window.location.href = `cambiarHorario.php`">Cambiar</button></span>
-            </div>';
+                <button class="action-btn change-schedule-btn"
+                    onclick="window.location.href = `cambiarHorario.php`">Cambiar horario</button>';
             }
             ?>
+            <button class="action-btn delete-account-btn" onclick="eliminarCuenta()">Eliminar cuenta</button>
         </div>
     </div>
 </div>
+
 <script>
-$('#foto').click(function(){ $('#subirfoto').trigger('click'); });
+    $('#profileImg').click(function() {
+        $('#fileInput').trigger('click');
+    });
+
+    function cambiarUsername() {
+        let person = prompt('¿Qué usuario quieres ponerte?', 'davpla');
+        if (person != null) {
+            //CAMBIAR USERNAME
+        }
+    }
+
+    function cambiarNombre() {
+        let person = prompt('¿Qué nombre quieres ponerte?', 'David');
+        if (person != null) {
+            //CAMBIAR NOMBRE
+        }
+    }
+
+    function cambiarApellidos() {
+        let person = prompt('¿Qué apellidos quieres ponerte?', 'Plaza');
+        if (person != null) {
+            //CAMBIAR APELLIDOS
+        }
+    }
+
+    function eliminarCuenta() {
+        if (confirm("Estás seguro de que quieres eliminar tu cuenta")) {
+            eliminarCuenta2();
+        }
+    }
+
+    function eliminarCuenta2() {
+        let eli = prompt('Escribe ELIMINAR para eliminar tu cuenta definitivamente');
+        if (eli.toUpperCase() == 'ELIMINAR') {
+            //ELIMINAR CUENTA
+        }
+    }
 </script>
 <?php include "components/footer.php" ?>

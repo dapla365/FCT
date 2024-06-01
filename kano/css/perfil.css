@@ -1,86 +1,116 @@
-.centro{
-    margin: 0;
-    margin-top: 2rem;
-    padding: 0;
+.centrar {
+    font-family: Arial, sans-serif;
+    margin-top: 20vh;
+    padding: 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
-.container {
-    width: 80%;
-    display: flex;
-    justify-content: center;
-}
-.container .left{
-    width: 35%;
-    margin-right: 5%;
+.profile-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    text-align: center;
-}
-.container .left img{
-    cursor: pointer;
-    border-radius: 50%;
-    border: 7px solid black;
-    box-shadow: 7px 7px 15px black;
-    max-width: 500px;
-    max-height: 500px;
-}
-.container .right{
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.container .datos{
+    align-items: center;
     width: 100%;
+    max-width: 1000px;
+    overflow: hidden;
+}
+.profile-header {
     display: flex;
+    align-items: center;
+    width: 100%;
 }
-.container .datos p, span{
-    width: 50%;
+.profile-image {
+    position: relative;
+    margin-right: 20px;
+    cursor: pointer;
 }
-.container p, .container h2, .container h3, .container span{
-    margin: 0;
-    padding: 5px;
+.profile-image img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
 }
-.container p{
-    font-size: x-large;
+.profile-image input {
+    display: none;
+}
+.profile-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.profile-details p {
+    margin: 5px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.profile-details span {
     font-weight: bold;
 }
-.container span{
-    font-size: x-large;
-    color: rgb(73, 73, 73);
+.edit-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
 }
-@media screen and (max-width: 900px) {
-    .container p, .container span, .container h2, .container h3{
-        font-size: normal;
-    }
+.edit-btn:hover {
+    background-color: #45a049;
+}
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
+}
+.action-btn {
+    flex: 1;
+    margin: 0 5px 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+.change-password-btn {
+    background-color: #4CAF50;
+}
+.change-password-btn:hover {
+    background-color: #45a049;
+}
+.change-schedule-btn {
+    background-color: #007BFF;
+}
+.change-schedule-btn:hover {
+    background-color: #0069d9;
+}
+.delete-account-btn {
+    background-color: #FF4D4D;
+}
+.delete-account-btn:hover {
+    background-color: #e60000;
 }
 
-@media screen and (max-width: 600px) {
-    .container {
-        width: 95%;
-        flex-direction: column;
+/* Estilos para dispositivos móviles */ 
+@media screen and (max-width: 630px) {
+    .profile-container, .profile-header{
+        display: block;
     }
-    .container .left img{
-        max-width: 300px;
-        max-height: 300px;
-
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%;
-    }
-    .container .left , .container .right{
-        margin-top: 20px;
-        width: 100%;
-    }
-    .container .left h2, .container h3{
-        display: none;
-    }
-    .container .datos{
-        flex-direction: column;
-    }
-    .container .datos p, .container span{
-        width: 100%;
-        text-align: center;
+    .profile-image{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }

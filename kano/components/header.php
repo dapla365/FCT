@@ -36,10 +36,7 @@
         if ($url == 'editar_user.php') {
             echo '<link rel="stylesheet" href="css/form_user.css">';
         }
-        if ($url == 'peluqueros.php' || $url == 'peluqueros2.php') {
-            echo '<link rel="stylesheet" href="css/peluqueros.css">';
-        }
-        if ($url == 'disponibles.php' || $url == 'disponibles2.php') {
+        if ($url == 'peluqueros.php' || $url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php') {
             echo '<link rel="stylesheet" href="css/calendario.css">';
         }
         if ($url == 'perfil.php') {

@@ -1,5 +1,6 @@
 <?php 
 session_start();
-session_abort();
+$_SESSION['usuario'] = null;
+session_destroy();
 header('Location: login.php');
 ?>

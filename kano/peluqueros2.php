@@ -2,28 +2,22 @@
 <?php include "components/navbar.php" ?>
 
 <div class="centrar">
-    <div class="wrapper">
-        <header>
-            <p class="current-date"><span class="mes">Abril 2024</span></p>
-            <p class="semana"></p>
-            <div class="icons">
-                <span id="prev" class="material-symbols-rounded">
-                    <i class="bi bi-chevron-left"></i></span>
-                <span class="material-symbols-rounded">
-                    <i class="bi bi-chevron-right"></i></span>
-            </div>
-        </header>
-        <div class="calendar">
-            <ul class="weeks">
-                <li class="domingo">Dom<span class="dias_semana">ingo</span></li>
-                <li class="lunes">Lun<span class="dias_semana">es</span></li>
-                <li class="martes">Mar<span class="dias_semana">tes</span></li>
-                <li class="miercoles">Mié<span class="dias_semana">rcoles</span></li>
-                <li class="jueves">Jue<span class="dias_semana">ves</span></li>
-                <li class="viernes">Vie<span class="dias_semana">rnes</span></li>
-                <li class="sabado">Sab<span class="dias_semana">ado</span></li>
-            </ul>
+    <div class="calendar">
+        <div class="header">
+            <button id="prev" onclick="changeWeek(-1)">&#8249;</button>
+            <h2 id="week-range"></h2>
+            <button id="next" onclick="changeWeek(1)">&#8250;</button>
         </div>
+        <div class="weekdays">
+            <div>Dom</div>
+            <div>Lun</div>
+            <div>Mar</div>
+            <div>Mié</div>
+            <div>Jue</div>
+            <div>Vie</div>
+            <div>Sáb</div>
+        </div>
+        <div class="days" id="days"></div>
     </div>
 </div>
 
@@ -119,304 +113,102 @@
 </div>
 
 <script>
-    const currentDate = document.querySelector(".current-date"),
-        semana = document.querySelector(".semana"),
-        prevNextIcon = document.querySelectorAll(".icons span");
-        
-    const lunes = document.querySelector(".lunes"),
-        martes = document.querySelector(".martes"),
-        miercoles = document.querySelector(".miercoles"),
-        jueves = document.querySelector(".jueves"),
-        viernes = document.querySelector(".viernes"),
-        sabado = document.querySelector(".sabado"),
-        domingo = document.querySelector(".domingo");
+const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+const daysContainer = document.getElementById('days');
+const weekRangeDisplay = document.getElementById('week-range');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
 
-    let date = new Date(),
-        currYear = date.getFullYear(),
-        currMonth = date.getMonth(),
+//* FECHA TIPO 'MES / DIA / AÑO'
+let fecha = "<?php echo $mes."/".$dia."/".$ano;?>";
 
-        trueYear = date.getFullYear(),
-        trueMonth = date.getMonth(),
-        trueDate = date.getDate(),
+let selectedDate = new Date(fecha);
+let today = new Date();
+let currentWeekStart = new Date(today.setDate(today.getDate() - today.getDay()));
+let displayWeekStart = new Date(selectedDate.setDate(selectedDate.getDate() - selectedDate.getDay()));
+let maxFutureDate = new Date();
+maxFutureDate.setMonth(maxFutureDate.getMonth() + 2);
 
-        selectDate = <?php echo "$dia";?>,
-        selectMonth = <?php echo "$mes";?>,
-        selectYear = <?php echo "$ano";?>,
+function updateCalendar() {
+    daysContainer.innerHTML = '';
+    let weekStart = new Date(displayWeekStart);
+    let weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekEnd.getDate() + 6);
 
-        listaDias = new Array(),
-        currWeek = 0;
+    weekRangeDisplay.textContent = `${weekStart.getDate()} ${monthNames[weekStart.getMonth()]} ${weekStart.getFullYear()} - ${weekEnd.getDate()} ${monthNames[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`;
 
-    const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    for (let i = 0; i < 7; i++) {
+        let day = new Date(weekStart);
+        day.setDate(day.getDate() + i);
+        const dayDiv = document.createElement('div');
+        dayDiv.textContent = day.getDate();
+        const formattedDay = day.getDate().toString().padStart(2, '0');
+        const formattedMonth = (day.getMonth() + 1).toString().padStart(2, '0');
+        const dateId = `${formattedDay}/${formattedMonth}/${day.getFullYear()}`;
+        dayDiv.id = dateId;
+        dayDiv.classList.add('day');
 
-    const days = [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"];
-
-    const renderCalendar = () => {
-        lunes.style.fontWeight = "normal";
-        martes.style.fontWeight = "normal";
-        miercoles.style.fontWeight = "normal";
-        jueves.style.fontWeight = "normal";
-        viernes.style.fontWeight = "normal";
-        sabado.style.fontWeight = "normal";
-        domingo.style.fontWeight = "normal";
-
-        let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(),
-            lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(),
-            lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(),
-            lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
-
-        //! DIAS DEL MES ANTERIOR
-        for (let i = firstDayofMonth; i > 0; i--) {
-            let mes = currMonth;
-            let ano = currYear;
-            if (currMonth == 0) { //* CAMBIO DE AÑO
-                if (currYear > trueYear) {
-                    mes = 12;
-                    ano = currYear - (currYear - trueYear);
-                } else if (currYear == trueYear) {
-                    mes = 12;
-                    ano = currYear - 1;
-                } else {
-                    ano = currYear + (trueYear - currYear);
-                }
-            }
-
-            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let dia = lastDateofLastMonth - i + 1;
-            dia = dia.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let fecha = `${dia}/${mes}/${ano}`;
-
-            listaDias.push(fecha);
+        if (day.toDateString() === new Date().toDateString()) {
+            dayDiv.classList.add('today');
         }
 
-        //! DIAS DEL MES EN EL QUE ESTAMOS
-        for (let i = 1; i <= lastDateofMonth; i++) {
-            let mes = currMonth + 1;
-            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let dia = i.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let fecha = `${dia}/${mes}/${currYear}`;
-
-            listaDias.push(fecha);
-        }
-
-        //! DIAS DEL SIGUIENTE MES
-        for (let i = lastDayofMonth; i < 6; i++) {
-            let mes = currMonth + 2;
-            let ano = currYear;
-
-            if (currMonth == 11) { //* CAMBIO DE AÑO
-                if (currYear > trueYear) {
-                    mes = 1;
-                    ano = currYear + (currYear - trueYear);
-                } else if (currYear == trueYear) {
-                    mes = 1;
-                    ano = currYear + 1;
-                } else {
-                    ano = currYear - (trueYear - currYear);
-                }
-            }
-            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let dia = i - lastDayofMonth + 1;
-            dia = dia.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let fecha = `${dia}/${mes}/${ano}`;
-
-            listaDias.push(fecha);
-        }
-
-        //! CARGAR FECHAS EN EL CALENDARIO
-        let primera = true;
-        let primerDiaSemana = 0;
-        let primerDiaSemanaMes = 0;
-        let ultimoDiaSemana = 0;
-        let ultimoDiaSemanaMes = 0;
-        for (let i = 0, j = 0; j < 7; i++, j++) {
-            if (currWeek != 0 && primera == true) {
-                i = currWeek*7;
-                primera = false;
-            }
-            const element = listaDias[i];
-
-            let dia = element.split("/")[0];
-            let mes = element.split("/")[1];
-            let ano = element.split("/")[2];
-
-            let trueMonthfecha = (trueMonth+1).toString().padStart(2, '0');
-            let trueDatefecha = trueDate.toString().padStart(2, '0');
-            let trueYearfecha = trueYear.toString().padStart(2, '0');
-            let fecha = `${trueDatefecha}/${trueMonthfecha}/${trueYearfecha}`;  //* DESACTIVAR FECHAS ANTERIORES 
-
-            let selectMonthfecha = selectMonth.toString().padStart(2, '0');
-            let selectDatefecha = selectDate.toString().padStart(2, '0');
-            let selectYearfecha = selectYear.toString().padStart(2, '0');
-            let selectFecha = `${selectDatefecha}/${selectMonthfecha}/${selectYearfecha}`;  //* FECHA ELEGIDA PARA COGER CITA
-
-            let clase = "";
-            if(element == selectFecha){   //* FECHA ELEGIDA 
-                clase = "active";
-            }
-            if(trueYearfecha > ano || (trueYearfecha == ano && trueMonthfecha > mes) || (trueYearfecha == ano && trueMonthfecha == mes && trueDatefecha > dia)){   //* QUITAR FECHAS ANTERIORES 
-                clase = "inactive";
-            }
-
-            let d = new Date(ano + '-' + mes + '-' + dia).getDay();
-            dia = dia.replace(/^(0+)/g, '');
-
-            switch (d) {
-                case 0:
-                    domingo.id = element;
-                    domingo.classList = `domingo ${clase}`;
-                    break;
-                case 1:
-                    lunes.id = element;
-                    lunes.classList = `lunes ${clase}`;
-                    break;
-                case 2:
-                    martes.id = element;
-                    martes.classList = `martes ${clase}`;
-                    break;
-                case 3:
-                    miercoles.id = element;
-                    miercoles.classList = `miercoles ${clase}`;
-                    break;
-                case 4:
-                    jueves.id = element;
-                    jueves.classList = `jueves ${clase}`;
-                    break;
-                case 5:
-                    viernes.id = element;
-                    viernes.classList = `viernes ${clase}`;
-                    break;
-                case 6:
-                    sabado.id = element;
-                    sabado.classList = `sabado ${clase}`;
-                    break;
-                default:
-                    break;
-            } 
-
-                //* DESACTIVAR DIAS COMPLETOS DE CITAS Y DESACTIVARLOS
-                $.ajax({
-                    url: 'components/comprobarDiaLibre.php',
-                    method: 'POST',
-                    data: {
-                        fecha: element,
-                        peluquero: <?php echo "$peluquero";?>
-                    },
-                    success: function(data) {
-                    
-                        let d = document.getElementById(element).classList;
-                        if(!d.contains("inactive") && !d.contains("active")){
-                            document.getElementById(element).classList += data.trim();
-                        }
+        //* DIAS LLENOS Y DISPONIBLES
+        $.ajax({
+            url: 'components/comprobarDiaLibre.php',
+            method: 'POST',
+            data: {
+                fecha: dateId,
+                peluquero: <?php echo "$peluquero";?>
+            },
+            success: function(data) {
+                if(data.trim() != "a"){
+                    dayDiv.classList.add(data.trim());
+                    // Añadir tooltips y clases para días llenos y disponibles
+                    if(data.trim() == "available"){
+                        dayDiv.setAttribute('data-tooltip', 'Disponible');
+                    }else if(data.trim() == "filled"){
+                        dayDiv.setAttribute('data-tooltip', 'Lleno');
                     }
-                });
-
-                if (primerDiaSemana == 0) {
-                    primerDiaSemana = dia;
-                    primerDiaSemanaMes = mes;
                 }
-                ultimoDiaSemana = dia;
-                ultimoDiaSemanaMes = mes;
+            }
+        });
+
+        daysContainer.appendChild(dayDiv);
+    }
+
+    // Deshabilitar el botón "anterior" si estamos en la semana actual
+    if (displayWeekStart <= currentWeekStart) {
+        prevButton.disabled = true;
+    } else {
+        prevButton.disabled = false;
+    }
+
+    // Deshabilitar el botón "siguiente" si estamos más allá de dos meses desde la fecha actual
+    let nextWeekStart = new Date(displayWeekStart);
+    nextWeekStart.setDate(nextWeekStart.getDate() + 7);
+    if (nextWeekStart > maxFutureDate) {
+        nextButton.disabled = true;
+    } else {
+        nextButton.disabled = false;
+    }
+}
+
+function changeWeek(step) {
+    displayWeekStart.setDate(displayWeekStart.getDate() + step * 7);
+    updateCalendar();
+}
+
+updateCalendar();
+
+//* REDIRIGIR A LA CITA DISPONIBLES
+$(document).on("click", function(e) { //*     SE HACE POR DOCUMENTO PARA CUANDO SE CAMBIE LA PAGINA SE PUEDA COMPROBAR DE NUEVO
+    let div = document.querySelectorAll(".days div");
+    div.forEach(d => {
+        if (e.target == d) {
+            location.href = `${location.origin}/kano/peluqueros2.php?fecha=${d.id}&peluquero=${<?php echo $peluquero; ?>}`;
         }
-        primera = true;
-        
-
-        currentDate.innerHTML = `<span class='mes'>${months[currMonth]} ${currYear}</span>`;
-        semana.innerHTML = `Semana ${primerDiaSemana}/${primerDiaSemanaMes} - ${ultimoDiaSemana}/${ultimoDiaSemanaMes}`;
-    }
-
-    //! CARGAR AL PRINCIPIO 
-    currWeek = getWeekOfMonth(selectYear, selectMonth-1, selectDate);
-    currMonth = selectMonth-1;
-    currYear = selectYear;
-
-    renderCalendar(); 
-
-    /* BOTONES DE CAMBIAR MES */
-    prevNextIcon.forEach(icon => {
-        icon.addEventListener("click", () => {
-            let w = getWeekOfMonth(trueYear, trueMonth, trueDate);
-            if (currWeek == w && icon.id === "prev" && currMonth == trueMonth && currYear == trueYear) {
-                return;
-            }
-
-            //TODO ARREGLAR NO PASAR MAS DE DOS MESES HACIA ADELANTE.
-            /*let tM = trueMonth;
-            let tY = trueYear;
-
-            console.log(currMonth, tM, tY);
-            if (trueMonth == 11) {
-                tM = 1;
-                tY = trueYear + 1;
-            }else if (trueMonth == 12){
-                tM = 2;
-                tY = trueYear + 1;
-            }else{
-                tM = trueMonth + 2;
-                tY = trueYear;
-            }
-            let w2 = semanasEnMes(tM, tY);
-           
-            if (currWeek == w2 && icon.id != "prev" && currMonth == tM && currYear == tY) {
-                return;
-            }*/
-            currWeek = icon.id === "prev" ? currWeek - 1 : currWeek + 1;
-            let maxWeek = Math.trunc(new Date(currYear, currMonth, 0).getDate()/7);
-            if (currWeek < 0) {
-                currMonth--;
-                currWeek = maxWeek;
-
-                if (currMonth < 0 || currMonth > 11) {
-                    date = new Date(currYear, currMonth);
-                    currYear = date.getFullYear();
-                    currMonth = date.getMonth();
-                } else {
-                    date = new Date();
-                }
-            }else if(currWeek > maxWeek){
-                currWeek = 0;
-                currMonth++;
-                if (currMonth < 0 || currMonth > 11) {
-                    date = new Date(currYear, currMonth);
-                    currYear = date.getFullYear();
-                    currMonth = date.getMonth();
-                } else {
-                    date = new Date();
-                }
-            }
-            listaDias = new Array();
-
-            renderCalendar();
-        });
     });
-
-    $(document).on("click", function(e) { //*     SE HACE POR DOCUMENTO PARA CUANDO SE CAMBIE LA PAGINA SE PUEDA COMPROBAR DE NUEVO
-        let li = document.querySelectorAll(".weeks li");
-        li.forEach(d => {
-            if (e.target == d || e.target.parentNode == d) {
-                if (!d.classList.contains("inactive")) {
-                    location.href = `${location.origin}/kano/peluqueros2.php?fecha=${d.id}&peluquero=${<?php echo $peluquero; ?>}`;
-                }
-            }
-        });
-    });
-
-    function getWeekOfMonth(year, month, day) {
-        let firstDay = new Date(year, month, 1);
-        let firstDayOfWeek = firstDay.getDay();
-        let currentDate = new Date(year, month, day);
-        let dayOfMonth = currentDate.getDate();
-        let weekNumber = Math.trunc((dayOfMonth + firstDayOfWeek - 1) / 7);
-        
-        return weekNumber;
-    }
-    function semanasEnMes(mes, año) {
-        // Obtener el número de días en el mes específico
-        let diasEnMes = new Date(año, mes, 0).getDate();
-        // Dividir los días entre 7 para obtener las semanas y redondear hacia arriba
-        let semanas = Math.ceil(diasEnMes / 7);
-        return semanas;
-    }
+});
 </script>
 
 <?php include "components/footer.php" ?>

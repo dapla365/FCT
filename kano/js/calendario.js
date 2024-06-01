@@ -1,236 +1,100 @@
-const currentDate = document.querySelector(".current-date"),
-    daysTag = document.querySelector(".days"),
-    prevNextIcon = document.querySelectorAll(".icons span");
+const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+const daysContainer = document.getElementById('days');
+const monthYearDisplay = document.getElementById('month-year');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
 
-let date = new Date();
-currYear = date.getFullYear();
-currMonth = date.getMonth();
+let today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
+let displayMonth = currentMonth;
+let displayYear = currentYear;
 
-trueYear = date.getFullYear();
-trueMonth = date.getMonth();
-trueDate = date.getDate();
-
-const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-    "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-];
-
-const renderCalendar = () => {
-    let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(),
-        lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(),
-        lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(),
-        lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
-    let liTag = "";
-
-    //! DIAS DEL MES ANTERIOR
-    for (let i = firstDayofMonth; i > 0; i--) {
-        let dia = new Date(currYear + '-' + currMonth + '-' + (lastDateofLastMonth - i + 1)).getDay();
-        let mes = currMonth;
-        let ano = currYear;
-        /* PARA EL CAMBIO DE AÑO */
-        if (currMonth == 0) {
-            if (currYear > trueYear) {
-                dia = new Date((currYear - (currYear - trueYear)) + '-' + 12 + '-' + (lastDateofLastMonth - i + 1)).getDay();
-                mes = 12;
-                ano = currYear - (currYear - trueYear);
-            } else if (currYear == trueYear) {
-                dia = new Date((currYear - 1) + '-' + 12 + '-' + (lastDateofLastMonth - i + 1)).getDay();
-                mes = 12;
-                ano = currYear - 1;
-            } else {
-                dia = new Date((currYear + (trueYear - currYear)) + '-' + currMonth + '-' + (lastDateofLastMonth - i + 1)).getDay();
-                ano = currYear + (trueYear - currYear);
-            }
+function updateCalendar() {
+    daysContainer.innerHTML = '';
+    const firstDay = new Date(displayYear, displayMonth, 1).getDay();
+    const lastDate = new Date(displayYear, displayMonth + 1, 0).getDate();
+    
+    monthYearDisplay.textContent = `${monthNames[displayMonth]} ${displayYear}`;
+    
+    for (let i = 0; i < firstDay; i++) {
+        const emptyDiv = document.createElement('div');
+        emptyDiv.classList.add('empty');
+        daysContainer.appendChild(emptyDiv);
+    }
+    
+    for (let day = 1; day <= lastDate; day++) {
+        const dayDiv = document.createElement('div');
+        const formattedDay = day.toString().padStart(2, '0');
+        const formattedMonth = (displayMonth + 1).toString().padStart(2, '0');
+        const dateId = `${formattedDay}/${formattedMonth}/${displayYear}`;
+        dayDiv.textContent = day;
+        dayDiv.id = dateId;
+        dayDiv.classList.add('day');
+        
+        if (day === today.getDate() && displayMonth === today.getMonth() && displayYear === today.getFullYear()) {
+            dayDiv.classList.add('today');
         }
-        if (dia != 0 && dia != 6) {
-            /* QUITAR FINES DE SEMANA */
-            let isLast = (lastDateofLastMonth - i + 1) === trueDate && trueMonth + 1 === currMonth && trueYear === currYear ? "active" : "";
 
-            if ((lastDateofLastMonth - i + 1) < trueDate && trueMonth === currMonth - 1 && trueYear === currYear) {
-                /* DIAS ANTERIORES AL QUE ESTAMOS */
-                isLast = "inactive";
-            }
-            if (currYear === trueYear) {
-                if (trueMonth >= currMonth) {
-                    /* MESES ANTERIORES */
-                    isLast = "inactive";
-                }
-            } else if (currYear > trueYear) {
-                isLast = "";
-            } else {
-                isLast = "inactive";
-            }
+        //* DIAS LLENOS Y DISPONIBLES
+        $.ajax({
+            url: 'components/comprobarDiaLibre.php',
+            method: 'POST',
+            data: {
+                fecha: dateId
+            },
+            success: function(data) {
+                if(data.trim() != "a"){
+                    dayDiv.classList.add(data.trim());
 
-            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let d = lastDateofLastMonth - i + 1;
-            d = d.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let fecha = `${mes}/${d}/${ano}`;
-
-            liTag += `<li id="${fecha}" class="${isLast}">${lastDateofLastMonth - i + 1}</li>`;     //! ESCRIBE LA FECHA
-
-            if (isLast != "inactive") {
-                //* PETICION PARA VER SI EL DIA ESTÁ DISPONIBLE
-                $.ajax({
-                    url: `${location.origin}/kano/components/comprobarDiaLibre.php`,
-                    method: 'POST',
-                    data: {
-                        fecha: fecha
-                    },
-                    success: function (data) {
-                        data = data.replace(/(\r\n|\n|\r)/gm, "");
-                        try {
-                            document.getElementById(fecha).classList += data;
-                        } catch (error) {
-                            
-                        }
+                    // Añadir tooltips y clases para días llenos y disponibles
+                    if(data.trim() == "available"){
+                        dayDiv.setAttribute('data-tooltip', 'Disponible');
+                    }else if(data.trim() == "filled"){
+                        dayDiv.setAttribute('data-tooltip', 'Lleno');
                     }
-                });
+                }
             }
-        }
+        });
+
+        daysContainer.appendChild(dayDiv);
     }
 
-    //! DIAS DEL MES EN EL QUE ESTAMOS
-    for (let i = 1; i <= lastDateofMonth; i++) {
-        let dia = new Date(currYear + '-' + (currMonth + 1) + '-' + i).getDay();
-
-        if (dia != 0 && dia != 6) {
-            /* QUITAR FINES DE SEMANA */
-            let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
-
-            if (i < trueDate && currMonth === new Date().getMonth() && currYear === new Date().getFullYear()) {
-                /* DESACTIVAR DIAS ANTERIORES */
-                isToday = "inactive";
-            }
-            if (currYear === trueYear) {
-                if (trueMonth > currMonth) {
-                    /* DESACTIVAR MESES ANTERIORES */
-                    isToday = "inactive";
-                }
-            } else if (currYear > trueYear) {
-                isToday = "";
-            } else {
-                isToday = "inactive"; /* DESACTIVAR AÑOS ANTERIORES */
-            }
-
-            let mes = currMonth + 1;
-            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let d = i.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let fecha = `${mes}/${d}/${currYear}`;
-
-            liTag += `<li id="${fecha}" class="${isToday}">${i}</li>`;     //! ESCRIBE LA FECHA
-
-            if (isToday != "inactive" && isToday != "active") {
-                //* PETICION PARA VER SI EL DIA ESTÁ DISPONIBLE
-                $.ajax({
-                    url: `${location.origin}/kano/components/comprobarDiaLibre.php`,
-                    method: 'POST',
-                    data: {
-                        fecha: fecha
-                    },
-                    success: function (data) {
-                        data = data.replace(/(\r\n|\n|\r)/gm, "");
-                        try {
-                            document.getElementById(fecha).classList += data;
-                        } catch (error) {
-                            
-                        }
-                    }
-                });
-            }
-
-        }
+    // Deshabilitar el botón de "anterior" si estamos en el mes actual o un mes posterior
+    if (displayYear === currentYear && displayMonth <= currentMonth) {
+        prevButton.disabled = true;
+    } else {
+        prevButton.disabled = false;
     }
 
-    //! DIAS DEL SIGUIENTE MES
-    for (let i = lastDayofMonth; i < 6; i++) {
-        let dia = new Date(currYear + '-' + (currMonth + 2) + '-' + (i - lastDayofMonth + 1)).getDay();
-        let mes = currMonth + 2;
-        let ano = currYear;
-        /* PARA EL CAMBIO DE AÑO */
-        if (currMonth == 11) {
-            if (currYear > trueYear) {
-                dia = new Date((currYear + (currYear - trueYear)) + '-' + 1 + '-' + (i - lastDayofMonth + 1)).getDay();
-                mes = 1;
-                ano = currYear + (currYear - trueYear);
-            } else if (currYear == trueYear) {
-                dia = new Date((currYear + 1) + '-' + 1 + '-' + (i - lastDayofMonth + 1)).getDay();
-                mes = 1;
-                ano = currYear + 1;
-            } else {
-                dia = new Date((currYear - (trueYear - currYear)) + '-' + currMonth + '-' + (i - lastDayofMonth + 1)).getDay();
-                ano = currYear - (trueYear - currYear);
-            }
-        }
-        if (dia != 0 && dia != 6) {
-            /* QUITAR FINES DE SEMANA */
-            let isLast = "";
-            if (currYear === trueYear) {
-                if (trueMonth > currMonth) {
-                    /* DESACTIVAR MESES ANTERIORES */
-                    isLast = "inactive";
-                }
-            } else if (currYear > trueYear) {
-                isLast = "";
-            } else {
-                isLast = "inactive"; /* DESACTIVAR AÑOS ANTERIORES */
-            }
-
-            mes = mes.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-            let d = i - lastDayofMonth + 1;
-            d = d.toString().padStart(2, '0'); //* FORMATO 2 DIGITOS
-
-            let fecha = `${mes}/${d}/${ano}`;
-
-            liTag += `<li id="${fecha}" class="${isLast}">${i - lastDayofMonth + 1}</li>`;     //! ESCRIBE LA FECHA
-
-            if (isLast != "inactive") {
-                //* PETICION PARA VER SI EL DIA ESTÁ DISPONIBLE
-                $.ajax({
-                    url: `${location.origin}/kano/components/comprobarDiaLibre.php`,
-                    method: 'POST',
-                    data: {
-                        fecha: fecha
-                    },
-                    success: function (data) {
-                        data = data.replace(/(\r\n|\n|\r)/gm, "");
-                        try {
-                            document.getElementById(fecha).classList += data;
-                        } catch (error) {
-                            
-                        }
-                    }
-                });
-            }
-        }
+    // Deshabilitar el botón de "siguiente" si estamos en el tercer mes en el futuro o más
+    if (displayYear > currentYear || (displayYear === currentYear && displayMonth >= currentMonth + 2)) {
+        nextButton.disabled = true;
+    } else {
+        nextButton.disabled = false;
     }
-    currentDate.innerText = `${months[currMonth]} ${currYear}`;
-    daysTag.innerHTML = liTag;
 }
 
-renderCalendar(); /* CARGAR AL PRINCIPIO */
+function changeMonth(step) {
+    displayMonth += step;
+    if (displayMonth > 11) {
+        displayMonth = 0;
+        displayYear++;
+    } else if (displayMonth < 0) {
+        displayMonth = 11;
+        displayYear--;
+    }
+    updateCalendar();
+}
 
-/* BOTONES DE CAMBIAR MES */
-prevNextIcon.forEach(icon => {
-    icon.addEventListener("click", () => {
-        currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
+updateCalendar();
 
-        if (currMonth < 0 || currMonth > 11) {
-            date = new Date(currYear, currMonth);
-            currYear = date.getFullYear();
-            currMonth = date.getMonth();
-        } else {
-            date = new Date();
-        }
-        renderCalendar();
-    });
-});
-
-$(document).on("click", function (e) {      //*     SE HACE POR DOCUMENTO PARA CUANDO SE CAMBIE LA PAGINA SE PUEDA COMPROBAR DE NUEVO
-    let li = document.querySelectorAll(".days li");
-    li.forEach(d => {
-        if(e.target == d){
-            if (!d.classList.contains("inactive")) {
-                location.href = `${location.origin}/kano/disponibles2.php?fecha=${d.id}`;
-            }
+//* REDIRIGIR A LA CITA DISPONIBLES
+$(document).on("click", function(e) { //*     SE HACE POR DOCUMENTO PARA CUANDO SE CAMBIE LA PAGINA SE PUEDA COMPROBAR DE NUEVO
+    let div = document.querySelectorAll(".days div");
+    div.forEach(d => {
+        if (e.target == d) {
+            location.href = `${location.origin}/kano/disponibles2.php?fecha=${d.id}`;
         }
     });
 });
