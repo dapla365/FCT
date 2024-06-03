@@ -9,6 +9,7 @@ if (!isset($_SESSION['usuario'])) {
 ?>
 <div class="index_centro">
     <div class="index_container">
+        <img src="images/kano.png" alt="logo">
         <a href="peluqueros.php">
             <h2>Peluqueros</h2>
         </a>

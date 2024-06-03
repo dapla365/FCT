@@ -6,181 +6,76 @@
         <?php
         if (isset($_GET['fecha'])) {
             $fecha = htmlspecialchars($_GET['fecha']);
-            $fecha_hoy = date('m/d/Y');
-            $hora = date("H:i", time());
+            $fecha_hoy = date('d/m/Y');
+            echo '<h2>' . formatDate($fecha) . '</h2>';
 
-            $peluqueros_ocupados_hora = array();
-            $peluqueros_libres = array();
-
-            foreach ($horas_disponibles as $x) {    //* OBTENEMOS LOS PELUQUEROS OCUPADOS DE ESE DIA POR CADA HORA.
-                if($fecha == $fecha_hoy){  
-                    $h = explode(":", $x)[0]; 
-                    $m = explode(":", $x)[1]; 
-                    $hh = explode(":", $hora)[0]; 
-                    $mm = explode(":", $hora)[1]; 
-                    if($hh < $h){  
-                        $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND hora = '$x';";
-                        $a = mysqli_query($mysqli, $a);
-                        if (mysqli_num_rows($a) > 0) {
-
-                            while($rowa = mysqli_fetch_assoc($a)){
-                                $peluquero_id = $rowa['peluquero'];
-
-                                $lista = array();
-                                if ($peluqueros_ocupados_hora[$x] != null) {
-                                    $lista = $peluqueros_ocupados_hora[$x];
-                                }
-                                array_push($lista, $peluquero_id);
-                                $peluqueros_ocupados_hora[$x] = $lista;
-                            }
-                        } else {
-                            $peluqueros_ocupados_hora[$x] = null;
-                        }
-                    }if($hh == $h){
-                        if($mm < $m){
-                            $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND hora = '$x';";
-                            $a = mysqli_query($mysqli, $a);
-                            if (mysqli_num_rows($a) > 0) {
-
-                                while($rowa = mysqli_fetch_assoc($a)){
-                                    $peluquero_id = $rowa['peluquero'];
-
-                                    $lista = array();
-                                    if ($peluqueros_ocupados_hora[$x] != null) {
-                                        $lista = $peluqueros_ocupados_hora[$x];
-                                    }
-                                    array_push($lista, $peluquero_id);
-                                    $peluqueros_ocupados_hora[$x] = $lista;
-                                }
-                            } else {
-                                $peluqueros_ocupados_hora[$x] = null;
+            if ($fecha >= $fecha_hoy) {
+                $a = "SELECT * FROM citas WHERE fecha='$fecha' AND usuario IS NULL;";
+                $a = mysqli_query($mysqli, $a);
+                if (mysqli_num_rows($a) > 0) {
+                    while ($row = mysqli_fetch_assoc($a)) {
+                        $id = $row['id'];
+                        $fecha = $row['fecha'];
+                        $hora = $row['hora'];
+                        $peluquero = $row['peluquero'];
+                        if ($fecha == $fecha_hoy) {
+                            $hora_hoy = date("H:i", time());
+                            $hh_hoy = explode(":", $hora_hoy)[0]; 
+                            $mm_hoy = explode(":", $hora_hoy)[1]; 
+                            $hh = explode(":", $hora)[0]; 
+                            $mm = explode(":", $hora)[1]; 
+                            if ($hh < $hh_hoy || ($hh == $hh_hoy && $mm < $mm_hoy)) {
+                                return;
                             }
                         }
-                    }
-                }else{      //* COGER FECHAS DISPONIBLES DE OTRO DIAS
-                    $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND hora = '$x';";
-                    $a = mysqli_query($mysqli, $a);
-                    if (mysqli_num_rows($a) > 0) {
 
-                        while($rowa = mysqli_fetch_assoc($a)){
-                            $peluquero_id = $rowa['peluquero'];
-
-                            $lista = array();
-                            if ($peluqueros_ocupados_hora[$x] != null) {
-                                $lista = $peluqueros_ocupados_hora[$x];
-                            }
-                            array_push($lista, $peluquero_id);
-                            $peluqueros_ocupados_hora[$x] = $lista;
-                        }
-                    } else {
-                        $peluqueros_ocupados_hora[$x] = null;
-                    }
-                }
-                
-            }
-            foreach ($horas_disponibles as $x) {    //* OBTENEMOS LOS PELUQUEROS LIBRES DE ESE DIA POR CADA HORA.
-                if($fecha == $fecha_hoy){  
-                    $h = explode(":", $x)[0]; 
-                    $m = explode(":", $x)[1]; 
-                    $hh = explode(":", $hora)[0]; 
-                    $mm = explode(":", $hora)[1]; 
-                    if($hh < $h){  
-                        if ($peluqueros_ocupados_hora[$x] != null && $peluqueros_ocupados_hora[$x] < $peluqueros_totales) {
-                            //* EN ESA HORA NO ESTAN TODOS LOS PELUQUEROS LIBRES
-                            $r[$x] = array_diff($peluqueros_totales, $peluqueros_ocupados_hora[$x]);
-    
-                            $peluqueros_libres[$x] = $r[$x];
-                            
-                        } else {
-                            $peluqueros_libres[$x] = $peluqueros_totales;
-                        }
-                    }if($hh == $h){
-                        if($mm < $m){
-                            if ($peluqueros_ocupados_hora[$x] != null && $peluqueros_ocupados_hora[$x] < $peluqueros_totales) {
-                                //* EN ESA HORA NO ESTAN TODOS LOS PELUQUEROS LIBRES
-                                $r[$x] = array_diff($peluqueros_totales, $peluqueros_ocupados_hora[$x]);
-        
-                                $peluqueros_libres[$x] = $r[$x];
-                                
-                            } else {
-                                $peluqueros_libres[$x] = $peluqueros_totales;
-                            }
-                        }
-                    }
-                }else{
-                    if ($peluqueros_ocupados_hora[$x] != null && $peluqueros_ocupados_hora[$x] < $peluqueros_totales) {
-                        //* EN ESA HORA NO ESTAN TODOS LOS PELUQUEROS LIBRES
-                        $r[$x] = array_diff($peluqueros_totales, $peluqueros_ocupados_hora[$x]);
-
-                        $peluqueros_libres[$x] = $r[$x];
+                        /* INFO PELUQUERO */
+                        $b = "SELECT * FROM usuarios WHERE id=$peluquero;";
+                        $b = mysqli_query($mysqli, $b);
+                        $rowb = mysqli_fetch_assoc($b);
+                        $peluquero_nombre = ucwords(mb_strtolower($rowb['nombre']));
+                        $peluquero_apellido = ucwords(mb_strtolower($rowb['apellidos']));
                         
-                    } else {
-                        $peluqueros_libres[$x] = $peluqueros_totales;
-                    }
-                }
-            }
-            foreach ($horas_disponibles as $x) {    //* MOSTRAMOS LOS PELUQUEROS LIBRES DE ESE DIA POR CADA HORA.
-                if($fecha == $fecha_hoy){  
-                    $h = explode(":", $x)[0]; 
-                    $m = explode(":", $x)[1]; 
-                    $hh = explode(":", $hora)[0]; 
-                    $mm = explode(":", $hora)[1]; 
-                    if($hh < $h){  
-                        $a = $peluqueros_libres[$x];
-                        foreach ($peluqueros_libres[$x] as $peluquero_libre) {
-                            $c = "SELECT * FROM usuarios WHERE id = $peluquero_libre;";
-                            $c = mysqli_query($mysqli, $c);
-                            $rowc = mysqli_fetch_assoc($c);
-                            $peluquero_nombre = ucwords(mb_strtolower($rowc['nombre']));
-                            $peluquero_apellido = ucwords(mb_strtolower($rowc['apellidos']));
-    
-                            echo "        
-                            <a href='confirmarCita.php?fecha=$fecha&hora=$x&peluquero=$peluquero_libre' class='cita' id='$fecha-$x'>
-                                <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
-                                <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
-                                <p class='cita_hora'><i class='bi bi-clock-fill'></i> $x</p>
-                            </a>";
-                        }
-                    }if($hh == $h){
-                        if($mm < $m){
-                            $a = $peluqueros_libres[$x];
-                            foreach ($peluqueros_libres[$x] as $peluquero_libre) {
-                                $c = "SELECT * FROM usuarios WHERE id = $peluquero_libre;";
-                                $c = mysqli_query($mysqli, $c);
-                                $rowc = mysqli_fetch_assoc($c);
-                                $peluquero_nombre = ucwords(mb_strtolower($rowc['nombre']));
-                                $peluquero_apellido = ucwords(mb_strtolower($rowc['apellidos']));
-        
-                                echo "        
-                                <a href='confirmarCita.php?fecha=$fecha&hora=$x&peluquero=$peluquero_libre' class='cita' id='$fecha-$x'>
-                                    <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
-                                    <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
-                                    <p class='cita_hora'><i class='bi bi-clock-fill'></i> $x</p>
-                                </a>";
-                            }
-                        }
-                    }
-                }else{
-                    $a = $peluqueros_libres[$x];
-                    foreach ($peluqueros_libres[$x] as $peluquero_libre) {
-                        $c = "SELECT * FROM usuarios WHERE id = $peluquero_libre;";
-                        $c = mysqli_query($mysqli, $c);
-                        $rowc = mysqli_fetch_assoc($c);
-                        $peluquero_nombre = ucwords(mb_strtolower($rowc['nombre']));
-                        $peluquero_apellido = ucwords(mb_strtolower($rowc['apellidos']));
-
                         echo "        
-                        <a href='confirmarCita.php?fecha=$fecha&hora=$x&peluquero=$peluquero_libre' class='cita' id='$fecha-$x'>
-                            <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
+                        <a href='confirmarCita.php?fecha=$fecha&hora=$hora&peluquero=$peluquero' class='cita' id='$fecha-$hora'>
+                            <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre&nbsp;<span class='apellidos'>$peluquero_apellido<span></p>
                             <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
-                            <p class='cita_hora'><i class='bi bi-clock-fill'></i> $x</p>
+                            <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
                         </a>";
                     }
+                }else{
+                //* NO HAY CITAS ESE DIA */
+                echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> No hay citas en esta fecha</a>";
                 }
+            } else {
+                //* CITAS PASADAS AL DIA EN QUE ESTAMOS */
+                echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> Has seleccionado una fecha pasada</a>";
             }
+            
             
         } else {
             header("Location: disponibles.php");
+        }
+
+
+        function formatDate($date) {
+            $dateParts = explode('/', $date);
+            if (count($dateParts) !== 3) {
+                return 'Formato de fecha no válido';
+            }
+
+            list($day, $month, $year) = $dateParts;
+            $months = [
+                1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
+                5 => 'mayo', 6 => 'junio', 7 => 'julio', 8 => 'agosto',
+                9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+            ];
+
+            if (!checkdate($month, $day, $year)) {
+                return 'Fecha no válida';
+            }
+
+            return intval($day) . ' de ' . $months[intval($month)] . ' del ' . $year;
         }
         ?>
     </div>

@@ -49,11 +49,13 @@
                 $mes_url = explode("/", $fecha_url)[1];
                 $ano_url = explode("/", $fecha_url)[2];
 
-                if($ano_url > $ano || ($ano_url == $ano && $mes_url > $mes) || ($ano_url == $ano && $mes_url == $mes && $dia_url > $dia)){   //* QUITAR FECHAS ANTERIORES 
+                if($ano_url > $ano || ($ano_url == $ano && $mes_url > $mes) || ($ano_url == $ano && $mes_url == $mes && $dia_url >= $dia)){   //* QUITAR FECHAS ANTERIORES 
                     $fecha = $fecha_url;
                     $dia = $dia_url;
                     $mes = $mes_url;
                     $ano = $ano_url;
+                }else{
+                    echo "<script>alert('No se puede seleccionar un día que ya ha pasado')</script>";
                 }
             }
             
@@ -111,6 +113,7 @@
         ?>
     </div>
 </div>
+
 
 <script>
 const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];

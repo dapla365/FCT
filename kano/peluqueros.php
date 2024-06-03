@@ -1,7 +1,8 @@
 <?php include "components/header.php" ?>
 <?php include "components/navbar.php" ?>
 
-<div class="peluqueros">
+<div class="body">
+    <div class="gallery">
         <?php
         $a = "SELECT * FROM usuarios WHERE rol>=1 AND rol<=2;";
         $a = mysqli_query($mysqli, $a);
@@ -12,18 +13,13 @@
             $foto = $row['foto'];
 
             echo "   
-            <a href='peluqueros2.php?peluquero={$id}' class='outer-div'>
-                <div class='inner-div'>
-                    <div class='front'>
-                        <img src='$foto' alt='$nombre' class='front__bkg-photo'></img>
-                        <p class='front__text'>
-                            $nombre
-                        </p>
-                    </div>
-                </div>
+            <a href='peluqueros2.php?peluquero={$id}' class='person'>
+                <img src='$foto' alt='$nombre'>
+                <p>$nombre</p>
             </a>";
         }
         ?>
- </div>
+    </div>
+</div>
 
 <?php include "components/footer.php" ?>

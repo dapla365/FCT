@@ -6,20 +6,22 @@
     box-sizing: border-box;
 	font-family: "Open Sans", sans-serif;
 }
+
 html{
 	position: relative;
 	height: 90%;
 }
+
 body{
 	position: absolute;
 	background-size: initial;
-	background-image: url(../images/kano.png);
 	background-blend-mode: luminosity;
 	background-position: top center;
 	background-repeat: no-repeat;
 	height: 100%;
 	width: 100%;
 }
+
 .index_centro {
 	margin-top: 20vh;
     width: 100%;
@@ -28,6 +30,7 @@ body{
     align-items: center;
 	text-transform: uppercase;
 }
+
 .index_container{
     width: 50%;
 	height: 50vh;
@@ -35,6 +38,12 @@ body{
     justify-content: center;
 	flex-wrap: wrap;
 }
+
+.index_container img {
+    max-width: 100%;
+    height: auto;
+}
+
 .index_container a{
 	display: flex;
 	justify-content: center;
@@ -52,10 +61,13 @@ body{
 	border: 2px solid red;
 	border-radius: 5px;
 }
+
 .index_container a:hover{
     color: red;
 	cursor: pointer;
+	background: #f5f5f5;
 }
+
 .index_container h2{
 	padding: 0;
 	margin: 0;
@@ -64,15 +76,11 @@ body{
 	align-items: center;
 }
 
-
 @media screen and (max-width: 675px) {
 	.index_centro {
 		margin-top: 45vh;
 	}
 	.index_container{
 		width: auto;
-	}
-	body{
-		background-image: url(../images/favicon.png);
 	}
 }

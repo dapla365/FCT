@@ -1,66 +1,49 @@
 /** PELUQUEROS */
-.peluqueros{
-	height: 80vh;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
+.body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    margin: 0;
 }
 
-.outer-div,
-.inner-div {
-	height: 350px;
-	max-width: 300px;
-	margin: 2rem;
-	position: relative;
-	text-decoration: none;
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 
-.inner-div {
-	margin: 0 auto;
-	border-radius: 5px;
-	font-weight: 400;
-	color: black;
-	font-size: 1rem;
-	text-align: center;
+.person {
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    width: 250px;
+    transition: transform 0.3s;
+    text-decoration: none;
+    color: black;
 }
 
-.front {
-	cursor: pointer;
-	height: 100%;
-	background: white;
-	backface-visibility: hidden;
-	border-radius: 5px;
-	box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3),
-	  0 0 40px rgba(0, 0, 0, 0.1) inset;
+.person:hover {
+    transform: scale(1.05);
+    border-color: #ff0000;
 }
 
-.front__bkg-photo {
-	position: relative;
-	height: 300px;
-	width: 300px;
-	background: no-repeat;
-	background-size: cover;
-	backface-visibility: hidden;
-	overflow: hidden;
-	border-top-right-radius: 5px;
-	border-top-left-radius: 5px;
-	border-bottom: 2px solid black;
+.person img {
+    width: 100%;
+    height: 300px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Asegura que la imagen se recorte correctamente para llenar el área */
+    border-bottom: 1px solid #ddd;
 }
 
-.front__text {
-	position: relative;
-	top: 10px;
-	margin: 0 auto;
-	font-size: 18px;
-	backface-visibility: hidden;
-	text-transform: uppercase;
-	transition: all 2ms ease-in-out;
+.person p {
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: #333;
 }
 
-.outer-div:hover .front__text{
-	color: red;
-}
 
 /** RESERVAS */
 .centro{
@@ -78,7 +61,10 @@
     flex-direction: column;
     padding: 2%;
 }
-
+.container h2 {
+    text-align: center;
+    margin: 1vh;
+}
 .sin_citas {
     width: 100%;
     display: flex;
