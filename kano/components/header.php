@@ -30,7 +30,7 @@
             <!-- Estilos -->
             <link rel="stylesheet" href="css/index.css">';
         }
-        if ($url == 'login.php' || $url == 'register.php' || $url == 'changePassword.php' || $url == 'registerAdmin.php') {
+        if ($url == 'login.php' || $url == 'register.php' || $url == 'perfil.php' || $url == 'registerAdmin.php') {
             echo '<link rel="stylesheet" href="css/form.css">';
         }
         if ($url == 'editar_user.php') {

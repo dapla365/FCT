@@ -1,5 +1,4 @@
 <?php
-include "info.php";
 include "conexion.php";
 
 $fecha = htmlspecialchars($_POST['fecha']);

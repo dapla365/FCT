@@ -7,6 +7,10 @@
     display: flex;
     min-height: 80vh;
 }
+#body{
+    display: none;
+    min-height: 30vh;
+}
 form{
     margin: auto;
     width: 90%;
