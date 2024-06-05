@@ -35,7 +35,7 @@ thead tr th {
     border-collapse: separate;
     border-spacing: 5px 5px;
     margin-bottom: 10px;
-    background: #a3a3a3;
+    background: rgb(221, 221, 221);
     cursor: pointer;
     transition: all 0.5s linear;
 }
@@ -93,6 +93,47 @@ tbody tr:hover td {
 
 .container .agregarUsuarios button:hover {
     background-color: #0069d9;
+}
+
+/** FILTRO */
+.panel {
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.panel-heading {
+    background-color: rgb(221, 221, 221);
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    padding: 10px 15px;
+
+    text-decoration: none;
+    color: #3d3d3d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-heading span {
+    font-size: 16px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.panel-heading input {
+    font-size: 16px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.panel-heading i:hover {
+    color: red;
+    cursor: pointer;
 }
 
 @media (max-width: 767px) {

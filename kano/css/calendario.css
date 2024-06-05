@@ -24,6 +24,7 @@
     transition: transform 0.3s;
     text-decoration: none;
     color: black;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .person:hover {
@@ -150,6 +151,7 @@ body {
 }
 
 .centrar h2 {
+    text-align: center;
     margin-bottom: 5vh;
     text-transform: uppercase;
     font-size: larger;
@@ -282,49 +284,7 @@ body {
     visibility: visible;
 }
 
-/* Responsive styles */
-@media (max-width: 600px) {
-    .header {
-        padding: 10px;
-    }
-
-    .header h2 {
-        font-size: 18px;
-    }
-
-    .weekdays div {
-        font-size: 12px;
-        padding: 10px;
-    }
-
-    .days div {
-        padding: 15px;
-    }
-}
-
-@media screen and (max-width: 675px) {
-    .mes {
-        display: none;
-    }
-
-    .dias_semana {
-        display: none;
-    }
-
-    .centro .container {
-        width: 100%;
-    }
-
-    .calendar .weeks li {
-        margin-inline: 2%;
-    }
-}
-
-@media screen and (max-width: 470px) {
-    .apellidos {
-        display: none;
-    }
-}
+/** HORARIO */
 
 #buttons {
     margin: 10px;
@@ -336,7 +296,7 @@ body {
     color: white;
     border: none;
     padding: 10px 20px;
-    margin-inline: 5px;
+    margin: 5px;
     font-size: 20px;
     cursor: pointer;
     border-radius: 5px;
@@ -382,4 +342,63 @@ body {
 
 #mensaje p {
     text-align: center;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .body {
+        display: block;
+    }
+
+    .gallery {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header {
+        padding: 10px;
+    }
+
+    .header h2 {
+        font-size: 18px;
+    }
+
+    .weekdays div {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .days div {
+        padding: 15px;
+    }
+
+    #buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 675px) {
+    .mes {
+        display: none;
+    }
+
+    .dias_semana {
+        display: none;
+    }
+
+    .centro .container {
+        width: 100%;
+    }
+
+    .calendar .weeks li {
+        margin-inline: 2%;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    .apellidos {
+        display: none;
+    }
 }

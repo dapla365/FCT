@@ -38,6 +38,7 @@
     border-radius: 5px;
     padding: 1%;
     margin-top: 1%;
+    overflow: hidden;
 }
 
 .cita_datos {
@@ -57,10 +58,7 @@
 
 .cita__datos {
     width: 20%;
-    display: flex;
-    justify-content: flex-start;
-    text-align: left;
-    flex-direction: column;
+    text-align: center;
 }
 
 .cita_peluquero {
@@ -134,4 +132,34 @@ p {
 .form_container p {
     margin-top: 5px;
     text-align: center;
+}
+
+@media (max-width: 600px) {
+    .form_container form{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .form_container input {
+        width: 100%;
+    }
+    .cita {
+        flex-direction: column;
+    }
+    .cita p {
+        display: flex;
+    }
+    .cita_opciones {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .cita_datos {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+    }
 }

@@ -7,24 +7,7 @@
 	font-family: "Open Sans", sans-serif;
 }
 
-html{
-	position: relative;
-	height: 90%;
-}
-
-body{
-	position: absolute;
-	background-size: initial;
-	background-blend-mode: luminosity;
-	background-position: top center;
-	background-repeat: no-repeat;
-	height: 100%;
-	width: 100%;
-}
-
 .index_centro {
-	margin-top: 20vh;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,16 +15,22 @@ body{
 }
 
 .index_container{
-    width: 50%;
-	height: 50vh;
+    display: flex;
+    justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.index{
     display: flex;
     justify-content: center;
 	flex-wrap: wrap;
+	min-width: 300px;
 }
 
 .index_container img {
     max-width: 100%;
     height: auto;
+	margin-bottom: 10vh;
 }
 
 .index_container a{
@@ -53,8 +42,9 @@ body{
     text-decoration: none;
 
     width: 45%;
-	height: 45%;
-	margin: 5px;
+	padding-top: 10%;
+	padding-bottom: 10%;
+	margin: 1%;
 
     color: black;
 	transition: all 0.2s;
@@ -69,8 +59,6 @@ body{
 }
 
 .index_container h2{
-	padding: 0;
-	margin: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -78,9 +66,12 @@ body{
 
 @media screen and (max-width: 675px) {
 	.index_centro {
-		margin-top: 45vh;
+		margin-top: 10vh;
 	}
 	.index_container{
 		width: auto;
+	}
+	.index_container h2{
+		font-size: 1.2rem;
 	}
 }
