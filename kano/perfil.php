@@ -161,13 +161,17 @@
                 url: 'components/cambiarPerfil.php',
                 method: 'POST',
                 data: {
-                    type: 'delete',
-                    user: person
+                    type: 'delete'
                 },
                 success: function(data) {
-                    document.getElementById('mensaje').innerHTML = data;
+                    location.reload();
                 }
             });
+        } else {
+            document.getElementById('mensaje').innerHTML = "No has confirmado la eliminación de la cuenta";
+            setTimeout(function() {
+                location.reload();
+            }, 3000);
         }
     }
 </script>

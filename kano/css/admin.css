@@ -1,10 +1,11 @@
-.centro{
+.centro {
     margin: 0;
     margin-top: 2rem;
     padding: 0;
     display: flex;
     justify-content: center;
 }
+
 .container {
     width: 80%;
     display: flex;
@@ -12,75 +13,107 @@
     flex-direction: column;
     padding: 2%;
 }
-h2{
+
+h2 {
     width: 100%;
     text-align: center;
     text-transform: uppercase;
     margin-bottom: 1em;
 }
+
 table {
     width: 100%;
     overflow-x: auto;
-    border: 0; 
-    border-collapse: separate; 
+    border: 0;
+    border-collapse: separate;
     border-spacing: 0 5px;
 }
-thead tr th{
+
+thead tr th {
     padding: 3px;
     border-bottom: 3px solid rgb(0, 0, 0);
-    border-collapse: separate; 
+    border-collapse: separate;
     border-spacing: 5px 5px;
     margin-bottom: 10px;
     background: #a3a3a3;
     cursor: pointer;
     transition: all 0.5s linear;
 }
-th a{
+
+th a {
     text-decoration: none;
     color: black;
 }
+
 th a:hover i,
 th a:hover {
     color: red;
 }
+
 tbody tr td {
     border-collapse: separate;
     border-spacing: 5px 5px;
     text-align: center;
     transition: all 0.4s ease;
 }
+
 tbody tr:hover td {
     background-color: rgb(236, 236, 236);
 }
-.editar a{
+
+.editar a {
+    cursor: pointer;
     padding-inline: 3px;
 }
+
 .editar i {
     color: black;
 }
+
 .editar i:hover {
     color: red;
 }
-.editar button{
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
+
+.container .agregarUsuarios {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.container .agregarUsuarios button {
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-inline: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #007BFF;
+}
+
+.container .agregarUsuarios button:hover {
+    background-color: #0069d9;
+}
+
 @media (max-width: 767px) {
     table thead {
-        display: none; /* Oculta los encabezados en dispositivos móviles */
+        display: none;
+        /* Oculta los encabezados en dispositivos móviles */
     }
+
     table tr {
         margin-bottom: 1em;
         display: block;
         border-bottom: 1px solid #ccc;
         padding: 1em;
     }
+
     table td {
         display: block;
         text-align: center;
         position: relative;
     }
+
     table td::before {
         content: attr(data-label);
         position: absolute;
@@ -88,5 +121,5 @@ tbody tr:hover td {
         width: 50%;
         font-weight: bold;
         text-align: center;
-   }
+    }
 }

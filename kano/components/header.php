@@ -36,20 +36,20 @@
         if ($url == 'editar_user.php') {
             echo '<link rel="stylesheet" href="css/form_user.css">';
         }
-        if ($url == 'peluqueros.php' || $url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php') {
+        if ($url == 'peluqueros.php' || $url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php' || $url == 'cambiarHorario.php') {
             echo '<link rel="stylesheet" href="css/calendario.css">';
         }
         if ($url == 'perfil.php') {
             echo '<link rel="stylesheet" href="css/perfil.css">';
         }
-        if ($url == 'reservas.php' || $url == 'editar_citas.php' || $url == 'eliminar_reserva.php' || $url == 'confirmarCita.php') {
+        if ($url == 'reservas.php' || $url == 'editar_citas.php' || $url == 'eliminar_reserva.php' || $url == 'confirmarCita.php' || $url == 'cambiarHorario2.php') {
             echo '<link rel="stylesheet" href="css/reservas.css">';
         }        
         if ($url == 'admin.php') {
             echo '<link rel="stylesheet" href="css/admin.css">';
         }
         //* JQUERY
-        if ($url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php' || $url == 'perfil.php') {
+        if ($url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php' || $url == 'perfil.php' || $url == 'cambiarHorario.php' ) {
             echo '             
             <!-- JQuery -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';

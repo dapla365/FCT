@@ -16,13 +16,13 @@ if (isset($_GET['reserva'])) {
     if (in_array($id, $b) || $user_nivel > 5) {
         $c = "DELETE FROM citas WHERE id = '{$id}';";
         $c = mysqli_query($mysqli, $c);
-        echo "Reserva eliminada correctamente";
+        echo "<div class='sin_citas'>Reserva eliminada correctamente</div>";
     } else {
-        echo "Esa reserva no es tuya o no existe";
+        echo "<div class='sin_citas'>Esa reserva no es tuya o no existe</div>";
     }
 
     $pagina = $_SERVER['HTTP_REFERER'];
-    header("Refresh:3; url=$pagina");
+    header("Refresh:2; url=$pagina");
 }
 ?>
     </div>

@@ -1,10 +1,11 @@
-.centro{
+.centro {
     margin: 0;
     margin-top: 2rem;
     padding: 0;
     display: flex;
     justify-content: center;
 }
+
 .container {
     width: 80%;
     display: flex;
@@ -12,6 +13,7 @@
     flex-direction: column;
     padding: 2%;
 }
+
 .sin_citas {
     width: 100%;
     display: flex;
@@ -21,11 +23,13 @@
     text-decoration: none;
     color: rgb(82, 82, 82);
 }
+
 .sin_citas:hover {
     cursor: pointer;
     color: black;
 }
-.cita{
+
+.cita {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -35,43 +39,99 @@
     padding: 1%;
     margin-top: 1%;
 }
-.cita_datos{
+
+.cita_datos {
     width: 40%;
     display: flex;
     justify-content: flex-start;
     text-align: left;
     flex-direction: column;
 }
-.cita_opciones{
+
+.cita_opciones {
     width: 20%;
     display: flex;
     justify-content: right;
     align-items: center;
 }
 
-.cita__datos{
+.cita__datos {
     width: 20%;
     display: flex;
     justify-content: flex-start;
     text-align: left;
     flex-direction: column;
 }
-.cita_peluquero{
+
+.cita_peluquero {
     font-weight: bold;
 }
-.cita_opciones i{
+
+.cita_opciones i {
     color: black;
     margin-right: 1%;
 }
-.cita_opciones i:hover{
+
+.cita_opciones i:hover {
     color: red;
 }
-p{
+
+p {
     margin: 0;
 }
 
-button{
-    cursor: pointer;
-    background-color: transparent;
+/** FORMULARIO */
+.form_centro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_container {
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.form_container form {
+    display: flex;
+}
+
+.form_container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form_container label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
+.form_container input {
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form_container input[type=submit] {
     border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    margin-right: 0;
+}
+
+.form_container input[type=submit]:hover {
+    background-color: #218838;
+}
+
+.form_container p {
+    margin-top: 5px;
+    text-align: center;
 }

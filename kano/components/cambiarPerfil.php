@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "user-data2.php";
 
 $type = htmlspecialchars($_POST['type']);

@@ -33,8 +33,10 @@
 
 .person img {
     width: 100%;
-    height: 300px; /* Altura fija para las imágenes */
-    object-fit: cover; /* Asegura que la imagen se recorte correctamente para llenar el área */
+    height: 300px;
+    /* Altura fija para las imágenes */
+    object-fit: cover;
+    /* Asegura que la imagen se recorte correctamente para llenar el área */
     border-bottom: 1px solid #ddd;
 }
 
@@ -46,7 +48,7 @@
 
 
 /** RESERVAS */
-.centro{
+.centro {
     margin: 0;
     margin-top: 2rem;
     padding: 0;
@@ -61,10 +63,12 @@
     flex-direction: column;
     padding: 2%;
 }
+
 .container h2 {
     text-align: center;
     margin: 1vh;
 }
+
 .sin_citas {
     width: 100%;
     display: flex;
@@ -80,7 +84,7 @@
     color: black;
 }
 
-.cita{
+.cita {
     color: black;
     text-decoration: none;
     width: 100%;
@@ -94,52 +98,61 @@
     transition: all 0.2s;
 }
 
-.cita:hover{
+.cita:hover {
     border: 1px solid red;
 }
 
-.cita_peluquero{
+.cita_peluquero {
     width: 40%;
     display: flex;
     justify-content: flex-start;
     text-align: left;
 }
 
-.cita_fecha{
+.cita_fecha {
     width: 40%;
     display: flex;
     justify-content: center;
     text-align: center;
 }
 
-.cita_hora{
+.cita_hora {
     width: 20%;
     display: flex;
     justify-content: right;
     align-items: center;
 }
 
-.cita_peluquero{
+.cita_peluquero {
     font-weight: bold;
 }
-p{
+
+p {
     margin: 0;
 }
 
-i{
+i {
     padding-right: 3px;
 }
 
-body{
+body {
     min-width: 310px;
 }
 
 /** CALENDARIO SEMANAL */
 .centrar {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     font-family: Arial, sans-serif;
     margin-top: 10vh;
+}
+
+.centrar h2 {
+    margin-bottom: 5vh;
+    text-transform: uppercase;
+    font-size: larger;
 }
 
 .calendar {
@@ -176,12 +189,14 @@ body{
     font-size: 20px;
 }
 
-.weekdays, .days {
+.weekdays,
+.days {
     display: flex;
     flex-wrap: wrap;
 }
 
-.weekdays div, .days div {
+.weekdays div,
+.days div {
     width: calc(100% / 7);
     text-align: center;
     padding: 15px;
@@ -203,21 +218,29 @@ body{
     color: #000000;
 }
 
+/* Estilo para días llenos */
+.days .filled {
+    background-color: #f44336;
+    /* Rojo */
+    color: white;
+}
+
+/* Estilo para días disponibles */
+.days .available {
+    background-color: #4caf50;
+    /* Verde */
+    color: white;
+}
+
 /* Estilo para el día actual */
 .days .today {
     background-color: black;
     color: white;
 }
 
-/* Estilo para días llenos */
-.days .filled {
-    background-color: #f44336; /* Rojo */
-    color: white;
-}
-
-/* Estilo para días disponibles */
-.days .available {
-    background-color: #4caf50; /* Verde */
+/* Estilo para días seleccionados */
+.days .selected {
+    background-color: #3669f4;
     color: white;
 }
 
@@ -278,25 +301,85 @@ body{
         padding: 15px;
     }
 }
+
 @media screen and (max-width: 675px) {
-    .mes{
+    .mes {
         display: none;
     }
-    .dias_semana{
+
+    .dias_semana {
         display: none;
     }
-    .centro .container{
+
+    .centro .container {
         width: 100%;
     }
-    .calendar .weeks li{
+
+    .calendar .weeks li {
         margin-inline: 2%;
     }
 }
+
 @media screen and (max-width: 470px) {
-    .apellidos{
+    .apellidos {
         display: none;
     }
 }
 
+#buttons {
+    margin: 10px;
+    padding: 10px;
+    display: none;
+}
 
+#buttons button {
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-inline: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
+#cancel,
+#delete {
+    background-color: #FF4D4D;
+}
+
+#cancel:hover,
+#delete:hover {
+    background-color: #e60000;
+}
+
+#copy {
+    background-color: #007BFF;
+}
+
+#paste {
+    display: none;
+    background-color: #007BFF;
+}
+
+#paste:hover,
+#copy:hover {
+    background-color: #0069d9;
+}
+
+#edit {
+    background-color: #4CAF50;
+}
+
+#edit:hover {
+    background-color: #45a049;
+}
+
+#mensaje {
+    text-align: center;
+    font-size: large;
+    margin-top: 10px;
+}
+
+#mensaje p {
+    text-align: center;
+}
