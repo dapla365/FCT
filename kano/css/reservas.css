@@ -32,7 +32,7 @@
 .cita {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     border: 1px solid black;
     border-radius: 5px;
@@ -64,13 +64,16 @@
 .cita_peluquero {
     font-weight: bold;
 }
-
+.cita_opciones{
+    display: flex;
+    justify-content: space-around;
+}
 .cita_opciones i {
     color: black;
-    margin-right: 1%;
 }
 
 .cita_opciones i:hover {
+    cursor: pointer;
     color: red;
 }
 

@@ -69,7 +69,8 @@
                     $hora = $row['hora'];
                     $peluquero = $row['peluquero'];
                     $usuario = $row['usuario'];
-    
+                    $cancel = true;
+
                     if($fecha == date("d/m/Y")){
                         $hora_hoy = date("H:i", time());
                         $hh = explode(":", $hora)[0]; 
@@ -78,12 +79,13 @@
                         $mm_hoy = explode(":", $hora_hoy)[1]; 
 
                         if($hh < $hh_hoy || ($hh == $hh_hoy && $mm < $mm_hoy)){
-                            $usuario = 0;
+                            $cancel = false;
                         }
                     }
 
-                    if($usuario == NULL){
+                    if($usuario == NULL && $cancel){
                         $disp = FALSE;
+                        
                         /* INFO PELUQUERO */
                         $b = "SELECT * FROM usuarios WHERE id=$peluquero;";
                         $b = mysqli_query($mysqli, $b);

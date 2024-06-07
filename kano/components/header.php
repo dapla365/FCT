@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <title><?php echo $title; ?></title>
     <link rel="shortcut icon" href="<?php echo $favicon; ?>" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -49,7 +50,7 @@
             echo '<link rel="stylesheet" href="css/admin.css">';
         }
         //* JQUERY
-        if ($url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php' || $url == 'perfil.php' || $url == 'cambiarHorario.php' ) {
+        if ($url == 'peluqueros2.php' || $url == 'disponibles.php' || $url == 'disponibles2.php' || $url == 'perfil.php' || $url == 'cambiarHorario.php' || $url == 'reservas.php') {
             echo '             
             <!-- JQuery -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';

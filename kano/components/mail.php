@@ -40,7 +40,7 @@ else if(isset($_GET['reserva']) && isset($_GET['correo']) && isset($_GET['fecha'
     $mail->addAddress("$correo");
     $mail->Subject="KANO - Confirmacion de cita";
 
-    $enlace = "$redirect_uris?reserva=$reserva";
+    $enlace = "$mail_cancel_url?reserva=$reserva";
     $msg = "
     <h2>Datos de la cita</h2>
     <p>Fecha: <strong>$fecha</strong></p>

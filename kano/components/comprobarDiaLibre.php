@@ -14,7 +14,7 @@ if ($type == "horario") {
     if ($user_nivel <= 0) {
         header("Location: index.php");
     }
-    $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero';";
+    $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero' AND realizada = FALSE;";
     $a = mysqli_query($mysqli, $a);
     if (mysqli_num_rows($a) > 0) {
         //* HAY CITAS DISPONIBLES EN ESA FECHA */
@@ -26,7 +26,7 @@ if ($type == "horario") {
     if ($user_nivel <= 0) {
         header("Location: index.php");
     }
-    $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero';";
+    $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero' AND realizada = FALSE;";
     $a = mysqli_query($mysqli, $a);
     if (mysqli_num_rows($a) > 0) {
         //* HAY CITAS DISPONIBLES PARA PEGAR DE ESA FECHA */
@@ -43,7 +43,7 @@ if ($type == "horario") {
     if ($user_nivel <= 0) {
         header("Location: index.php");
     }
-    $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero';";
+    $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero' AND realizada = FALSE;";
     $a = mysqli_query($mysqli, $a);
     if (mysqli_num_rows($a) > 0) {
         //* HAY CITAS PARA ELIMINAR EN ESA FECHA */
@@ -56,14 +56,14 @@ if ($type == "horario") {
 } else {
     if ($peluquero != null && $peluquero != "") {
         //! PARA PELUQUEROS DISPONIBLES
-        $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero' AND usuario IS NULL;";
+        $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero' AND usuario IS NULL AND realizada = FALSE;";
         $a = mysqli_query($mysqli, $a);
         if (mysqli_num_rows($a) > 0) {
             //* HAY CITAS DISPONIBLES EN ESA FECHA */
             $valida = 'available';
         } else {
             //* NO HAY CITAS DISPONIBLES EN ESA FECHA */
-            $b = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero';";
+            $b = "SELECT * FROM citas WHERE fecha = '$fecha' AND peluquero='$peluquero' AND realizada = FALSE;";
             $b = mysqli_query($mysqli, $b);
             if (mysqli_num_rows($b) > 0) {
                 $valida = 'filled';
@@ -71,14 +71,14 @@ if ($type == "horario") {
         }
     } else {
         //! PARA CALENDARIO DISPONIBLES
-        $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND usuario IS NULL;";
+        $a = "SELECT * FROM citas WHERE fecha = '$fecha' AND usuario IS NULL AND realizada = FALSE;";
         $a = mysqli_query($mysqli, $a);
         if (mysqli_num_rows($a) > 0) {
             //* HAY CITAS DISPONIBLES EN ESA FECHA */
             $valida = 'available';
         } else {
             //* NO HAY CITAS DISPONIBLES EN ESA FECHA */
-            $b = "SELECT * FROM citas WHERE fecha = '$fecha';";
+            $b = "SELECT * FROM citas WHERE fecha = '$fecha' AND realizada = FALSE;";
             $b = mysqli_query($mysqli, $b);
             if (mysqli_num_rows($b) > 0) {
                 $valida = 'filled';

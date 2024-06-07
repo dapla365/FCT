@@ -131,7 +131,7 @@ if (isset($_GET['fecha'])) {
 <script>
     function confirmacion(id) {
         if (confirm("¿Estás seguro que quieres eliminar esta reserva?")) {
-            location.href = "eliminar_reserva.php?reserva=" + id;
+            location.href = "eliminar_reserva.php?delete=" + id;
         }
     }
 </script>

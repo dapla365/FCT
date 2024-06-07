@@ -18,16 +18,6 @@
                         $fecha = $row['fecha'];
                         $hora = $row['hora'];
                         $peluquero = $row['peluquero'];
-                        if ($fecha == $fecha_hoy) {
-                            $hora_hoy = date("H:i", time());
-                            $hh_hoy = explode(":", $hora_hoy)[0]; 
-                            $mm_hoy = explode(":", $hora_hoy)[1]; 
-                            $hh = explode(":", $hora)[0]; 
-                            $mm = explode(":", $hora)[1]; 
-                            if ($hh < $hh_hoy || ($hh == $hh_hoy && $mm < $mm_hoy)) {
-                                return;
-                            }
-                        }
 
                         /* INFO PELUQUERO */
                         $b = "SELECT * FROM usuarios WHERE id=$peluquero;";
@@ -35,30 +25,45 @@
                         $rowb = mysqli_fetch_assoc($b);
                         $peluquero_nombre = ucwords(mb_strtolower($rowb['nombre']));
                         $peluquero_apellido = ucwords(mb_strtolower($rowb['apellidos']));
-                        
-                        echo "        
-                        <a href='confirmarCita.php?fecha=$fecha&hora=$hora&peluquero=$peluquero' class='cita' id='$fecha-$hora'>
-                            <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre&nbsp;<span class='apellidos'>$peluquero_apellido<span></p>
-                            <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
-                            <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
-                        </a>";
+
+                        if ($fecha == $fecha_hoy) {
+                            $hora_hoy = date("H:i", time());
+                            $hh_hoy = explode(":", $hora_hoy)[0];
+                            $mm_hoy = explode(":", $hora_hoy)[1];
+                            $hh = explode(":", $hora)[0];
+                            $mm = explode(":", $hora)[1];
+                            if ($hh > $hh_hoy || ($hh == $hh_hoy && $mm > $mm_hoy)) {
+                                echo "        
+                            <a href='confirmarCita.php?fecha=$fecha&hora=$hora&peluquero=$peluquero' class='cita' id='$fecha-$hora'>
+                                <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre&nbsp;<span class='apellidos'>$peluquero_apellido<span></p>
+                                <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
+                                <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
+                            </a>";
+                            }
+                        } else {
+                            echo "        
+                            <a href='confirmarCita.php?fecha=$fecha&hora=$hora&peluquero=$peluquero' class='cita' id='$fecha-$hora'>
+                                <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre&nbsp;<span class='apellidos'>$peluquero_apellido<span></p>
+                                <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
+                                <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
+                            </a>";
+                        }
                     }
-                }else{
-                //* NO HAY CITAS ESE DIA */
-                echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> No hay citas en esta fecha</a>";
+                } else {
+                    //* NO HAY CITAS ESE DIA */
+                    echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> No hay citas en esta fecha</a>";
                 }
             } else {
                 //* CITAS PASADAS AL DIA EN QUE ESTAMOS */
                 echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> Has seleccionado una fecha pasada</a>";
             }
-            
-            
         } else {
             header("Location: disponibles.php");
         }
 
 
-        function formatDate($date) {
+        function formatDate($date)
+        {
             $dateParts = explode('/', $date);
             if (count($dateParts) !== 3) {
                 return 'Formato de fecha no válido';

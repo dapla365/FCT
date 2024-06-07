@@ -231,7 +231,7 @@ if (isset($_GET['filtro'])) {
 
                                         <td class='editar'>
                                             <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
-                                            <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                                            <a href='reservas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
                                             <a href='cambiarHorario.php?user={$id}'><i class='bi bi-calendar2-date-fill'></i></a>
                                             <a onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></a>  
                                         </td>
@@ -251,7 +251,7 @@ if (isset($_GET['filtro'])) {
 
                                     <td class='editar'>
                                         <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
-                                        <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                                        <a href='reservas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
                                         <a href='cambiarHorario.php?user={$id}'><i class='bi bi-calendar2-date-fill'></i></a>
                                         <a onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></a>  
                                     </td>
@@ -278,7 +278,7 @@ if (isset($_GET['filtro'])) {
                 
                                         <td class='editar'>
                                             <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
-                                            <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                                            <a href='reservas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
                                             <a onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></a>  
                                         </td>
                                     </tr>";
@@ -297,7 +297,7 @@ if (isset($_GET['filtro'])) {
             
                                     <td class='editar'>
                                         <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
-                                        <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                                        <a href='reservas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
                                         <a onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></a>  
                                     </td>
                                 </tr>";
@@ -347,7 +347,7 @@ if (isset($_GET['filtro'])) {
                 
                                         <td class='editar'>
                                             <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
-                                            <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                                            <a href='reservas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
                                             <a href='cambiarHorario.php?user={$id}'><i class='bi bi-calendar2-date-fill'></i></a>
                                             <a onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></a>  
                                         </td>
@@ -367,7 +367,7 @@ if (isset($_GET['filtro'])) {
             
                                     <td class='editar'>
                                         <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
-                                        <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                                        <a href='reservas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
                                         <a href='cambiarHorario.php?user={$id}'><i class='bi bi-calendar2-date-fill'></i></a>
                                         <a onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></a>  
                                     </td>
@@ -396,7 +396,7 @@ if (isset($_GET['filtro'])) {
                 
                                         <td class='editar'>
                                             <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
-                                            <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                                            <a href='reservas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
                                             <a href='cambiarHorario.php?user={$id}'><i class='bi bi-calendar2-date-fill'></i></a>
                                             <a onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></a>  
                                         </td>
@@ -416,7 +416,7 @@ if (isset($_GET['filtro'])) {
             
                                     <td class='editar'>
                                         <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
-                                        <a href='editar_citas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
+                                        <a href='reservas.php?user={$id}'><i class='bi bi-calendar-event-fill'></i></a>
                                         <a onclick='eliminarUsuario($id)'><i class='bi bi-trash-fill'></i></a>  
                                     </td>
                                 </tr>";

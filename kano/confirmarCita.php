@@ -43,6 +43,15 @@
         header("Refresh:3; url=index.php");
         echo "<h2 class='sin_citas'> ¡Cita añadida con éxito!. Redirigiendo...</h2>";
         echo "<p class='sin_citas'> Si no redirige puedes hacer&nbsp;<a href='index.php'>click aquí</a></p>";
+    }else if (isset($_GET['id']) && isset($_GET['tipo'])) { //* CAMBIAR TIPO DE CITA 
+        $id = htmlspecialchars($_GET['id']);
+        $tipo = htmlspecialchars($_GET['tipo']);
+        $a = "UPDATE citas SET tipo='$tipo' WHERE id='$id';";
+        $a = mysqli_query($mysqli, $a);
+
+        header("Refresh:2; url=reservas.php");
+        echo "<h2 class='sin_citas'> ¡Cita cambiada con éxito!. Redirigiendo...</h2>";
+        echo "<p class='sin_citas'> Si no redirige puedes hacer&nbsp;<a href='reservas.php'>click aquí</a></p>";
     }
     
     else {

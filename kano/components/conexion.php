@@ -6,6 +6,7 @@ $dbname = "thsi_35476428_pruebas";
 
 // Crear conexión
 $mysqli = new mysqli($hostname,$username,$password,$dbname);
+$mysqli->set_charset("utf8");
 ?>
 
 

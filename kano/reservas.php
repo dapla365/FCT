@@ -1,10 +1,19 @@
 <?php include "components/header.php"; ?>
 <?php include "components/navbar.php"; ?>
-
+<?php
+if (isset($_GET['user'])) {
+    $user = htmlspecialchars($_GET['user']);
+    if ($user_nivel <= 5) {
+        $user = $user_id;
+    }
+} else {
+    $user = $user_id;
+}
+?>
 <div class="centro">
     <div class="container">
         <?php
-        $a = "SELECT * FROM citas WHERE peluquero=$user_id OR usuario=$user_id;";
+        $a = "SELECT * FROM citas WHERE peluquero=$user OR usuario=$user;";
         $a = mysqli_query($mysqli, $a);
 
         if (mysqli_num_rows($a) <= 0) {
@@ -21,7 +30,7 @@
                 $pagado = $row['pagado'];
                 $realizada = $row['realizada'];
 
-                if($usuario != NULL){
+                if ($usuario != NULL && !$realizada) {
                     $disp = FALSE;
 
                     /* INFO PELUQUERO */
@@ -44,12 +53,14 @@
                     $rowd = mysqli_fetch_assoc($d);
                     $tipo_nombre = ucwords(mb_strtolower($rowd['tipo']));
                     $tipo_precio = $rowd['precio'];
+                    $tipo_id = $rowd['id'];
 
-                    $pago = 'Sin Pagar: ' . $tipo_precio. "€";
-                    if($pagado == TRUE){
-                        $pago = 'Pagado';
-
-                        //* PAGADO */
+                    $pago = 'Sin Pagar: ' . $tipo_precio . "€";
+                    if ($user_nivel >= 5) {
+                        if ($pagado == TRUE) {
+                            //* PAGADO 
+                            $pago = 'Pagado';
+                        }
                         echo "        
                         <div class='cita' id='$id'>
                             <div class='cita__datos'>
@@ -61,41 +72,69 @@
                                 <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
                             </div>
                             <div class='cita__datos'>
-                                <p class='cita_tipo'> $tipo_nombre </p>
-                                <p class='cita_pagado'> $pago </p>
-                            </div>
-                            <div class='cita_opciones'>
-                                <div onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></div>
-                            </div>
-                        </div>
-                        ";
-                    }else {
-                        //* SIN PAGAR
-                        echo "        
-                        <div class='cita' id='$id'>
-                            <div class='cita__datos'>
-                                <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
-                                <p class='cita_usuario'><i class='bi bi-person-standing'></i> $usuario_nombre $usuario_apellido</p>
-                            </div>
-                            <div class='cita__datos'>
-                                <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
-                                <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
-                            </div>
-                            <div class='cita__datos'>
-                                <p class='cita_tipo'> $tipo_nombre </p>
+                                <select class='cita_tipo'>
+                                <option value='$tipo_id'>$tipo_nombre</option>";
+                        $d = "SELECT * FROM tipos;";
+                        $d = mysqli_query($mysqli, $d);
+                        while ($rowd = mysqli_fetch_assoc($d)) {
+                            $tipo_nombre2 = ucwords(mb_strtolower($rowd['tipo']));
+                            $tipo_id2 = $rowd['id'];
+                            if ($tipo_nombre != $tipo_nombre2) {
+                                echo "<option value='$tipo_id2'>$tipo_nombre2</option>";
+                            }
+                        }
+                        echo    "</select>
                                 <p class='cita_pagado'> $pago </p>
                             </div>
                             <div class='cita_opciones'>
                                 <div onclick='realizada($id)'><i class='bi bi-check-lg'></i></div>
                                 <div onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></div>
-                                <div onclick='pagar($id)'><i class='bi bi-currency-euro'></i></div>
                             </div>
+                        </div>
+                        ";
+                    } else {
+                        //! VISTA DE USUARIO
+                        if ($pagado == TRUE) {
+                            //* PAGADO
+                            $pago = 'Pagado';
+                        }
+                        echo "        
+                        <div class='cita' id='$id'>
+                            <div class='cita__datos'>
+                                <p class='cita_peluquero'><i class='bi bi-scissors'></i> $peluquero_nombre $peluquero_apellido</p>
+                                <p class='cita_usuario'><i class='bi bi-person-standing'></i> $usuario_nombre $usuario_apellido</p>
+                            </div>
+                            <div class='cita__datos'>
+                                <p class='cita_fecha'><i class='bi bi-calendar-event-fill'></i> $fecha</p>
+                                <p class='cita_hora'><i class='bi bi-clock-fill'></i> $hora</p>
+                            </div>
+                            <div class='cita__datos'>
+                                <select class='cita_tipo'>
+                                <option value='$tipo_id'>$tipo_nombre</option>";
+                        $d = "SELECT * FROM tipos;";
+                        $d = mysqli_query($mysqli, $d);
+                        while ($rowd = mysqli_fetch_assoc($d)) {
+                            $tipo_nombre2 = ucwords(mb_strtolower($rowd['tipo']));
+                            $tipo_id2 = $rowd['id'];
+                            if ($tipo_nombre != $tipo_nombre2) {
+                                echo "<option value='$tipo_id2'>$tipo_nombre2</option>";
+                            }
+                        }
+                        echo "</select>
+                                <p class='cita_pagado'> $pago </p>
+                            </div>
+                            <div class='cita_opciones'>
+                                <div onclick='confirmacion($id)'><i class='bi bi-trash3-fill'></i></div>";
+                        if ($pagado != TRUE) {
+                            echo "<div onclick='pagar($id)'><i class='bi bi-currency-euro'></i></div>";
+                        }
+                        echo "</div>
                         </div>
                         ";
                     }
                 }
             }
-            if($disp){
+            if ($disp) {
                 echo "<a href='disponibles.php' class='sin_citas'><i class='bi bi-calendar-fill'></i> No hay citas reservadas</a>";
             }
         }
@@ -109,7 +148,23 @@
             location.href = "eliminar_reserva.php?reserva=" + id;
         }
     }
-</script>
 
+    function realizada(id) {
+        if (confirm("¿Confirmas de qué ya se realizó esta cita?")) {
+            location.href = "eliminar_reserva.php?realizada=" + id;
+        }
+    }
+
+    $(document).on("change", function(e) {
+        let select = document.querySelectorAll(".cita select");
+        select.forEach(o => {
+            if (e.target == o) {
+                let c = e.target.parentElement.parentElement.id;
+
+                location.href = `${location.origin}/kano/confirmarCita.php?id=${c}&tipo=${o.value}`;
+            }
+        });
+    });
+</script>
 
 <?php include "components/footer.php"; ?>
