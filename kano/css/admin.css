@@ -89,6 +89,8 @@ tbody tr:hover td {
     cursor: pointer;
     border-radius: 5px;
     background-color: #007BFF;
+
+    margin-bottom: 50px;
 }
 
 .container .agregarUsuarios button:hover {
