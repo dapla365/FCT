@@ -210,7 +210,8 @@ $(document).on("click", function(e) { //*     SE HACE POR DOCUMENTO PARA CUANDO 
     let div = document.querySelectorAll(".days div");
     div.forEach(d => {
         if (e.target == d) {
-            location.href = `${location.origin}/kano/peluqueros2.php?fecha=${d.id}&peluquero=${<?php echo $peluquero; ?>}`;
+            //* location.href = `${location.origin}/kano/peluqueros2.php?fecha=${d.id}&peluquero=${<?php echo $peluquero; ?>}`; //* PARA LA PÁGINA WEB
+            location.href = `peluqueros2.php?fecha=${d.id}&peluquero=${<?php echo $peluquero; ?>}`; //* PARA LA PÁGINA WEB EN LOCAL
         }
     });
 });

@@ -1,4 +1,3 @@
-<?php include "components/info.php" ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title><?php echo $title; ?></title>
-    <link rel="shortcut icon" href="<?php echo $favicon; ?>" type="image/x-icon">
+    <title>KANO | Cut & Shave</title>
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
     <?php
@@ -16,7 +15,8 @@
 
     if ($_SERVER['PHP_SELF'] != "") {
         $url = explode("/", $_SERVER['PHP_SELF']);
-        $url = $url[2];
+        //*$url = $url[2]; //* PARA LA PÁGINA WEB
+        $url = $url[1]; //* PARA LA PÁGINA WEB EN LOCAL
         //* NAVBAR
         if ($url != 'index.php') {
             echo '            

@@ -94,7 +94,8 @@ $(document).on("click", function(e) { //*     SE HACE POR DOCUMENTO PARA CUANDO 
     let div = document.querySelectorAll(".days div");
     div.forEach(d => {
         if (e.target == d) {
-            location.href = `${location.origin}/kano/disponibles2.php?fecha=${d.id}`;
+            //* location.href = `${location.origin}/kano/disponibles2.php?fecha=${d.id}`; //* PARA LA PÁGINA WEB
+            location.href = `disponibles2.php?fecha=${d.id}`; //* PARA LA PÁGINA WEB EN LOCAL
         }
     });
 });

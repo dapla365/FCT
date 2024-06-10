@@ -161,7 +161,8 @@ if (isset($_GET['user'])) {
             if (e.target == o) {
                 let c = e.target.parentElement.parentElement.id;
 
-                location.href = `${location.origin}/kano/confirmarCita.php?id=${c}&tipo=${o.value}`;
+                //* location.href = `${location.origin}/kano/confirmarCita.php?id=${c}&tipo=${o.value}`; //* PARA LA PÁGINA WEB
+                location.href = `confirmarCita.php?id=${c}&tipo=${o.value}`; //* PARA LA PÁGINA WEB EN LOCAL
             }
         });
     });
