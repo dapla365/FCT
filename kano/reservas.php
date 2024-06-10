@@ -37,21 +37,21 @@ if (isset($_GET['user'])) {
                     $b = "SELECT * FROM usuarios WHERE id=$peluquero;";
                     $b = mysqli_query($mysqli, $b);
                     $rowb = mysqli_fetch_assoc($b);
-                    $peluquero_nombre = ucwords(mb_strtolower($rowb['nombre']));
-                    $peluquero_apellido = ucwords(mb_strtolower($rowb['apellidos']));
+                    $peluquero_nombre = ucwords(strtolower($rowb['nombre']));
+                    $peluquero_apellido = ucwords(strtolower($rowb['apellidos']));
 
                     /* INFO USUARIO */
                     $c = "SELECT * FROM usuarios WHERE id=$usuario;";
                     $c = mysqli_query($mysqli, $c);
                     $rowc = mysqli_fetch_assoc($c);
-                    $usuario_nombre = ucwords(mb_strtolower($rowc['nombre']));
-                    $usuario_apellido = ucwords(mb_strtolower($rowc['apellidos']));
+                    $usuario_nombre = ucwords(strtolower($rowc['nombre']));
+                    $usuario_apellido = ucwords(strtolower($rowc['apellidos']));
 
                     /* INFO TIPO */
                     $d = "SELECT * FROM tipos WHERE id=$tipo;";
                     $d = mysqli_query($mysqli, $d);
                     $rowd = mysqli_fetch_assoc($d);
-                    $tipo_nombre = ucwords(mb_strtolower($rowd['tipo']));
+                    $tipo_nombre = ucwords(strtolower($rowd['tipo']));
                     $tipo_precio = $rowd['precio'];
                     $tipo_id = $rowd['id'];
 
@@ -77,7 +77,7 @@ if (isset($_GET['user'])) {
                         $d = "SELECT * FROM tipos;";
                         $d = mysqli_query($mysqli, $d);
                         while ($rowd = mysqli_fetch_assoc($d)) {
-                            $tipo_nombre2 = ucwords(mb_strtolower($rowd['tipo']));
+                            $tipo_nombre2 = ucwords(strtolower($rowd['tipo']));
                             $tipo_id2 = $rowd['id'];
                             if ($tipo_nombre != $tipo_nombre2) {
                                 echo "<option value='$tipo_id2'>$tipo_nombre2</option>";
@@ -114,7 +114,7 @@ if (isset($_GET['user'])) {
                         $d = "SELECT * FROM tipos;";
                         $d = mysqli_query($mysqli, $d);
                         while ($rowd = mysqli_fetch_assoc($d)) {
-                            $tipo_nombre2 = ucwords(mb_strtolower($rowd['tipo']));
+                            $tipo_nombre2 = ucwords(strtolower($rowd['tipo']));
                             $tipo_id2 = $rowd['id'];
                             if ($tipo_nombre != $tipo_nombre2) {
                                 echo "<option value='$tipo_id2'>$tipo_nombre2</option>";

@@ -8,8 +8,8 @@
         $a = mysqli_query($mysqli, $a);
         while ($row = mysqli_fetch_assoc($a)) {
             $id = $row['id'];
-            $username = mb_strtolower($row['username']);
-            $nombre = ucfirst(mb_strtolower($row['nombre']));
+            $username = strtolower($row['username']);
+            $nombre = ucfirst(strtolower($row['nombre']));
             $foto = $row['foto'];
 
             echo "   

@@ -23,8 +23,8 @@
                         $b = "SELECT * FROM usuarios WHERE id=$peluquero;";
                         $b = mysqli_query($mysqli, $b);
                         $rowb = mysqli_fetch_assoc($b);
-                        $peluquero_nombre = ucwords(mb_strtolower($rowb['nombre']));
-                        $peluquero_apellido = ucwords(mb_strtolower($rowb['apellidos']));
+                        $peluquero_nombre = ucwords(strtolower($rowb['nombre']));
+                        $peluquero_apellido = ucwords(strtolower($rowb['apellidos']));
 
                         if ($fecha == $fecha_hoy) {
                             $hora_hoy = date("H:i", time());

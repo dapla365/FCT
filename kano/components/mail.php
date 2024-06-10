@@ -24,8 +24,8 @@ else if(isset($_GET['reserva']) && isset($_GET['correo']) && isset($_GET['fecha'
     $a = mysqli_query($mysqli, $a);
     if (mysqli_num_rows($a) > 0) {
         $rowa = mysqli_fetch_assoc($a);
-        $peluquero = ucwords(mb_strtolower($rowa['nombre']));
-        $peluquero_apellido .= ucwords(mb_strtolower($rowa['apellidos']));
+        $peluquero = ucwords(strtolower($rowa['nombre']));
+        $peluquero_apellido .= ucwords(strtolower($rowa['apellidos']));
     }
     $mail= new PHPMailer();
     $mail->isSMTP();

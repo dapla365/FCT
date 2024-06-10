@@ -126,9 +126,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode(['success' => false, 'message' => 'Token invalido']);
         }
     }else{
-        $nombre = mb_strtolower(htmlspecialchars($_POST["nombre"]));
-        $apellidos = mb_strtolower(htmlspecialchars($_POST["apellidos"]));
-        $correo = mb_strtolower(htmlspecialchars($_POST["email"]));
+        $nombre = strtolower(htmlspecialchars($_POST["nombre"]));
+        $apellidos = strtolower(htmlspecialchars($_POST["apellidos"]));
+        $correo = strtolower(htmlspecialchars($_POST["email"]));
         $contrasena_uno = htmlspecialchars($_POST["contrasena_uno"]);
         $contrasena_dos = htmlspecialchars($_POST["contrasena_dos"]);
 

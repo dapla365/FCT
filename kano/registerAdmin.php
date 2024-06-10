@@ -30,7 +30,7 @@
                 $a = mysqli_query($mysqli, $a);
 
                 while($row = mysqli_fetch_assoc($a)){
-                  $option = ucwords(mb_strtolower($row['nombre']));
+                  $option = ucwords(strtolower($row['nombre']));
                 echo "<option value='$option'>$option</option>";
                   
                 }
@@ -53,10 +53,10 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-        $nombre = mb_strtolower(htmlspecialchars($_POST["nombre"]));
-        $apellidos = mb_strtolower(htmlspecialchars($_POST["apellidos"]));
-        $correo = mb_strtolower(htmlspecialchars($_POST["email"]));
-        $rol = mb_strtoupper(htmlspecialchars($_POST["rol"]));
+        $nombre = strtolower(htmlspecialchars($_POST["nombre"]));
+        $apellidos = strtolower(htmlspecialchars($_POST["apellidos"]));
+        $correo = strtolower(htmlspecialchars($_POST["email"]));
+        $rol = strtoupper(htmlspecialchars($_POST["rol"]));
         $contrasena_uno = htmlspecialchars($_POST["contrasena_uno"]);
         $contrasena_dos = htmlspecialchars($_POST["contrasena_dos"]);
         $a = "SELECT id FROM roles WHERE nombre LIKE '$rol'";

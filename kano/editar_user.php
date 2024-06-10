@@ -14,7 +14,7 @@ if (isset($_GET['user'])) {
             $b="SELECT nombre FROM roles WHERE id=$rol";          
             $b = mysqli_query($mysqli, $b);
             $b = mysqli_fetch_assoc($b);
-            $rol_name = ucwords(mb_strtolower($b['nombre']));
+            $rol_name = ucwords(strtolower($b['nombre']));
         }
     } else {
         header("Location: index.php");
@@ -41,7 +41,7 @@ if (isset($_GET['user'])) {
                 echo "<option value='$rol_name'>$rol_name</option>";
 
                 while($row = mysqli_fetch_assoc($a)){
-                  $option = ucwords(mb_strtolower($row['nombre']));
+                  $option = ucwords(strtolower($row['nombre']));
                   if($rol_name != $option){
                     echo "<option value='$option'>$option</option>";
                   }
@@ -64,7 +64,7 @@ if (isset($_GET['user'])) {
     if($user_nivel <= 5){
       echo "<p><strong>Error: </strong>¡No tienes permisos para editar al usuario!</p>";
     }else{      
-      $rol = mb_strtoupper(htmlspecialchars($_POST['rol']));
+      $rol = strtoupper(htmlspecialchars($_POST['rol']));
       $pass = htmlspecialchars($_POST['pass']);
 
       $a = "SELECT id FROM roles WHERE nombre LIKE '$rol'";

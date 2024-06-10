@@ -111,7 +111,7 @@ if (isset($_GET['reserva'])) {
                     echo json_encode(['success' => false, 'message' => 'Token invalido']);
                 }
             } else {
-                $nombre = mb_strtolower(htmlspecialchars($_POST["nombre"]));
+                $nombre = strtolower(htmlspecialchars($_POST["nombre"]));
                 $contrasena = htmlspecialchars($_POST["contrasena"]);
 
                 if (!empty($nombre) && !empty($contrasena)) {
