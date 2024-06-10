@@ -55,7 +55,7 @@ $peluquero_apellidos = $row['apellidos'];
 
 <script>
     let hayCitas = false;
-    let peluquero = "<? echo $peluquero; ?>";
+    let peluquero = "<?php echo $peluquero ?>";
     let copied = null;
 
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];

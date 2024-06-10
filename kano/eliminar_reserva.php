@@ -81,7 +81,7 @@ else if (isset($_GET['delete'])) {
         $file = $pagina;
     }
 
-    header("Refresh:2; url=$file");
+    header("Location: $file");
 }
 
 ?>
