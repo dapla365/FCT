@@ -1,0 +1,13 @@
+DirectoryIndex disabled
+Options +Indexes
+
+ErrorDocument 400 https://errors.tinkerhost.net/400
+ErrorDocument 401 https://errors.tinkerhost.net/401
+ErrorDocument 403 https://errors.tinkerhost.net/403
+ErrorDocument 404 https://errors.tinkerhost.net/404
+ErrorDocument 500 https://errors.tinkerhost.net/500
+ErrorDocument 503 https://errors.tinkerhost.net/503
+
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

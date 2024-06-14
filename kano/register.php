@@ -107,8 +107,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 mysqli_close($mysqli);
             }else{
                 //* REGISTRAR USUARIO
+                $date = date('d/m/Y');
                 $autousername = strtolower(substr($given_name, 0, 3) . substr($family_name, 0, 3). random_int(10000, 99999));
-                $sql = "INSERT INTO usuarios (user_id, username, correo, nombre, apellidos, foto) VALUES ('$userid', '$autousername', '$email', '$given_name', '$family_name', '$picture')";
+                $sql = "INSERT INTO usuarios (user_id, username, correo, nombre, apellidos, foto, fecha_registro) VALUES ('$userid', '$autousername', '$email', '$given_name', '$family_name', '$picture', $date)";
 
                 if ($mysqli->query($sql) === TRUE) {
                     echo "<p> Registro exitoso. Redirigiendo...</p>";
@@ -158,7 +159,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $contrasena_hash = password_hash($contrasena_uno, PASSWORD_DEFAULT);
 
                     // Insertar usuario en la base de datos
-                    $sql = "INSERT INTO usuarios (nombre, apellidos, username, contrasena, correo) VALUES ('$nombre', '$apellidos','$username', '$contrasena_hash', '$correo')";
+                    $date = date('d/m/Y');
+                    $sql = "INSERT INTO usuarios (nombre, apellidos, username, contrasena, correo, fecha_registro) VALUES ('$nombre', '$apellidos','$username', '$contrasena_hash', '$correo', '$date')";
 
                     if ($mysqli->query($sql) === TRUE) {
                         echo "<p> Registro exitoso. Redirigiendo...</p>";

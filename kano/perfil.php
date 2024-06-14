@@ -17,13 +17,14 @@
         <div class="buttons-container">
             <button class="action-btn change-password-btn" onclick="cambiarPass()">Cambiar contraseña</button>
             <?php
-            if ($user_rol > 0 && $user_rol < 3) {
+            if ($user_rol > 1 && $user_rol < 4) {
                 echo '
                 <button class="action-btn change-schedule-btn"
                     onclick="window.location.href = `cambiarHorario.php`">Cambiar horario</button>';
+            }else {
+                echo '<button class="action-btn delete-account-btn" onclick="eliminarCuenta()">Eliminar cuenta</button>';
             }
             ?>
-            <button class="action-btn delete-account-btn" onclick="eliminarCuenta()">Eliminar cuenta</button>
         </div>
         <p id="mensaje"></p>
     </div>
@@ -164,7 +165,10 @@
                     type: 'delete'
                 },
                 success: function(data) {
-                    location.reload();
+                    document.getElementById('mensaje').innerHTML = data;
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
                 }
             });
         } else {

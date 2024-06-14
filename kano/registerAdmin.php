@@ -89,7 +89,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $contrasena_hash = password_hash($contrasena_uno, PASSWORD_DEFAULT);
 
                     // Insertar usuario en la base de datos
-                    $sql = "INSERT INTO usuarios (nombre, apellidos, username, rol, contrasena, correo) VALUES ('$nombre', '$apellidos','$username', '$rolnuevo', '$contrasena_hash', '$correo')";
+                    $date = date('d/m/Y');
+                    $sql = "INSERT INTO usuarios (nombre, apellidos, username, rol, contrasena, correo, fecha_registro) VALUES ('$nombre', '$apellidos','$username', '$rolnuevo', '$contrasena_hash', '$correo', '$date')";
 
                     if ($mysqli->query($sql) === TRUE) {
 

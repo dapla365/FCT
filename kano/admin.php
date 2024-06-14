@@ -20,10 +20,10 @@ if (isset($_GET['filtro'])) {
             <div class="panel-heading">
                 <span>Filtrar </span>
                 <input id="filtro" type="text">
-                <?php 
-                    if($filtro != null) {
-                        echo "<i onclick='location.href = `admin.php`' class='bi bi-x-circle-fill'></i>";
-                    }
+                <?php
+                if ($filtro != null) {
+                    echo "<i onclick='location.href = `admin.php`' class='bi bi-x-circle-fill'></i>";
+                }
                 ?>
             </div>
         </div>
@@ -32,29 +32,6 @@ if (isset($_GET['filtro'])) {
             <thead>
                 <tr>
                     <th scope='col'>FOTO</th>
-                    <th scope='col'><a href="
-                    <?php
-                    $enlace = "admin.php?orderby=id";
-                    if ($filtro != null) {
-                        $enlace .= "&filtro=" . $filtro;
-                    }
-                    if (htmlspecialchars($_GET["orderby"]) == "id") {
-                        if (htmlspecialchars($_GET["type"]) == "DESC") {
-                            $enlace .= "&type=ASC";
-                        } else {
-                            $enlace .= "&type=DESC";
-                        }
-                    }
-                    echo $enlace;
-                    ?>">ID
-                            <?php
-                            if (htmlspecialchars($_GET["orderby"]) == "id") {
-                                if (htmlspecialchars($_GET["type"]) == "DESC") {
-                                    echo "<i class='bi bi-arrow-up'></i>";
-                                } else {
-                                    echo "<i class='bi bi-arrow-down'></i>";
-                                }
-                            } ?></a></th>
                     <th scope='col'><a href="<?php
                                                 $enlace = "admin.php?orderby=username";
                                                 if ($filtro != null) {
@@ -165,6 +142,28 @@ if (isset($_GET['filtro'])) {
                                     echo "<i class='bi bi-arrow-down'></i>";
                                 }
                             } ?></a></th>
+                    <th scope='col'><a href="<?php
+                                                $enlace = "admin.php?orderby=fecha_registro";
+                                                if ($filtro != null) {
+                                                    $enlace .= "&filtro=" . $filtro;
+                                                }
+                                                if (htmlspecialchars($_GET["orderby"]) == "fecha_registro") {
+                                                    if (htmlspecialchars($_GET["type"]) == "DESC") {
+                                                        $enlace .= "&type=ASC";
+                                                    } else {
+                                                        $enlace .= "&type=DESC";
+                                                    }
+                                                }
+                                                echo $enlace;
+                                                ?>">FECHA REGISTRO
+                            <?php
+                            if (htmlspecialchars($_GET["orderby"]) == "fecha_registro") {
+                                if (htmlspecialchars($_GET["type"]) == "DESC") {
+                                    echo "<i class='bi bi-arrow-up'></i>";
+                                } else {
+                                    echo "<i class='bi bi-arrow-down'></i>";
+                                }
+                            } ?></a></th>
                     <th scope='col'>OPERACIONES</th>
                 </tr>
             </thead>
@@ -203,6 +202,7 @@ if (isset($_GET['filtro'])) {
                         $apellidos = $row['apellidos'];
                         $rol = $row['rol'];
                         $foto = $row['foto'];
+                        $fecha_registro = $row['fecha_registro'];
 
                         $b = "SELECT * FROM roles WHERE id=$rol;";
                         $b = mysqli_query($mysqli, $b);
@@ -210,7 +210,7 @@ if (isset($_GET['filtro'])) {
                         $rol_name = $rowb["nombre"];
 
 
-                        if ($rol > 0 && $rol < 3) {
+                        if ($rol > 1 && $rol < 4) {
                             if (isset($_GET['filtro'])) {
                                 $filtro = htmlspecialchars($_GET['filtro']);
                                 $filtro = strtolower($filtro);
@@ -222,12 +222,12 @@ if (isset($_GET['filtro'])) {
                                     echo
                                     "<tr> 
                                         <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
-                                        <td class='id'>$id</td>
                                         <td class='username'>$username</td>
                                         <td class='correo'>$correo</td>
                                         <td class='nombre'>$nombre</td>
                                         <td class='apellidos'>$apellidos</td>
                                         <td class='rol'>$rol_name</td>
+                                        <td class='fecha_registro'>$fecha_registro</td>
 
                                         <td class='editar'>
                                             <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
@@ -242,12 +242,12 @@ if (isset($_GET['filtro'])) {
                                 echo
                                 "<tr> 
                                     <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
-                                    <td class='id'>$id</td>
                                     <td class='username'>$username</td>
                                     <td class='correo'>$correo</td>
                                     <td class='nombre'>$nombre</td>
                                     <td class='apellidos'>$apellidos</td>
                                     <td class='rol'>$rol_name</td>
+                                    <td class='fecha_registro'>$fecha_registro</td>
 
                                     <td class='editar'>
                                         <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
@@ -269,12 +269,12 @@ if (isset($_GET['filtro'])) {
                                     echo
                                     "<tr> 
                                         <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
-                                        <td class='id'>$id</td>
                                         <td class='username'>$username</td>
                                         <td class='correo'>$correo</td>
                                         <td class='nombre'>$nombre</td>
                                         <td class='apellidos'>$apellidos</td>
                                         <td class='rol'>$rol_name</td>
+                                        <td class='fecha_registro'>$fecha_registro</td>
                 
                                         <td class='editar'>
                                             <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
@@ -288,12 +288,12 @@ if (isset($_GET['filtro'])) {
                                 echo
                                 "<tr> 
                                     <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
-                                    <td class='id'>$id</td>
                                     <td class='username'>$username</td>
                                     <td class='correo'>$correo</td>
                                     <td class='nombre'>$nombre</td>
                                     <td class='apellidos'>$apellidos</td>
                                     <td class='rol'>$rol_name</td>
+                                    <td class='fecha_registro'>$fecha_registro</td>
             
                                     <td class='editar'>
                                         <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
@@ -318,13 +318,14 @@ if (isset($_GET['filtro'])) {
                         $apellidos = $row['apellidos'];
                         $rol = $row['rol'];
                         $foto = $row['foto'];
+                        $fecha_registro = $row['fecha_registro'];
 
                         $b = "SELECT * FROM roles WHERE id=$rol;";
                         $b = mysqli_query($mysqli, $b);
                         $rowb = mysqli_fetch_assoc($b);
                         $rol_name = $rowb["nombre"];
 
-                        if ($rol > 0 && $rol < 3) {
+                        if ($rol > 1 && $rol < 4) {
                             //! VISTA DE PELUQUERO 
                             if (isset($_GET['filtro'])) {
                                 //! CON FILTRO 
@@ -338,12 +339,12 @@ if (isset($_GET['filtro'])) {
                                     echo
                                     "<tr> 
                                         <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
-                                        <td class='id'>$id</td>
                                         <td class='username'>$username</td>
                                         <td class='correo'>$correo</td>
                                         <td class='nombre'>$nombre</td>
                                         <td class='apellidos'>$apellidos</td>
                                         <td class='rol'>$rol_name</td>
+                                        <td class='fecha_registro'>$fecha_registro</td>
                 
                                         <td class='editar'>
                                             <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
@@ -358,12 +359,12 @@ if (isset($_GET['filtro'])) {
                                 echo
                                 "<tr> 
                                     <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
-                                    <td class='id'>$id</td>
                                     <td class='username'>$username</td>
                                     <td class='correo'>$correo</td>
                                     <td class='nombre'>$nombre</td>
                                     <td class='apellidos'>$apellidos</td>
                                     <td class='rol'>$rol_name</td>
+                                    <td class='fecha_registro'>$fecha_registro</td>
             
                                     <td class='editar'>
                                         <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
@@ -387,12 +388,12 @@ if (isset($_GET['filtro'])) {
                                     echo
                                     "<tr> 
                                         <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
-                                        <td class='id'>$id</td>
                                         <td class='username'>$username</td>
                                         <td class='correo'>$correo</td>
                                         <td class='nombre'>$nombre</td>
                                         <td class='apellidos'>$apellidos</td>
                                         <td class='rol'>$rol_name</td>
+                                        <td class='fecha_registro'>$fecha_registro</td>
                 
                                         <td class='editar'>
                                             <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>
@@ -407,12 +408,12 @@ if (isset($_GET['filtro'])) {
                                 echo
                                 "<tr> 
                                     <td class='image'><img src='$foto' alt='foto' style='width: 100px'></td>
-                                    <td class='id'>$id</td>
                                     <td class='username'>$username</td>
                                     <td class='correo'>$correo</td>
                                     <td class='nombre'>$nombre</td>
                                     <td class='apellidos'>$apellidos</td>
                                     <td class='rol'>$rol_name</td>
+                                    <td class='fecha_registro'>$fecha_registro</td>
             
                                     <td class='editar'>
                                         <a href='editar_user.php?user={$id}'><i class='bi bi-pencil-fill'></i></a>

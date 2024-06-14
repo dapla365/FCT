@@ -92,8 +92,9 @@ if (isset($_GET['reserva'])) {
                         }
                     } else {
                         //* REGISTRAR USUARIO
+                        $date = date('d/m/Y');
                         $autousername = strtolower(substr($given_name, 0, 3) . substr($family_name, 0, 3) . random_int(10000, 99999));
-                        $sql = "INSERT INTO usuarios (user_id, username, correo, nombre, apellidos, foto) VALUES ('$userid', '$autousername', '$email', '$given_name', '$family_name', '$picture')";
+                        $sql = "INSERT INTO usuarios (user_id, username, correo, nombre, apellidos, foto, fecha_registro) VALUES ('$userid', '$autousername', '$email', '$given_name', '$family_name', '$picture', '$date')";
 
                         if ($mysqli->query($sql) === TRUE) {
                             echo "<p> Registro exitoso. Redirigiendo...</p>";

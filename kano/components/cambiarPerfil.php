@@ -37,10 +37,19 @@ switch ($type) {
         $valida = "Se ha cambiado correctamente los apellidos";
         break;
     case 'delete':
-        $b = "DELETE FROM usuarios WHERE id = '$user_id'";
-        $b = mysqli_query($mysqli, $b);
-
-        session_destroy();
+        $a = "SELECT * FROM usuarios WHERE id = $user_id;";
+        $a = mysqli_query($mysqli, $a);
+        $rowa = mysqli_fetch_array($a);
+        $rol = $rowa["rol"];
+        if($rol > 1 && $rol < 4){
+            $valida = "No se ha podido eliminar correctamente porque eres peluquero";
+            break;
+        }else{
+            $b = "DELETE FROM usuarios WHERE id = '$user_id'";
+            $b = mysqli_query($mysqli, $b);
+    
+            session_destroy();
+        }
         break;
     default:
         $valida = "No se ha podido cambiar correctamente";
