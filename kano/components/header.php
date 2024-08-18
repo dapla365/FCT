@@ -15,8 +15,8 @@
 
     if ($_SERVER['PHP_SELF'] != "") {
         $url = explode("/", $_SERVER['PHP_SELF']);
-        //*$url = $url[2]; //* PARA LA PÁGINA WEB
-        $url = $url[1]; //* PARA LA PÁGINA WEB EN LOCAL
+        $url = $url[2]; //* PARA LA PÁGINA WEB
+        //$url = $url[1]; //* PARA LA PÁGINA WEB EN LOCAL
         //* NAVBAR
         if ($url != 'index.php') {
             echo '            

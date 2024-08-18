@@ -155,9 +155,11 @@ $peluquero_apellidos = $row['apellidos'];
         div.forEach(d => {
             if (e.target == d) {
                 if (d.classList.contains('available')) {
+                    // REVISAR DIA QUE NO ES CLICKEADO
                     div.forEach(ds => {
                         if (ds != e.target) {
                             if (ds.classList.contains('selected')) {
+                                // OTRO DIA YA ESTA SELECCIONADO
                                 if (copied != null) {
                                     msg.innerHTML = "<p>¡Este día ya tiene alguna cita!</p><p>¡Borralo antes de pegarle otro día!</p>";
                                     setTimeout(function() {
@@ -167,14 +169,15 @@ $peluquero_apellidos = $row['apellidos'];
                                     ds.classList.toggle('selected');
                                     d.classList.toggle('selected');
                                 }
-                            } else {
+                            } else {                           
+                                // NO HAY OTRO DIA SELECCIONADO
                                 if (copied != null) {
                                     msg.innerHTML = "<p>¡Este día ya tiene alguna cita!</p><p>¡Borralo antes de pegarle otro día!</p>";
                                     setTimeout(function() {
                                         msg.innerHTML = '';
                                     }, 2000);
                                 } else {
-                                    d.classList.toggle('selected');
+                                    d.classList.add('selected');
                                 }
                             }
                         }
